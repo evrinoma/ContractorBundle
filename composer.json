@@ -1,0 +1,28 @@
+{
+  "name": "evrinoma/cotractor-bundle",
+  "description": "Contractor",
+  "keywords": [
+    "Contractor"
+  ],
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nikolay Nikolaev",
+      "email": "evrinoma@gmail.com"
+    }
+  ],
+  "version": "1.0.0",
+  "require": {
+    "php": "^7.4.1",
+    "evrinoma/utils-bundle": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Evrinoma\\ContractorBundle\\": "src/"
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  }
+}
