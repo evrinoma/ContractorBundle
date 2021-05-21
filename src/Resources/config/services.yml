@@ -6,6 +6,9 @@ services:
   evrinoma.contractor.manager:
     arguments: [ '@doctrine.orm.entity_manager' ]
 
+#  Evrinoma\ContractorBundle\Manager\ContractorManager:
+#    arguments: [ '@doctrine.orm.entity_manager']
+
   Evrinoma\ContractorBundle\Controller\ContractorApiController:
     alias: evrinoma.contractor.api.controller
     public: true
@@ -16,5 +19,5 @@ services:
       - '@jms_serializer'
       - '@request_stack'
       - '@evrinoma.dto.factory'
-      - ''
+      - '@evrinoma.contractor.manager'
     autowire: true
