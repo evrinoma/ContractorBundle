@@ -1,0 +1,3 @@
+contractor_api:
+  resource: "@ContractorBundle/Controller/ContractorController.php"
+  type: annotation

@@ -1,0 +1,3 @@
+contractorapi:
+  resource: "@ContractorBundle/Bundle/Resources/config/routing/api.yml"
+  prefix: evrinoma

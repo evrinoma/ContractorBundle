@@ -15,9 +15,31 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
 //region SECTION: Getters/Setters
+    /**
+     * {@inheritdoc}
+     */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder(ContractorBundle::CONTRACTOR_BUNDLE);
+        $treeBuilder = new TreeBuilder('contr_agent');
+        $rootNode    = $treeBuilder->getRootNode();
+        $supportedDrivers = ['orm'];
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('db_driver')
+            ->validate()
+            ->ifNotInArray($supportedDrivers)
+            ->thenInvalid('The driver %s is not supported. Please choose one of '.json_encode($supportedDrivers))
+            ->end()
+            ->cannotBeOverwritten()
+            ->defaultValue('orm')
+            ->end()
+            ->scalarNode('class')
+            //->isRequired()
+                ->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
+                ->scalarNode('entity_manager_name')->defaultNull()->end()
+            ->end();
 
         return $treeBuilder;
     }
