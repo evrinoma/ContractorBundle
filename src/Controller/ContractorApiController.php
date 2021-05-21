@@ -2,24 +2,38 @@
 
 namespace Evrinoma\ContractorBundle\Controller;
 
+use Evrinoma\ContractorBundle\Manager\ManagerInterface;
 use Evrinoma\DtoBundle\Factory\FactoryDtoInterface;
 use Evrinoma\UtilsBundle\Controller\AbstractApiController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Annotations as OA;
 
-final class ContractorController extends AbstractApiController
+final class ContractorApiController extends AbstractApiController
 {
 //region SECTION: Fields
+    /**
+     * @var FactoryDtoInterface
+     */
     private FactoryDtoInterface $factoryDto;
 
-    private ?RequestStack $request;
+    /**
+     * @var ?Request
+     */
+    private ?Request $request;
+    /**
+     * @var ManagerInterface
+     */
+    private ManagerInterface $manager;
 //endregion Fields
 
 //region SECTION: Constructor
+
+
     /**
      * ApiController constructor.
      *
@@ -30,12 +44,13 @@ final class ContractorController extends AbstractApiController
     public function __construct(
         SerializerInterface $serializer,
         RequestStack $requestStack,
-        FactoryDtoInterface $factoryDto
-
+        FactoryDtoInterface $factoryDto,
+        ManagerInterface $manager
     ) {
         parent::__construct($serializer);
         $this->request    = $requestStack->getCurrentRequest();
         $this->factoryDto = $factoryDto;
+        $this->manager = $manager;
     }
 
 //endregion Constructor

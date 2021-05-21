@@ -1,6 +1,20 @@
-parameters:
-  evrinoma.contractor.class: Evrinoma\ContractorBundle\Entity\BaseContractor
-
-serivces:
+services:
   Evrinoma\ContractorBundle\Manager\ContractorManager:
-    arguments: [ '@doctrine.orm.entity_manager', '%evrinoma.contractor.class%' ]
+    alias: evrinoma.contractor.manager
+    public: true
+
+  evrinoma.contractor.manager:
+    arguments: [ '@doctrine.orm.entity_manager' ]
+
+  Evrinoma\ContractorBundle\Controller\ContractorApiController:
+    alias: evrinoma.contractor.api.controller
+    public: true
+
+  evrinoma.contractor.api.controller:
+    class: Evrinoma\ContractorBundle\Controller\ContractorApiController
+    arguments:
+      - '@jms_serializer'
+      - '@request_stack'
+      - '@evrinoma.dto.factory'
+      - ''
+    autowire: true
