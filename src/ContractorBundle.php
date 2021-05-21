@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class ContractorBundle extends Bundle
 {
-    public const CONTRACTOR_BUNDLE = 'Contractor';
+    public const CONTRACTOR_BUNDLE = 'contractor';
 
 //region SECTION: Getters/Setters
     public function getContainerExtension()
