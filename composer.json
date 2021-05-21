@@ -1,5 +1,5 @@
 {
-  "name": "evrinoma/cotractor-bundle",
+  "name": "evrinoma/contractor-bundle",
   "description": "Contractor",
   "keywords": [
     "Contractor"
@@ -14,15 +14,34 @@
   ],
   "version": "1.0.0",
   "require": {
-    "php": "^7.4.1",
+    "php": "^7.4",
+    "evrinoma/dto-bundle": "dev-master",
     "evrinoma/utils-bundle": "dev-master"
   },
   "autoload": {
     "psr-4": {
-      "Evrinoma\\ContractorBundle\\": "src/"
+      "Evrinoma\\ContractorBundle\\": "src/",
+      "Evrinoma\\ContractorBundle\\Tests\\": "tests/"
     },
     "exclude-from-classmap": [
       "/Tests/"
     ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require-dev": {
+    "symfony/phpunit-bridge": "^5.0",
+    "symfony/yaml": "^5.0",
+    "phpunit/phpunit": "^9.5.2"
+  },
+  "repositories": {
+    "dto": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/DtoBundle.git"
+    },
+    "utils": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/UtilsBundle.git"
+    }
   }
 }

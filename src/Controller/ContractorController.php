@@ -1,16 +1,22 @@
 <?php
 
+namespace Evrinoma\ContractorBundle\Controller;
+
 use Evrinoma\DtoBundle\Factory\FactoryDtoInterface;
 use Evrinoma\UtilsBundle\Controller\AbstractApiController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Annotations as OA;
 
 final class ContractorController extends AbstractApiController
 {
 //region SECTION: Fields
-    private $factoryDto;
-    private $request;
+    private FactoryDtoInterface $factoryDto;
+
+    private ?RequestStack $request;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -35,30 +41,62 @@ final class ContractorController extends AbstractApiController
 //endregion Constructor
 
 //region SECTION: Public
-    public function saveAction()
+    /**
+     * @Rest\Put("/api/contractor/save", options={"expose"=true}, name="api_save_contractor")
+     * @OA\Put(tags={"contractor"})
+     * @OA\Response(response=200,description="Returns contractors")
+     *
+     * @return JsonResponse
+     */
+    public function saveAction(): JsonResponse
     {
         $json = [];
-        $this->json(['message' => 'save', 'data' => $json], Response::HTTP_OK);
+
+        return $this->json(['message' => 'save', 'data' => $json], Response::HTTP_OK);
     }
 
-    public function deleteAction()
+    /**
+     * @Rest\Delete("/api/contractor/delete", options={"expose"=true}, name="api_delete_contractor")
+     * @OA\Delete(tags={"contractor"})
+     * @OA\Response(response=200,description="Delete contractors")
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction(): JsonResponse
     {
         $json = [];
-        $this->json(['message' => 'delete', 'data' => $json], Response::HTTP_OK);
+
+        return $this->json(['message' => 'delete', 'data' => $json], Response::HTTP_OK);
     }
 
-    public function searchAction()
+    /**
+     * @Rest\Get("/api/contractor/search", options={"expose"=true}, name="api_search_contractor")
+     * @OA\Get(tags={"contractor"})
+     * @OA\Response(response=200,description="Search contractors")
+     *
+     * @return JsonResponse
+     */
+    public function searchAction(): JsonResponse
     {
         $json = [];
-        $this->json(['message' => 'search', 'data' => $json], Response::HTTP_OK);
+
+        return $this->json(['message' => 'search', 'data' => $json], Response::HTTP_OK);
     }
 //endregion Public
 
 //region SECTION: Getters/Setters
-    public function getAction()
+    /**
+     * @Rest\Get("/api/contractor", options={"expose"=true}, name="api_contractor")
+     * @OA\Get(tags={"contractor"})
+     * @OA\Response(response=200,description="Return contractors")
+     *
+     * @return JsonResponse
+     */
+    public function getAction(): JsonResponse
     {
         $json = [];
-        $this->json(['message' => 'get', 'data' => $json], Response::HTTP_OK);
+
+        return $this->json(['message' => 'get', 'data' => $json], Response::HTTP_OK);
     }
 //endregion Getters/Setters
 }

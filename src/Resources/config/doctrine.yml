@@ -1,0 +1,5 @@
+services:
+  evrinoma.contractor.object_manager:
+    class:  Doctrine\Persistence\ObjectManager
+    public: false
+    arguments: ['%evrinoma.contractor.model_manager_name%']

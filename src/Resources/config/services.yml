@@ -1,0 +1,6 @@
+parameters:
+  evrinoma.contractor.class: Evrinoma\ContractorBundle\Entity\BaseContractor
+
+serivces:
+  Evrinoma\ContractorBundle\Manager\ContractorManager:
+    arguments: [ '@doctrine.orm.entity_manager', '%evrinoma.contractor.class%' ]
