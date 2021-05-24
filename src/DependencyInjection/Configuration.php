@@ -36,9 +36,10 @@ class Configuration implements ConfigurationInterface
             ->defaultValue('orm')
             ->end()
             ->scalarNode('class')
-            //->isRequired()
                 ->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
                 ->scalarNode('entity_manager_name')->defaultNull()->end()
+                ->scalarNode('dto_class')->defaultNull()
+                ->info('This option is used for dto class override')
             ->end();
 
         return $treeBuilder;

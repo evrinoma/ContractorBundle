@@ -1,14 +1,17 @@
 services:
-#  Evrinoma\ContractorBundle\Manager\ContractorManager:
-#    alias: evrinoma.contractor.manager
-#    public: true
+  #  Evrinoma\ContractorBundle\Manager\ContractorManager:
+  #    alias: evrinoma.contractor.manager
+  #    public: true
 
   evrinoma.contractor.manager:
     alias: Evrinoma\ContractorBundle\Manager\ContractorManager
     public: true
 
   Evrinoma\ContractorBundle\Manager\ContractorManager:
-    arguments: [ '@doctrine.orm.entity_manager']
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@validator'
+      - '@evrinoma.contractor.api.provider.base'
 
   Evrinoma\ContractorBundle\Controller\ContractorApiController:
     alias: evrinoma.contractor.api.controller
@@ -22,3 +25,12 @@ services:
       - '@evrinoma.dto.factory'
       - '@evrinoma.contractor.manager'
     autowire: true
+
+  Evrinoma\ContractorBundle\Provider\BaseProvider:
+    alias: evrinoma.contractor.api.provider.base
+    public: true
+
+  evrinoma.contractor.api.provider.base:
+    class: Evrinoma\ContractorBundle\Provider\BaseProvider
+    autowire: true
+

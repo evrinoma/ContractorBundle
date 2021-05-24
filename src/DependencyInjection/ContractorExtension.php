@@ -4,6 +4,7 @@
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
 use Evrinoma\ContractorBundle\ContractorBundle;
+use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,19 +19,22 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ContractorExtension extends Extension
 {
-    const ENTITY_BASE_CONTRACTOR = 'Evrinoma\ContractorBundle\Entity\BaseContractor';
+//region SECTION: Fields
+    public const ENTITY_BASE_CONTRACTOR = 'Evrinoma\ContractorBundle\Entity\BaseContractor';
 
     /**
      * @var array
      */
-    private static $doctrineDrivers = array(
+    private static array $doctrineDrivers = array(
         'orm' => array(
             'registry' => 'doctrine',
             'tag'      => 'doctrine.event_subscriber',
         ),
     );
+//endregion Fields
 
-    protected function remapParameters(array $config, ContainerBuilder $container, array $map)
+//region SECTION: Protected
+    protected function remapParameters(array $config, ContainerBuilder $container, array $map): void
     {
         foreach ($map as $name => $paramName) {
             if (array_key_exists($name, $config)) {
@@ -39,7 +43,7 @@ class ContractorExtension extends Extension
         }
     }
 
-    protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
+    protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces): void
     {
         foreach ($namespaces as $ns => $map) {
             if ($ns) {
@@ -59,10 +63,7 @@ class ContractorExtension extends Extension
             }
         }
     }
-
-//region SECTION: Fields
-    private $container;
-//endregion Fields
+//endregion Protected
 
 //region SECTION: Public
     public function load(array $configs, ContainerBuilder $container)
@@ -95,6 +96,9 @@ class ContractorExtension extends Extension
                 ],
             ]
         );
+
+        $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
+        $definition->setArgument(4, $config['dto_class'] ?? ContractorApiDto::class);
     }
 //endregion Public
 
