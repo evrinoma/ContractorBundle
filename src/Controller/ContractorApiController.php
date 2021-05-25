@@ -2,9 +2,9 @@
 
 namespace Evrinoma\ContractorBundle\Controller;
 
-use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
-use Evrinoma\ContractorBundle\Manager\ManagerInterface;
+use Evrinoma\ContractorBundle\Manager\CommandManagerInterface;
+use Evrinoma\ContractorBundle\Manager\QueryManagerInterface;
 use Evrinoma\DtoBundle\Factory\FactoryDtoInterface;
 use Evrinoma\UtilsBundle\Controller\AbstractApiController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -26,10 +26,13 @@ final class ContractorApiController extends AbstractApiController
      */
     private FactoryDtoInterface $factoryDto;
     /**
-     * @var ManagerInterface
+     * @var CommandManagerInterface
      */
-    private ManagerInterface $manager;
-
+    private CommandManagerInterface $commandManager;
+    /**
+     * @var QueryManagerInterface
+     */
+    private QueryManagerInterface $queryManager;
     /**
      * @var string
      */
@@ -42,60 +45,31 @@ final class ContractorApiController extends AbstractApiController
     /**
      * ApiController constructor.
      *
-     * @param SerializerInterface $serializer
-     * @param RequestStack        $requestStack
-     * @param FactoryDtoInterface $factoryDto
-     * @param ManagerInterface    $manager
-     * @param string              $dtoClass
+     * @param SerializerInterface     $serializer
+     * @param RequestStack            $requestStack
+     * @param FactoryDtoInterface     $factoryDto
+     * @param CommandManagerInterface $commandManager
+     * @param QueryManagerInterface   $queryManager
+     * @param string                  $dtoClass
      */
     public function __construct(
         SerializerInterface $serializer,
         RequestStack $requestStack,
         FactoryDtoInterface $factoryDto,
-        ManagerInterface $manager,
+        CommandManagerInterface $commandManager,
+        QueryManagerInterface $queryManager,
         string $dtoClass
     ) {
         parent::__construct($serializer);
-        $this->request    = $requestStack->getCurrentRequest();
-        $this->factoryDto = $factoryDto;
-        $this->manager    = $manager;
-        $this->dtoClass   = $dtoClass;
+        $this->request        = $requestStack->getCurrentRequest();
+        $this->factoryDto     = $factoryDto;
+        $this->commandManager = $commandManager;
+        $this->dtoClass       = $dtoClass;
     }
 
 //endregion Constructor
 
 //region SECTION: Public
-    /**
-     * @Rest\Put("/api/contractor/save", options={"expose"=true}, name="api_save_contractor")
-     * @OA\Put(tags={"contractor"})
-     * @OA\Response(response=200,description="Save contractors")
-     *
-     * @return JsonResponse
-     */
-    public function putAction(): JsonResponse
-    {
-        /** @var ContractorApiDtoInterface $contractorApiDto */
-        $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
-        $manager          = $this->manager;
-
-        if ($contractorApiDto->hasContractor()) {
-            $json = [];
-            $em   = $this->getDoctrine()->getManager();
-
-            $em->transactional(
-                function () use ($contractorApiDto, $manager, &$json) {
-                    $manager->putFromApi($contractorApiDto);
-                    $json = ['OK'];
-                }
-            );
-        } else {
-            $this->manager->setRestClientErrorBadRequest();
-            $json = ['errors' => 'ошибка'];
-        }
-
-        return $this->json(['message' => 'Save contractor', 'data' => $json], $this->manager->getRestStatus());
-    }
-
     /**
      * @Rest\Post("/api/contractor/create", options={"expose"=true}, name="api_create_contractor")
      * @OA\Post(tags={"contractor"})
@@ -107,24 +81,60 @@ final class ContractorApiController extends AbstractApiController
     {
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
-        $manager          = $this->manager;
+        $manager          = $this->commandManager;
 
-        if ($contractorApiDto->hasContractor()) {
+        try {
             $json = [];
             $em   = $this->getDoctrine()->getManager();
 
             $em->transactional(
                 function () use ($contractorApiDto, $manager, &$json) {
-                    $manager->postFromApi($contractorApiDto);
+                    $manager->post($contractorApiDto);
                     $json = ['OK'];
                 }
             );
+        } catch (\Exception $e) {
+            $json = ['errors' => $e->getMessage()];
+            $this->commandManager->setRestClientErrorBadRequest();
+        }
+
+        return $this->json(['message' => 'Create contractor', 'data' => $json], $this->commandManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Put("/api/contractor/save", options={"expose"=true}, name="api_save_contractor")
+     * @OA\Put(tags={"contractor"})
+     * @OA\Response(response=200,description="Save contractors")
+     *
+     * @return JsonResponse
+     */
+    public function putAction(): JsonResponse
+    {
+        /** @var ContractorApiDtoInterface $contractorApiDto */
+        $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
+        $manager          = $this->commandManager;
+
+        if ($contractorApiDto->hasEntityId()) {
+            try {
+                $json = [];
+                $em   = $this->getDoctrine()->getManager();
+
+                $em->transactional(
+                    function () use ($contractorApiDto, $manager, &$json) {
+                        $manager->put($contractorApiDto);
+                        $json = ['OK'];
+                    }
+                );
+            } catch (\Exception $e) {
+                $this->commandManager->setRestClientErrorBadRequest();
+                $json = ['errors' => $e->getMessage()];
+            }
         } else {
-            $this->manager->setRestClientErrorBadRequest();
+            $this->commandManager->setRestClientErrorBadRequest();
             $json = ['errors' => 'ошибка'];
         }
 
-        return $this->json(['message' => 'Create contractor', 'data' => $json], $this->manager->getRestStatus());
+        return $this->json(['message' => 'Save contractor', 'data' => $json], $this->commandManager->getRestStatus());
     }
 
     /**
@@ -138,31 +148,68 @@ final class ContractorApiController extends AbstractApiController
     {
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
-        $manager          = $this->manager;
+        $manager          = $this->commandManager;
 
-        if ($contractorApiDto->hasContractor()) {
-            $json = [];
-            $em   = $this->getDoctrine()->getManager();
+        if ($contractorApiDto->hasEntityId()) {
+            try {
+                $json = [];
+                $em   = $this->getDoctrine()->getManager();
 
-            $em->transactional(
-                function () use ($contractorApiDto, $manager, &$json) {
-                    $manager->deleteFromApi($contractorApiDto);
-                    $json = ['OK'];
-                }
-            );
+                $em->transactional(
+                    function () use ($contractorApiDto, $manager, &$json) {
+                        $manager->delete($contractorApiDto);
+                        $json = ['OK'];
+                    }
+                );
+            } catch (\Exception $e) {
+                $this->commandManager->setRestClientErrorBadRequest();
+                $json = ['errors' => $e->getMessage()];
+            }
         } else {
-            $this->manager->setRestClientErrorBadRequest();
+            $this->commandManager->setRestClientErrorBadRequest();
             $json = ['errors' => 'id contractor not found'];
         }
 
-        return $this->json(['message' => 'Delete contractor', 'data' => $json], $this->manager->getRestStatus());
+        return $this->json(['message' => 'Delete contractor', 'data' => $json], $this->commandManager->getRestStatus());
     }
 //endregion Public
 
 //region SECTION: Getters/Setters
     /**
      * @Rest\Get("/api/contractor", options={"expose"=true}, name="api_contractor")
-     * @OA\Get(tags={"contractor"})
+     * @OA\Get(
+     *     tags={"contractor"},
+     *      @OA\Parameter(
+     *         description="id Entity",
+     *         in="query",
+     *         name="entityId",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="3",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         description="page number",
+     *         in="query",
+     *         name="page",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="0",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         description="records count",
+     *         in="query",
+     *         name="per_page",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="1",
+     *         )
+     *     )
+     * )
      * @OA\Response(response=200,description="Return contractors")
      *
      * @return JsonResponse
@@ -172,20 +219,15 @@ final class ContractorApiController extends AbstractApiController
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
 
-        if ($contractorApiDto->hasContractor()) {
-            try {
-                $json = [];
-                $this->manager->getFromApi($contractorApiDto);
-            } catch (\Exception $e) {
-                $json = ['errors' => $e->getMessage()];
-            }
-        } else {
-            $this->manager->setRestClientErrorBadRequest();
-
-            $json = ['errors' => 'Не переданы необходимые данные для получения contractors'];
+        try {
+            $json = [];
+            $this->queryManager->get($contractorApiDto);
+        } catch (\Exception $e) {
+            $this->commandManager->setRestClientErrorBadRequest();
+            $json = ['errors' => $e->getMessage()];
         }
 
-        return $this->setSerializeGroup('api_get_comment')->json(['message' => 'Get contractors', 'data' => $json], $this->manager->getRestStatus());
+        return $this->setSerializeGroup('api_get_comment')->json(['message' => 'Get contractors', 'data' => $json], $this->commandManager->getRestStatus());
     }
 //endregion Getters/Setters
 }

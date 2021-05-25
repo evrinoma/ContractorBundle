@@ -3,14 +3,14 @@
 namespace Evrinoma\ContractorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evrinoma\ContrAgentBundle\Model\AbstractBaseContractor;
+use Evrinoma\ContractorBundle\Model\AbstractContractor;
 
 /**
  * BaseContractor
  *
  * @ORM\Table(name="contragent")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Evrinoma\ContractorBundle\Repository\ContractorRepository")
  */
-class BaseContractor extends AbstractBaseContractor
+class BaseContractor extends AbstractContractor
 {
 }

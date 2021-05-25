@@ -1,9 +1,8 @@
 <?php
 
-namespace Evrinoma\ContrAgentBundle\Model;
+namespace Evrinoma\ContractorBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtTrait;
 use Evrinoma\UtilsBundle\Entity\IdTrait;
@@ -11,10 +10,9 @@ use Evrinoma\UtilsBundle\Entity\IdTrait;
 /**
  * Class AbstractBaseContractor
  *
- * @package Evrinoma\ContrAgentBundle\Model
  * @ORM\MappedSuperclass
  */
-abstract class AbstractBaseContractor implements ActiveInterface
+abstract class AbstractContractor implements ContractorInterface
 {
     use IdTrait, ActiveTrait, CreateUpdateAtTrait;
 
@@ -24,21 +22,21 @@ abstract class AbstractBaseContractor implements ActiveInterface
      *
      * @ORM\Column(name="short_name", type="string", length=255, nullable=false)
      */
-    private string $shortName;
+    protected string $shortName;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="full_name", type="string", length=255, nullable=true)
      */
-    private string $fullName;
+    protected string $fullName;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="inn", type="string", length=255, nullable=true)
      */
-    private string $inn;
+    protected string $inn;
 //endregion Fields
 
 //region SECTION: Getters/Setters
@@ -51,19 +49,55 @@ abstract class AbstractBaseContractor implements ActiveInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getFullName(): ?string
+    public function getFullName(): string
     {
         return $this->fullName;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getInn(): ?string
+    public function getInn(): string
     {
         return $this->inn;
+    }
+
+    /**
+     * @param string $shortName
+     *
+     * @return $this
+     */
+    public function setShortName(string $shortName): self
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * @param string $fullName
+     *
+     * @return $this
+     */
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * @param string $inn
+     *
+     * @return $this
+     */
+    public function setInn(string $inn): self
+    {
+        $this->inn = $inn;
+
+        return $this;
     }
 //endregion Getters/Setters
 }

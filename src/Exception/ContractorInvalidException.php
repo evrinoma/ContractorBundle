@@ -2,7 +2,7 @@
 
 namespace Evrinoma\ContractorBundle\Exception;
 
-class ContractorIsInValidException extends \Exception
+class ContractorInvalidException extends \Exception
 {
 
 }

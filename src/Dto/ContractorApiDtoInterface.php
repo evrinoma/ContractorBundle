@@ -3,9 +3,36 @@
 
 namespace Evrinoma\ContractorBundle\Dto;
 
-interface ContractorApiDtoInterface
+use Evrinoma\DtoBundle\Dto\DtoInterface;
+
+interface ContractorApiDtoInterface extends DtoInterface
 {
 //region SECTION: Public
-    public function hasContractor(): bool;
+    /**
+     * @return bool
+     */
+    public function hasEntityId(): bool;
 //endregion Public
+
+//region SECTION: Getters/Setters
+    /**
+     * @return string
+     */
+    public function getEntityId(): string;
+
+    /**
+     * @return string
+     */
+    public function getInn(): string;
+
+    /**
+     * @return string
+     */
+    public function getFullName(): string;
+
+    /**
+     * @return string
+     */
+    public function getShortname(): string;
+//endregion Getters/Setters
 }
