@@ -64,6 +64,7 @@ final class ContractorApiController extends AbstractApiController
         $this->request        = $requestStack->getCurrentRequest();
         $this->factoryDto     = $factoryDto;
         $this->commandManager = $commandManager;
+        $this->queryManager   = $queryManager;
         $this->dtoClass       = $dtoClass;
     }
 
@@ -81,15 +82,15 @@ final class ContractorApiController extends AbstractApiController
     {
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
-        $manager          = $this->commandManager;
+        $commandManager   = $this->commandManager;
 
         try {
             $json = [];
             $em   = $this->getDoctrine()->getManager();
 
             $em->transactional(
-                function () use ($contractorApiDto, $manager, &$json) {
-                    $manager->post($contractorApiDto);
+                function () use ($contractorApiDto, $commandManager, &$json) {
+                    $commandManager->post($contractorApiDto);
                     $json = ['OK'];
                 }
             );
@@ -112,7 +113,7 @@ final class ContractorApiController extends AbstractApiController
     {
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
-        $manager          = $this->commandManager;
+        $commandManager   = $this->commandManager;
 
         if ($contractorApiDto->hasEntityId()) {
             try {
@@ -120,8 +121,8 @@ final class ContractorApiController extends AbstractApiController
                 $em   = $this->getDoctrine()->getManager();
 
                 $em->transactional(
-                    function () use ($contractorApiDto, $manager, &$json) {
-                        $manager->put($contractorApiDto);
+                    function () use ($contractorApiDto, $commandManager, &$json) {
+                        $commandManager->put($contractorApiDto);
                         $json = ['OK'];
                     }
                 );
@@ -139,7 +140,30 @@ final class ContractorApiController extends AbstractApiController
 
     /**
      * @Rest\Delete("/api/contractor/delete", options={"expose"=true}, name="api_delete_contractor")
-     * @OA\Delete(tags={"contractor"})
+     * @OA\Delete(
+     *     tags={"contractor"},
+     *     @OA\Parameter(
+     *         description="class",
+     *         in="query",
+     *         name="class",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="Evrinoma\ContractorBundle\Dto\ContractorApiDto",
+     *           readOnly=true
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         description="id Entity",
+     *         in="query",
+     *         name="entity_id",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="3",
+     *         )
+     *     )
+     * )
      * @OA\Response(response=200,description="Delete contractors")
      *
      * @return JsonResponse
@@ -148,7 +172,7 @@ final class ContractorApiController extends AbstractApiController
     {
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
-        $manager          = $this->commandManager;
+        $commandManager   = $this->commandManager;
 
         if ($contractorApiDto->hasEntityId()) {
             try {
@@ -156,8 +180,8 @@ final class ContractorApiController extends AbstractApiController
                 $em   = $this->getDoctrine()->getManager();
 
                 $em->transactional(
-                    function () use ($contractorApiDto, $manager, &$json) {
-                        $manager->delete($contractorApiDto);
+                    function () use ($contractorApiDto, $commandManager, &$json) {
+                        $commandManager->delete($contractorApiDto);
                         $json = ['OK'];
                     }
                 );
@@ -179,10 +203,21 @@ final class ContractorApiController extends AbstractApiController
      * @Rest\Get("/api/contractor", options={"expose"=true}, name="api_contractor")
      * @OA\Get(
      *     tags={"contractor"},
+     *     @OA\Parameter(
+     *         description="class",
+     *         in="query",
+     *         name="class",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="Evrinoma\ContractorBundle\Dto\ContractorApiDto",
+     *           readOnly=true
+     *         )
+     *     ),
      *      @OA\Parameter(
      *         description="id Entity",
      *         in="query",
-     *         name="entityId",
+     *         name="entity_id",
      *         required=true,
      *         @OA\Schema(
      *           type="string",
@@ -220,14 +255,15 @@ final class ContractorApiController extends AbstractApiController
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
 
         try {
-            $json = [];
-            $this->queryManager->get($contractorApiDto);
+            $json = $this->queryManager->get($contractorApiDto);
         } catch (\Exception $e) {
             $this->commandManager->setRestClientErrorBadRequest();
             $json = ['errors' => $e->getMessage()];
         }
 
-        return $this->setSerializeGroup('api_get_comment')->json(['message' => 'Get contractors', 'data' => $json], $this->commandManager->getRestStatus());
+        return $this->setSerializeGroup('api_get_contractor')->json(['message' => 'Get contractors', 'data' => $json], $this->commandManager->getRestStatus());
     }
 //endregion Getters/Setters
+
+
 }

@@ -5,6 +5,7 @@ namespace Evrinoma\ContractorBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMInvalidArgumentException;
+use Doctrine\Persistence\ManagerRegistry;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
@@ -13,6 +14,13 @@ use Evrinoma\DtoBundle\Dto\DtoInterface;
 
 class ContractorRepository extends ServiceEntityRepository implements ContractorRepositoryInterface
 {
+//region SECTION: Constructor
+    public function __construct(ManagerRegistry $registry, string $entityClass)
+    {
+        parent::__construct($registry, $entityClass);
+    }
+//endregion Constructor
+
 //region SECTION: Public
     /**
      * @param ContractorInterface $contractor
@@ -25,12 +33,6 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
         try {
             $this->getEntityManager()->persist($contractor);
         } catch (ORMInvalidArgumentException $e) {
-            throw new ContractorCannotBeSavedException($e->getMessage());
-        }
-
-        try {
-            $this->getEntityManager()->flush();
-        } catch (OptimisticLockException $e) {
             throw new ContractorCannotBeSavedException($e->getMessage());
         }
 
@@ -47,24 +49,20 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
     {
         $contractor->setActiveToDelete();
 
-        try {
-            $this->getEntityManager()->flush();
-        } catch (OptimisticLockException $e) {
-            throw new ContractorCannotBeSavedException($e->getMessage());
-        }
-
         return true;
     }
 //endregion Public
 
 //region SECTION: Find Filters Repository
     /**
-     * @param string $id
+     * @param mixed|string $id
+     * @param null         $lockMode
+     * @param null         $lockVersion
      *
      * @return ContractorInterface
      * @throws ContractorNotFoundException
      */
-    public function find($id): ContractorInterface
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
         /** @var ContractorInterface $contractor */
         $contractor = parent::find($id);
@@ -92,7 +90,7 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
      */
     public function findByCriteria(DtoInterface $dto): array
     {
-
+        return [];
     }
 //endregion Find Filters Repository
 }

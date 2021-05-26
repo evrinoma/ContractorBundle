@@ -68,7 +68,7 @@ class CommandManager implements CommandManagerInterface
     public function delete(ContractorApiDtoInterface $dto): void
     {
         try {
-            $contractor = $this->repository->findByCriteria($dto);
+            $contractor = $this->repository->find($dto->getEntityId());
         } catch (ContractorNotFoundException $e) {
             throw $e;
         }

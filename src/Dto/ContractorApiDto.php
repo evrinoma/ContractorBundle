@@ -3,7 +3,7 @@
 namespace Evrinoma\ContractorBundle\Dto;
 
 use Evrinoma\ContractorBundle\Model\ContractorModelInterface;
-use Evrinoma\ContrAgentBundle\Model\PaginationModelInterface;
+use Evrinoma\ContractorBundle\Model\PaginationModelInterface;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\HttpFoundation\Request;

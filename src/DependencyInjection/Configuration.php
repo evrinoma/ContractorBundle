@@ -3,7 +3,6 @@
 
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
-use Evrinoma\ContractorBundle\ContractorBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,8 +19,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('contr_agent');
-        $rootNode    = $treeBuilder->getRootNode();
+        $treeBuilder      = new TreeBuilder('contr_agent');
+        $rootNode         = $treeBuilder->getRootNode();
         $supportedDrivers = ['orm'];
 
         $rootNode
@@ -35,12 +34,9 @@ class Configuration implements ConfigurationInterface
             ->cannotBeOverwritten()
             ->defaultValue('orm')
             ->end()
-            ->scalarNode('class')
-                ->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
-                ->scalarNode('entity_manager_name')->defaultNull()->end()
-                ->scalarNode('dto_class')->defaultNull()
-                ->info('This option is used for dto class override')
-            ->end();
+            ->scalarNode('class')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
+            ->scalarNode('entity_manager_name')->defaultNull()->end()
+            ->scalarNode('dto_class')->defaultNull()->info('This option is used for dto class override')->end();
 
         return $treeBuilder;
     }

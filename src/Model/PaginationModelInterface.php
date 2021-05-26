@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Evrinoma\ContrAgentBundle\Model;
+namespace Evrinoma\ContractorBundle\Model;
 
 
 interface PaginationModelInterface

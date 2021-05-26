@@ -8,7 +8,7 @@ use Evrinoma\ContractorBundle\Model\AbstractContractor;
 /**
  * BaseContractor
  *
- * @ORM\Table(name="contragent")
+ * @ORM\Table(name="company")
  * @ORM\Entity(repositoryClass="Evrinoma\ContractorBundle\Repository\ContractorRepository")
  */
 class BaseContractor extends AbstractContractor

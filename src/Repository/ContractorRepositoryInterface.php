@@ -46,10 +46,12 @@ interface ContractorRepositoryInterface
 
     /**
      * @param string $id
+     * @param null   $lockMode
+     * @param null   $lockVersion
      *
      * @return ContractorInterface
      * @throws ContractorNotFoundException
      */
-    public function find(string $id): ContractorInterface;
+    public function find(string $id, $lockMode = NULL, $lockVersion = NULL);
 //endregion Find Filters Repository
 }

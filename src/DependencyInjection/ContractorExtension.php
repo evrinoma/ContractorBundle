@@ -73,14 +73,23 @@ class ContractorExtension extends Extension
         $configuration = $this->getConfiguration($configs, $container);
         $config        = $this->processConfiguration($configuration, $configs);
 
+        $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
+        $definition->setArgument(5, $config['dto_class'] ?? ContractorApiDto::class);
+
+        $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
+        $definition->setArgument(0, $config['class']);
 
         if (isset(self::$doctrineDrivers[$config['db_driver']])) {
             $loader->load('doctrine.yml');
             $container->setAlias('evrinoma.'.$this->getAlias().'.doctrine_registry', new Alias(self::$doctrineDrivers[$config['db_driver']]['registry'], false));
-        }
-        $container->setParameter('evrinoma.'.$this->getAlias().'.backend_type_'.$config['db_driver'], true);
 
-        if (isset(self::$doctrineDrivers[$config['db_driver']])) {
+            $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
+
+            $definition->setArgument(0, new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'));
+            $definition->setArgument(1, $config['class']);
+
+            $container->setParameter('evrinoma.'.$this->getAlias().'.backend_type_'.$config['db_driver'], true);
+
             $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.object_manager');
             $definition->setFactory([new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'), 'getManager']);
         }
@@ -96,9 +105,6 @@ class ContractorExtension extends Extension
                 ],
             ]
         );
-
-        $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
-        $definition->setArgument(4, $config['dto_class'] ?? ContractorApiDto::class);
     }
 //endregion Public
 
