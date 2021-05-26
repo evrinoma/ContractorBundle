@@ -3,7 +3,6 @@
 namespace Evrinoma\ContractorBundle\Dto;
 
 use Evrinoma\ContractorBundle\Model\ContractorModelInterface;
-use Evrinoma\ContractorBundle\Model\PaginationModelInterface;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,10 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 {
 //region SECTION: Fields
-    private string $perPage = '1';
-
-    private string $page = '0';
-
     private string $entityId = '';
 
     private string $inn = '';
@@ -46,30 +41,6 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 
         return $this;
     }
-
-    /**
-     * @param string $page
-     *
-     * @return ContractorApiDto
-     */
-    private function setPage(string $page): ContractorApiDto
-    {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * @param string $perPage
-     *
-     * @return ContractorApiDto
-     */
-    private function setPerPage(string $perPage): ContractorApiDto
-    {
-        $this->perPage = $perPage;
-
-        return $this;
-    }
 //endregion Private
 
 //region SECTION: Dto
@@ -79,18 +50,6 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 
         if ($class === $this->getClass()) {
             $entityId = $request->get(ContractorModelInterface::ENTITY_ID);
-
-            $perPage = $request->get(PaginationModelInterface::PER_PAGE);
-
-            $page = $request->get(PaginationModelInterface::PAGE);
-
-            if ($perPage) {
-                $this->setPerPage($perPage);
-            }
-
-            if ($page) {
-                $this->setPage($page);
-            }
 
             if ($entityId) {
                 $this->setEntityId($entityId);
@@ -133,22 +92,6 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     public function getEntityId(): string
     {
         return $this->entityId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPage(): string
-    {
-        return $this->page;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPerPage(): string
-    {
-        return $this->perPage;
     }
 //endregion Getters/Setters
 }

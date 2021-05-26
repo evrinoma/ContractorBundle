@@ -223,26 +223,6 @@ final class ContractorApiController extends AbstractApiController
      *           type="string",
      *           default="3",
      *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="page number",
-     *         in="query",
-     *         name="page",
-     *         required=true,
-     *         @OA\Schema(
-     *           type="string",
-     *           default="0",
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="records count",
-     *         in="query",
-     *         name="per_page",
-     *         required=true,
-     *         @OA\Schema(
-     *           type="string",
-     *           default="1",
-     *         )
      *     )
      * )
      * @OA\Response(response=200,description="Return contractors")
