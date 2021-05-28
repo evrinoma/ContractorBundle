@@ -34,5 +34,10 @@ interface ContractorApiDtoInterface extends DtoInterface
      * @return string
      */
     public function getShortname(): string;
+
+    /**
+     * @return string
+     */
+    public function getActive(): string;
 //endregion Getters/Setters
 }

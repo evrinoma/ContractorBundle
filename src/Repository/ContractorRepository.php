@@ -5,18 +5,31 @@ namespace Evrinoma\ContractorBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Doctrine\Persistence\ManagerRegistry;
+use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
+use Evrinoma\ContractorBundle\Mediator\QueryMediatorInterface;
 use Evrinoma\ContractorBundle\Model\ContractorInterface;
-
 
 class ContractorRepository extends ServiceEntityRepository implements ContractorRepositoryInterface
 {
+//region SECTION: Fields
+    private QueryMediatorInterface $mediator;
+//endregion Fields
+
 //region SECTION: Constructor
-    public function __construct(ManagerRegistry $registry, string $entityClass)
+    /**
+     * ContractorRepository constructor.
+     *
+     * @param ManagerRegistry        $registry
+     * @param string                 $entityClass
+     * @param QueryMediatorInterface $mediator
+     */
+    public function __construct(ManagerRegistry $registry, string $entityClass, QueryMediatorInterface $mediator)
     {
         parent::__construct($registry, $entityClass);
+        $this->mediator = $mediator;
     }
 //endregion Constructor
 
@@ -72,14 +85,24 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
     }
 
     /**
-     * @param ContractorInterface $dto
+     * @param ContractorApiDtoInterface $dto
      *
      * @return array
      * @throws ContractorNotFoundException
      */
-    public function findByCriteria(ContractorInterface $dto): array
+    public function findByCriteria(ContractorApiDtoInterface $dto): array
     {
-        return [];
+        $builder = $this->createQueryBuilder($this->mediator->alias());
+
+        $this->mediator->createQuery($dto, $builder);
+
+        $contractors = $this->mediator->getResult($dto, $builder);
+
+        if (count($contractors) === 0) {
+            throw new ContractorNotFoundException("Cannot find contractor by findByCriteria");
+        }
+
+        return $contractors;
     }
 //endregion Find Filters Repository
 }

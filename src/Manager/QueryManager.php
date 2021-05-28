@@ -6,9 +6,11 @@ use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Model\ContractorInterface;
 use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
+use Evrinoma\UtilsBundle\Rest\RestInterface;
 use Evrinoma\UtilsBundle\Rest\RestTrait;
 
-class QueryManager implements QueryManagerInterface
+
+final class QueryManager implements QueryManagerInterface, RestInterface
 {
     use RestTrait;
 
@@ -22,6 +24,25 @@ class QueryManager implements QueryManagerInterface
         $this->repository = $repository;
     }
 //endregion Constructor
+
+//region SECTION: Public
+    /**
+     * @param ContractorApiDtoInterface $dto
+     *
+     * @return ContractorInterface[]
+     * @throws ContractorNotFoundException
+     */
+    public function criteria(ContractorApiDtoInterface $dto): array
+    {
+        try {
+            $contractors = $this->repository->findByCriteria($dto);
+        } catch (ContractorNotFoundException $e) {
+            throw $e;
+        }
+
+        return $contractors;
+    }
+//endregion Public
 
 //region SECTION: Getters/Setters
     /**
@@ -39,23 +60,6 @@ class QueryManager implements QueryManagerInterface
         }
 
         return $contractor;
-    }
-
-    /**
-     * @param ContractorApiDtoInterface $dto
-     *
-     * @return ContractorInterface[]
-     * @throws ContractorNotFoundException
-     */
-    public function criteria(ContractorApiDtoInterface $dto): array
-    {
-        try {
-            $contractors = $this->repository->findByCriteria($dto);
-        } catch (ContractorNotFoundException $e) {
-            throw $e;
-        }
-
-        return $contractors;
     }
 
     public function getRestStatus(): int

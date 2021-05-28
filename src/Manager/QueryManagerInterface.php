@@ -5,9 +5,8 @@ namespace Evrinoma\ContractorBundle\Manager;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Model\ContractorInterface;
-use Evrinoma\UtilsBundle\Rest\RestInterface;
 
-interface QueryManagerInterface extends RestInterface
+interface QueryManagerInterface
 {
 //region SECTION: Getters/Setters
     /**

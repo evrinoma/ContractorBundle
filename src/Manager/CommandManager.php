@@ -8,11 +8,13 @@ use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
 use Evrinoma\ContractorBundle\Exception\ContractorInvalidException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Factory\ContractorFactoryInterface;
+use Evrinoma\ContractorBundle\Mediator\CommandMediatorInterface;
 use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
+use Evrinoma\UtilsBundle\Rest\RestInterface;
 use Evrinoma\UtilsBundle\Rest\RestTrait;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class CommandManager implements CommandManagerInterface
+final class CommandManager implements CommandManagerInterface, RestInterface
 {
     use RestTrait;
 
@@ -20,14 +22,24 @@ class CommandManager implements CommandManagerInterface
     private ValidatorInterface            $validator;
     private ContractorRepositoryInterface $repository;
     private ContractorFactoryInterface    $factory;
+    private CommandMediatorInterface      $mediator;
 //endregion Fields
 
 //region SECTION: Constructor
-    public function __construct(ValidatorInterface $validator, ContractorRepositoryInterface $repository, ContractorFactoryInterface $factory)
+    /**
+     * CommandManager constructor.
+     *
+     * @param ValidatorInterface            $validator
+     * @param ContractorRepositoryInterface $repository
+     * @param ContractorFactoryInterface    $factory
+     * @param CommandMediatorInterface      $mediator
+     */
+    public function __construct(ValidatorInterface $validator, ContractorRepositoryInterface $repository, ContractorFactoryInterface $factory, CommandMediatorInterface $mediator)
     {
         $this->validator  = $validator;
         $this->repository = $repository;
         $this->factory    = $factory;
+        $this->mediator   = $mediator;
     }
 //endregion Constructor
 
@@ -52,6 +64,8 @@ class CommandManager implements CommandManagerInterface
             ->setShortName($dto->getShortName())
             ->setUpdatedAt(new \DateTime());
 
+        $this->mediator->onUpdate($dto, $contractor);
+
         if ($this->validator->validate($contractor)) {
             throw new ContractorInvalidException("Can't update, contractor is invalid cause wrong DTO");
         }
@@ -72,6 +86,7 @@ class CommandManager implements CommandManagerInterface
         } catch (ContractorNotFoundException $e) {
             throw $e;
         }
+        $this->mediator->onDelete($dto, $contractor);
         try {
             $this->repository->remove($contractor);
         } catch (ContractorCannotBeRemovedException $e) {
@@ -88,6 +103,8 @@ class CommandManager implements CommandManagerInterface
     public function post(ContractorApiDtoInterface $dto): void
     {
         $contractor = $this->factory->create($dto);
+
+        $this->mediator->onCreate($dto, $contractor);
 
         if ($this->validator->validate($contractor)) {
             throw new ContractorInvalidException("Can't create, contractor is invalid cause wrong DTO");

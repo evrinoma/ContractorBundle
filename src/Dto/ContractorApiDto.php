@@ -5,6 +5,7 @@ namespace Evrinoma\ContractorBundle\Dto;
 use Evrinoma\ContractorBundle\Model\ContractorModelInterface;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\UtilsBundle\Model\ActiveModel;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
@@ -17,6 +18,8 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     private string $fullName = '';
 
     private string $shortname = '';
+
+    private string $active = ActiveModel::ACTIVE;
 //endregion Fields
 
 //region SECTION: Public
@@ -30,6 +33,18 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 //endregion Public
 
 //region SECTION: Private
+    /**
+     * @param string $active
+     *
+     * @return ContractorApiDto
+     */
+    private function setActive(string $active): ContractorApiDto
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
     /**
      * @param string $entityId
      *
@@ -61,6 +76,14 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
+    /**
+     * @return string
+     */
+    public function getActive(): string
+    {
+        return $this->active;
+    }
+
     /**
      * @return string
      */

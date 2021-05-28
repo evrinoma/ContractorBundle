@@ -18,6 +18,7 @@ services:
       - '@validator'
       - '@evrinoma.contractor.repository'
       - '@evrinoma.contractor.factory'
+      - '@evrinoma.contractor.command.mediator'
 
   evrinoma.contractor.query.manager:
     alias: Evrinoma\ContractorBundle\Manager\QueryManager
@@ -26,6 +27,16 @@ services:
   Evrinoma\ContractorBundle\Manager\QueryManager:
     arguments:
       - '@evrinoma.contractor.repository'
+
+  evrinoma.contractor.query.mediator:
+    class: Evrinoma\ContractorBundle\Mediator\QueryMediator
+    public: true
+    arguments:
+
+  evrinoma.contractor.command.mediator:
+    class: Evrinoma\ContractorBundle\Mediator\CommandMediator
+    public: true
+    arguments:
 
   Evrinoma\ContractorBundle\Controller\ContractorApiController:
     alias: evrinoma.contractor.api.controller
@@ -41,11 +52,4 @@ services:
       - '@evrinoma.contractor.query.manager'
     autowire: true
 
-  Evrinoma\ContractorBundle\Provider\BaseProvider:
-    alias: evrinoma.contractor.api.provider.base
-    public: true
-
-  evrinoma.contractor.api.provider.base:
-    class: Evrinoma\ContractorBundle\Provider\BaseProvider
-    autowire: true
 
