@@ -41,6 +41,23 @@ class QueryManager implements QueryManagerInterface
         return $contractor;
     }
 
+    /**
+     * @param ContractorApiDtoInterface $dto
+     *
+     * @return ContractorInterface[]
+     * @throws ContractorNotFoundException
+     */
+    public function criteria(ContractorApiDtoInterface $dto): array
+    {
+        try {
+            $contractors = $this->repository->findByCriteria($dto);
+        } catch (ContractorNotFoundException $e) {
+            throw $e;
+        }
+
+        return $contractors;
+    }
+
     public function getRestStatus(): int
     {
         return $this->status;

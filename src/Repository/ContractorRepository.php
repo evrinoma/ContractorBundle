@@ -3,14 +3,13 @@
 namespace Evrinoma\ContractorBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Doctrine\Persistence\ManagerRegistry;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Model\ContractorInterface;
-use Evrinoma\DtoBundle\Dto\DtoInterface;
+
 
 class ContractorRepository extends ServiceEntityRepository implements ContractorRepositoryInterface
 {
@@ -56,8 +55,6 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
 //region SECTION: Find Filters Repository
     /**
      * @param mixed|string $id
-     * @param null         $lockMode
-     * @param null         $lockVersion
      *
      * @return ContractorInterface
      * @throws ContractorNotFoundException
@@ -75,20 +72,12 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
     }
 
     /**
-     * @return array
-     */
-    public function findAll(): array
-    {
-        return parent::findAll();
-    }
-
-    /**
-     * @param DtoInterface $dto
+     * @param ContractorInterface $dto
      *
      * @return array
      * @throws ContractorNotFoundException
      */
-    public function findByCriteria(DtoInterface $dto): array
+    public function findByCriteria(ContractorInterface $dto): array
     {
         return [];
     }

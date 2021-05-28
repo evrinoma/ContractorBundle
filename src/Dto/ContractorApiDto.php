@@ -56,7 +56,6 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
             }
         }
 
-
         return $this;
     }
 //endregion SECTION: Dto

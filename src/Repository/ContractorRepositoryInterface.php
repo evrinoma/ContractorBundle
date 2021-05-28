@@ -8,7 +8,6 @@ use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Model\ContractorInterface;
-use Evrinoma\DtoBundle\Dto\DtoInterface;
 
 interface ContractorRepositoryInterface
 {
@@ -32,17 +31,12 @@ interface ContractorRepositoryInterface
 
 //region SECTION: Find Filters Repository
     /**
-     * @return array
-     */
-    public function findAll(): array;
-
-    /**
-     * @param DtoInterface $dto
+     * @param ContractorInterface $dto
      *
      * @return array
      * @throws ContractorNotFoundException
      */
-    public function findByCriteria(DtoInterface $dto): array;
+    public function findByCriteria(ContractorInterface $dto): array;
 
     /**
      * @param string $id
