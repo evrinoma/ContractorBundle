@@ -13,7 +13,7 @@ class QueryMediator implements QueryMediatorInterface
 //endregion Fields
 
 //region SECTION: Public
-    public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder)
+    public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder):void
     {
         $builder
             ->andWhere('contractor.active = :active')

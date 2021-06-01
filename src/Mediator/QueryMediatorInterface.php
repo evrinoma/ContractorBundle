@@ -21,7 +21,7 @@ interface QueryMediatorInterface
      *
      * @return mixed
      */
-    public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder);
+    public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder):void;
 //endregion Public
 
 //region SECTION: Getters/Setters
