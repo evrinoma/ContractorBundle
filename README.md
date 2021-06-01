@@ -3,8 +3,9 @@
 преопределение штатного класса сущности
 
     contractor:
-        db_driver: orm
-        class: App\Contractor\Entity\Contractor
+        db_driver: orm модель данных
+        class: App\Contractor\Entity\Contractor сущность
+        dto_class: App\Contractor\Dto\ContractorDto класс dto с которым работает сущность 
 
 #CQRS model
 
