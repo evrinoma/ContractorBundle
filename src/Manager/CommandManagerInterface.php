@@ -3,13 +3,14 @@
 namespace Evrinoma\ContractorBundle\Manager;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
+use Evrinoma\ContractorBundle\Model\ContractorInterface;
 
 interface CommandManagerInterface
 {
 //region SECTION: Public
-    public function post(ContractorApiDtoInterface $dto): void;
+    public function post(ContractorApiDtoInterface $dto): ContractorInterface;
 
-    public function put(ContractorApiDtoInterface $dto): void;
+    public function put(ContractorApiDtoInterface $dto): ContractorInterface;
 
     public function delete(ContractorApiDtoInterface $dto): void;
 //endregion Public

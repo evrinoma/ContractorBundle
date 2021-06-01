@@ -112,8 +112,8 @@ final class ContractorApiController extends AbstractApiController
 
             $em->transactional(
                 function () use ($contractorApiDto, $commandManager, &$json) {
-                    $commandManager->post($contractorApiDto);
-                    $json = ['OK'];
+                    $contractor = $commandManager->post($contractorApiDto);
+                    $json = [ $contractor ];
                 }
             );
         } catch (\Exception $e) {
@@ -121,7 +121,7 @@ final class ContractorApiController extends AbstractApiController
             $this->commandManager->setRestClientErrorBadRequest();
         }
 
-        return $this->json(['message' => 'Create contractor', 'data' => $json], $this->commandManager->getRestStatus());
+        return $this->setSerializeGroup('api_post_contractor')->json(['message' => 'Create contractor', 'data' => $json], $this->commandManager->getRestStatus());
     }
 
     /**
@@ -169,8 +169,8 @@ final class ContractorApiController extends AbstractApiController
 
                 $em->transactional(
                     function () use ($contractorApiDto, $commandManager, &$json) {
-                        $commandManager->put($contractorApiDto);
-                        $json = ['OK'];
+                        $contractor = $commandManager->put($contractorApiDto);
+                        $json = [ $contractor ];
                     }
                 );
             } catch (\Exception $e) {
@@ -182,7 +182,7 @@ final class ContractorApiController extends AbstractApiController
             $json = ['errors' => 'ошибка'];
         }
 
-        return $this->json(['message' => 'Save contractor', 'data' => $json], $this->commandManager->getRestStatus());
+        return $this->setSerializeGroup('api_put_contractor')->json(['message' => 'Save contractor', 'data' => $json], $this->commandManager->getRestStatus());
     }
 
     /**

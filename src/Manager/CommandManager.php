@@ -9,6 +9,7 @@ use Evrinoma\ContractorBundle\Exception\ContractorInvalidException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Factory\ContractorFactoryInterface;
 use Evrinoma\ContractorBundle\Mediator\CommandMediatorInterface;
+use Evrinoma\ContractorBundle\Model\ContractorInterface;
 use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
 use Evrinoma\ContractorBundle\Validator\ContractorValidatorInterface;
 use Evrinoma\UtilsBundle\Rest\RestInterface;
@@ -51,7 +52,7 @@ final class CommandManager implements CommandManagerInterface, RestInterface
      * @throws ContractorNotFoundException
      * @throws ContractorCannotBeSavedException
      */
-    public function put(ContractorApiDtoInterface $dto): void
+    public function put(ContractorApiDtoInterface $dto): ContractorInterface
     {
         try {
             $contractor = $this->repository->find($dto->getId());
@@ -78,6 +79,8 @@ final class CommandManager implements CommandManagerInterface, RestInterface
         }
 
         $this->repository->save($contractor);
+
+        return $contractor;
     }
 
     /**
@@ -104,10 +107,11 @@ final class CommandManager implements CommandManagerInterface, RestInterface
     /**
      * @param ContractorApiDtoInterface $dto
      *
+     * @return ContractorInterface
      * @throws ContractorCannotBeSavedException
      * @throws ContractorInvalidException
      */
-    public function post(ContractorApiDtoInterface $dto): void
+    public function post(ContractorApiDtoInterface $dto): ContractorInterface
     {
         $contractor = $this->factory->create($dto);
 
@@ -123,6 +127,8 @@ final class CommandManager implements CommandManagerInterface, RestInterface
         }
 
         $this->repository->save($contractor);
+
+        return $contractor;
     }
 //endregion Public
 
