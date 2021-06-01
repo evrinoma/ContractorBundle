@@ -119,6 +119,11 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
             $inn       = $request->get(ContractorModelInterface::INN);
             $fullName  = $request->get(ContractorModelInterface::FULL_NAME);
             $shortName = $request->get(ContractorModelInterface::SHORT_NAME);
+            $active = $request->get(ContractorModelInterface::ACTIVE);
+
+            if ($active) {
+                $this->setActive($active);
+            }
 
             if ($fullName) {
                 $this->setFullName($fullName);

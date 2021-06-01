@@ -36,6 +36,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->scalarNode('class')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
             ->scalarNode('entity_manager_name')->defaultNull()->end()
+            ->scalarNode('constraints')->defaultTrue()->info('This option is used for enable/disable basic constraints')->end()
             ->scalarNode('dto_class')->defaultNull()->info('This option is used for dto class override')->end()
             ->arrayNode('decorates')->addDefaultsIfNotSet()->children()
             ->scalarNode('command')->defaultNull()->info('This option is used for command decoration')->end()

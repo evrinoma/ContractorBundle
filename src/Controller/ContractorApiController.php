@@ -137,6 +137,7 @@ final class ContractorApiController extends AbstractApiController
      *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
      *                  "id":"3",
      *                  "inn":"7702070139",
+     *                  "active": "b",
      *                  "full_name": "Банк ВТБ (публичное акционерное общество)",
      *                  "short_name":"Банк ВТБ"
      *                  },
@@ -144,6 +145,7 @@ final class ContractorApiController extends AbstractApiController
      *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
      *               @OA\Property(property="id",type="string"),
      *               @OA\Property(property="inn",type="string"),
+     *               @OA\Property(property="active",type="string"),
      *               @OA\Property(property="short_name",type="string"),
      *               @OA\Property(property="full_name",type="string")
      *            )

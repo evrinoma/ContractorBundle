@@ -4,6 +4,7 @@
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
 use Evrinoma\ContractorBundle\ContractorBundle;
+use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
@@ -78,8 +79,8 @@ class ContractorExtension extends Extension
         $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
         $definitionFactory->setArgument(0, $config['class']);
 
-        $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
-        $definitionFactory->setArgument(0, $config['class']);
+        $definitionValidator= $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
+        $definitionValidator->setArgument(0, $config['class']);
 
         $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
 
@@ -94,6 +95,17 @@ class ContractorExtension extends Extension
 
             $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.object_manager');
             $definitionRepository->setFactory([new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'), 'getManager']);
+        }
+
+        if ($config['constraints']) {
+            $loader->load('validation.yml');
+            foreach ($container->getDefinitions() as $key => $definition)
+            {
+                if (strpos($key, ConstraintPass::CONTRACTOR_CONSTRAINT) !== false)
+                {
+                    $definition->addTag(ConstraintPass::CONTRACTOR_CONSTRAINT);
+                }
+            }
         }
 
         $this->remapParametersNamespaces(

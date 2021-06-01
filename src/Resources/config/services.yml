@@ -56,3 +56,6 @@ services:
     class: Evrinoma\ContractorBundle\Validator\ContractorValidator
     public: true
     arguments:
+
+  Evrinoma\ContractorBundle\Validator\ContractorValidator:
+    alias: evrinoma.contractor.validator
