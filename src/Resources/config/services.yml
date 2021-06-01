@@ -10,10 +10,7 @@ services:
     arguments:
 
   evrinoma.contractor.command.manager:
-    alias: Evrinoma\ContractorBundle\Manager\CommandManager
-    public: true
-
-  Evrinoma\ContractorBundle\Manager\CommandManager:
+    class: Evrinoma\ContractorBundle\Manager\CommandManager
     arguments:
       - '@validator'
       - '@evrinoma.contractor.repository'
@@ -21,17 +18,20 @@ services:
       - '@evrinoma.contractor.command.mediator'
 
   evrinoma.contractor.query.manager:
-    alias: Evrinoma\ContractorBundle\Manager\QueryManager
-    public: true
-
-  Evrinoma\ContractorBundle\Manager\QueryManager:
+    class: Evrinoma\ContractorBundle\Manager\QueryManager
     arguments:
       - '@evrinoma.contractor.repository'
+
+  Evrinoma\ContractorBundle\Mediator\QueryMediator:
+    alias: evrinoma.contractor.query.mediator
 
   evrinoma.contractor.query.mediator:
     class: Evrinoma\ContractorBundle\Mediator\QueryMediator
     public: true
     arguments:
+
+  Evrinoma\ContractorBundle\Mediator\CommandMediator:
+    alias: evrinoma.contractor.command.mediator
 
   evrinoma.contractor.command.mediator:
     class: Evrinoma\ContractorBundle\Mediator\CommandMediator

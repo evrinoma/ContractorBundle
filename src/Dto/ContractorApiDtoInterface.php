@@ -33,7 +33,7 @@ interface ContractorApiDtoInterface extends DtoInterface
     /**
      * @return string
      */
-    public function getShortname(): string;
+    public function getShortName(): string;
 
     /**
      * @return string

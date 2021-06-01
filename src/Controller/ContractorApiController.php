@@ -7,6 +7,7 @@ use Evrinoma\ContractorBundle\Manager\CommandManagerInterface;
 use Evrinoma\ContractorBundle\Manager\QueryManagerInterface;
 use Evrinoma\DtoBundle\Factory\FactoryDtoInterface;
 use Evrinoma\UtilsBundle\Controller\AbstractApiController;
+use Evrinoma\UtilsBundle\Rest\RestInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
@@ -26,11 +27,11 @@ final class ContractorApiController extends AbstractApiController
      */
     private FactoryDtoInterface $factoryDto;
     /**
-     * @var CommandManagerInterface
+     * @var CommandManagerInterface|RestInterface
      */
     private CommandManagerInterface $commandManager;
     /**
-     * @var QueryManagerInterface
+     * @var QueryManagerInterface|RestInterface
      */
     private QueryManagerInterface $queryManager;
     /**
@@ -104,7 +105,30 @@ final class ContractorApiController extends AbstractApiController
 
     /**
      * @Rest\Put("/api/contractor/save", options={"expose"=true}, name="api_save_contractor")
-     * @OA\Put(tags={"contractor"})
+     * @OA\Put(
+     *     tags={"contractor"},
+     *     @OA\Parameter(
+     *         description="class",
+     *         in="query",
+     *         name="class",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="Evrinoma\ContractorBundle\Dto\ContractorApiDto",
+     *           readOnly=true
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         description="id Entity",
+     *         in="query",
+     *         name="entity_id",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="3",
+     *         )
+     *     )
+     * )
      * @OA\Response(response=200,description="Save contractors")
      *
      * @return JsonResponse
@@ -196,6 +220,82 @@ final class ContractorApiController extends AbstractApiController
 
         return $this->json(['message' => 'Delete contractor', 'data' => $json], $this->commandManager->getRestStatus());
     }
+
+    /**
+     * @Rest\Get("/api/contractor/criteria", options={"expose"=true}, name="api_contractor_criteria")
+     * @OA\Get(
+     *     tags={"contractor"},
+     *     @OA\Parameter(
+     *         description="class",
+     *         in="query",
+     *         name="class",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *           default="Evrinoma\ContractorBundle\Dto\ContractorApiDto",
+     *           readOnly=true
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         description="id Entity",
+     *         in="query",
+     *         name="entity_id",
+     *         @OA\Schema(
+     *           type="string",
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         description="inn",
+     *         in="query",
+     *         name="inn",
+     *         @OA\Schema(
+     *           type="string",
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         description="fullName",
+     *         in="query",
+     *         name="full_name",
+     *         @OA\Schema(
+     *           type="string",
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         description="shortName",
+     *         in="query",
+     *         name="short_name",
+     *         @OA\Schema(
+     *           type="string",
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         description="active",
+     *         in="query",
+     *         name="active",
+     *         @OA\Schema(
+     *           type="string",
+     *           default="a",
+     *         )
+     *     )
+     * )
+     * @OA\Response(response=200,description="Return contractors")
+     *
+     * @return JsonResponse
+     */
+    public function criteriaAction(): JsonResponse
+    {
+        /** @var ContractorApiDtoInterface $contractorApiDto */
+        $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
+
+        try {
+            $json = $this->queryManager->criteria($contractorApiDto);
+        } catch (\Exception $e) {
+            $this->queryManager->setRestClientErrorBadRequest();
+            $json = ['errors' => $e->getMessage()];
+        }
+
+        return $this->setSerializeGroup('api_get_contractor')->json(['message' => 'Get contractors', 'data' => $json], $this->queryManager->getRestStatus());
+    }
 //endregion Public
 
 //region SECTION: Getters/Setters
@@ -237,57 +337,11 @@ final class ContractorApiController extends AbstractApiController
         try {
             $json = $this->queryManager->get($contractorApiDto);
         } catch (\Exception $e) {
-            $this->commandManager->setRestClientErrorBadRequest();
+            $this->queryManager->setRestClientErrorBadRequest();
             $json = ['errors' => $e->getMessage()];
         }
 
-        return $this->setSerializeGroup('api_get_contractor')->json(['message' => 'Get contractors', 'data' => $json], $this->commandManager->getRestStatus());
-    }
-
-
-    /**
-     * @Rest\Get("/api/contractor/criteria", options={"expose"=true}, name="api_contractor_criteria")
-     * @OA\Get(
-     *     tags={"contractor"},
-     *     @OA\Parameter(
-     *         description="class",
-     *         in="query",
-     *         name="class",
-     *         required=true,
-     *         @OA\Schema(
-     *           type="string",
-     *           default="Evrinoma\ContractorBundle\Dto\ContractorApiDto",
-     *           readOnly=true
-     *         )
-     *     ),
-     *      @OA\Parameter(
-     *         description="id Entity",
-     *         in="query",
-     *         name="entity_id",
-     *         required=true,
-     *         @OA\Schema(
-     *           type="string",
-     *           default="3",
-     *         )
-     *     )
-     * )
-     * @OA\Response(response=200,description="Return contractors")
-     *
-     * @return JsonResponse
-     */
-    public function criteriaAction(): JsonResponse
-    {
-        /** @var ContractorApiDtoInterface $contractorApiDto */
-        $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
-
-        try {
-            $json = $this->queryManager->criteria($contractorApiDto);
-        } catch (\Exception $e) {
-            $this->commandManager->setRestClientErrorBadRequest();
-            $json = ['errors' => $e->getMessage()];
-        }
-
-        return $this->setSerializeGroup('api_get_contractor')->json(['message' => 'Get contractors', 'data' => $json], $this->commandManager->getRestStatus());
+        return $this->setSerializeGroup('api_get_contractor')->json(['message' => 'Get contractors', 'data' => $json], $this->queryManager->getRestStatus());
     }
 //endregion Getters/Setters
 

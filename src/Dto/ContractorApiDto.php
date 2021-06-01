@@ -17,7 +17,7 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 
     private string $fullName = '';
 
-    private string $shortname = '';
+    private string $shortName = '';
 
     private string $active = ActiveModel::ACTIVE;
 //endregion Fields
@@ -103,9 +103,9 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     /**
      * @return string
      */
-    public function getShortname(): string
+    public function getShortName(): string
     {
-        return $this->shortname;
+        return $this->shortName;
     }
 
     /**

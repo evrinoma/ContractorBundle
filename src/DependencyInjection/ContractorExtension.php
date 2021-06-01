@@ -21,7 +21,6 @@ class ContractorExtension extends Extension
 {
 //region SECTION: Fields
     public const ENTITY_BASE_CONTRACTOR = 'Evrinoma\ContractorBundle\Entity\BaseContractor';
-
     /**
      * @var array
      */
@@ -79,22 +78,19 @@ class ContractorExtension extends Extension
         $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
         $definition->setArgument(0, $config['class']);
 
+        $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
+
         if (isset(self::$doctrineDrivers[$config['db_driver']])) {
             $loader->load('doctrine.yml');
             $container->setAlias('evrinoma.'.$this->getAlias().'.doctrine_registry', new Alias(self::$doctrineDrivers[$config['db_driver']]['registry'], false));
 
-            $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
-
-            $queryMediator = $container->getDefinition('evrinoma.'.$this->getAlias().'.query.mediator');
-
-            $definition->setArgument(0, new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'));
-            $definition->setArgument(1, $config['class']);
-            $definition->setArgument(2, $queryMediator);
+            $definitionRepository->setArgument(0, new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'));
+            $definitionRepository->setArgument(1, $config['class']);
 
             $container->setParameter('evrinoma.'.$this->getAlias().'.backend_type_'.$config['db_driver'], true);
 
-            $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.object_manager');
-            $definition->setFactory([new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'), 'getManager']);
+            $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.object_manager');
+            $definitionRepository->setFactory([new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'), 'getManager']);
         }
 
         $this->remapParametersNamespaces(
@@ -110,7 +106,6 @@ class ContractorExtension extends Extension
         );
     }
 //endregion Public
-
 
 //region SECTION: Getters/Setters
     public function getAlias()
