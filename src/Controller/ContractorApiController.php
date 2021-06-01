@@ -135,14 +135,14 @@ final class ContractorApiController extends AbstractApiController
      *             @OA\Schema(
      *               example={
      *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
-     *                  "entityId":"1673",
+     *                  "id":"3",
      *                  "inn":"7702070139",
      *                  "full_name": "Банк ВТБ (публичное акционерное общество)",
      *                  "short_name":"Банк ВТБ"
      *                  },
      *               type="object",
      *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
-     *               @OA\Property(property="entityId",type="string"),
+     *               @OA\Property(property="id",type="string"),
      *               @OA\Property(property="inn",type="string"),
      *               @OA\Property(property="short_name",type="string"),
      *               @OA\Property(property="full_name",type="string")
@@ -160,7 +160,7 @@ final class ContractorApiController extends AbstractApiController
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
         $commandManager   = $this->commandManager;
 
-        if ($contractorApiDto->hasEntityId()) {
+        if ($contractorApiDto->hasId()) {
             try {
                 $json = [];
                 $em   = $this->getDoctrine()->getManager();
@@ -201,7 +201,7 @@ final class ContractorApiController extends AbstractApiController
      *      @OA\Parameter(
      *         description="id Entity",
      *         in="query",
-     *         name="entity_id",
+     *         name="id",
      *         required=true,
      *         @OA\Schema(
      *           type="string",
@@ -219,7 +219,7 @@ final class ContractorApiController extends AbstractApiController
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
         $commandManager   = $this->commandManager;
 
-        if ($contractorApiDto->hasEntityId()) {
+        if ($contractorApiDto->hasId()) {
             try {
                 $json = [];
                 $em   = $this->getDoctrine()->getManager();
@@ -260,7 +260,7 @@ final class ContractorApiController extends AbstractApiController
      *      @OA\Parameter(
      *         description="id Entity",
      *         in="query",
-     *         name="entity_id",
+     *         name="id",
      *         @OA\Schema(
      *           type="string",
      *         )
@@ -338,7 +338,7 @@ final class ContractorApiController extends AbstractApiController
      *      @OA\Parameter(
      *         description="id Entity",
      *         in="query",
-     *         name="entity_id",
+     *         name="id",
      *         required=true,
      *         @OA\Schema(
      *           type="string",

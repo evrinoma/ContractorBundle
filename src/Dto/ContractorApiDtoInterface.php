@@ -11,7 +11,7 @@ interface ContractorApiDtoInterface extends DtoInterface
     /**
      * @return bool
      */
-    public function hasEntityId(): bool;
+    public function hasId(): bool;
 
     /**
      * @return bool
@@ -33,7 +33,7 @@ interface ContractorApiDtoInterface extends DtoInterface
     /**
      * @return string
      */
-    public function getEntityId(): string;
+    public function getId(): string;
 
     /**
      * @return string

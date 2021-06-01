@@ -54,7 +54,7 @@ final class QueryManager implements QueryManagerInterface, RestInterface
     public function get(ContractorApiDtoInterface $dto): ContractorInterface
     {
         try {
-            $contractor = $this->repository->find($dto->getEntityId());
+            $contractor = $this->repository->find($dto->getId());
         } catch (ContractorNotFoundException $e) {
             throw $e;
         }

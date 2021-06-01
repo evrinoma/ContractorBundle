@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 {
 //region SECTION: Fields
-    private string $entityId = '';
+    private string $id = '';
 
     private string $inn = '';
 
@@ -26,9 +26,9 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     /**
      * @return bool
      */
-    public function hasEntityId(): bool
+    public function hasId(): bool
     {
-        return $this->entityId !== '';
+        return $this->id !== '';
     }
 
     public function hasShortName(): bool
@@ -61,13 +61,13 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     }
 
     /**
-     * @param string $entityId
+     * @param string $id
      *
      * @return ContractorApiDto
      */
-    private function setEntityId(string $entityId): ContractorApiDto
+    private function setId(string $id): ContractorApiDto
     {
-        $this->entityId = $entityId;
+        $this->id = $id;
 
         return $this;
     }
@@ -115,7 +115,7 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
         $class = $request->get(DtoInterface::DTO_CLASS);
 
         if ($class === $this->getClass()) {
-            $entityId  = $request->get(ContractorModelInterface::ENTITY_ID);
+            $id  = $request->get(ContractorModelInterface::ID);
             $inn       = $request->get(ContractorModelInterface::INN);
             $fullName  = $request->get(ContractorModelInterface::FULL_NAME);
             $shortName = $request->get(ContractorModelInterface::SHORT_NAME);
@@ -132,8 +132,8 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
                 $this->setInn($inn);
             }
 
-            if ($entityId) {
-                $this->setEntityId($entityId);
+            if ($id) {
+                $this->setId($id);
             }
         }
 
@@ -177,9 +177,9 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     /**
      * @return string
      */
-    public function getEntityId(): string
+    public function getId(): string
     {
-        return $this->entityId;
+        return $this->id;
     }
 //endregion Getters/Setters
 }

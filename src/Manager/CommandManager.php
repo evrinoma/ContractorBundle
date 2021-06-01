@@ -52,7 +52,7 @@ final class CommandManager implements CommandManagerInterface, RestInterface
     public function put(ContractorApiDtoInterface $dto): void
     {
         try {
-            $contractor = $this->repository->find($dto->getEntityId());
+            $contractor = $this->repository->find($dto->getId());
         } catch (ContractorNotFoundException $e) {
             throw $e;
         }
@@ -81,7 +81,7 @@ final class CommandManager implements CommandManagerInterface, RestInterface
     public function delete(ContractorApiDtoInterface $dto): void
     {
         try {
-            $contractor = $this->repository->find($dto->getEntityId());
+            $contractor = $this->repository->find($dto->getId());
         } catch (ContractorNotFoundException $e) {
             throw $e;
         }
