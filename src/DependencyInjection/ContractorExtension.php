@@ -72,11 +72,14 @@ class ContractorExtension extends Extension
         $configuration = $this->getConfiguration($configs, $container);
         $config        = $this->processConfiguration($configuration, $configs);
 
-        $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
-        $definition->setArgument(5, $config['dto_class'] ?? ContractorApiDto::class);
+        $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
+        $definitionApiController->setArgument(5, $config['dto_class'] ?? ContractorApiDto::class);
 
-        $definition = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
-        $definition->setArgument(0, $config['class']);
+        $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
+        $definitionFactory->setArgument(0, $config['class']);
+
+        $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
+        $definitionFactory->setArgument(0, $config['class']);
 
         $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
 

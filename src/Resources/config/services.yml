@@ -12,7 +12,7 @@ services:
   evrinoma.contractor.command.manager:
     class: Evrinoma\ContractorBundle\Manager\CommandManager
     arguments:
-      - '@validator'
+      - '@evrinoma.contractor.validator'
       - '@evrinoma.contractor.repository'
       - '@evrinoma.contractor.factory'
       - '@evrinoma.contractor.command.mediator'
@@ -52,4 +52,7 @@ services:
       - '@evrinoma.contractor.query.manager'
     autowire: true
 
-
+  evrinoma.contractor.validator:
+    class: Evrinoma\ContractorBundle\Validator\ContractorValidator
+    public: true
+    arguments:

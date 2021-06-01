@@ -115,7 +115,7 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
         $class = $request->get(DtoInterface::DTO_CLASS);
 
         if ($class === $this->getClass()) {
-            $id  = $request->get(ContractorModelInterface::ID);
+            $id        = $request->get(ContractorModelInterface::ID);
             $inn       = $request->get(ContractorModelInterface::INN);
             $fullName  = $request->get(ContractorModelInterface::FULL_NAME);
             $shortName = $request->get(ContractorModelInterface::SHORT_NAME);
