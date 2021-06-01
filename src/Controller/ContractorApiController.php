@@ -74,8 +74,29 @@ final class ContractorApiController extends AbstractApiController
 //region SECTION: Public
     /**
      * @Rest\Post("/api/contractor/create", options={"expose"=true}, name="api_create_contractor")
-     * @OA\Post(tags={"contractor"})
-     * @OA\Response(response=200,description="Create contractors")
+     * @OA\Post(
+     *     tags={"contractor"},
+     *     description="the method perform create contractor",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *               example={
+     *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
+     *                  "inn":"7702070139",
+     *                  "full_name": "Банк ВТБ (публичное акционерное общество)",
+     *                  "short_name":"Банк ВТБ"
+     *                  },
+     *               type="object",
+     *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
+     *               @OA\Property(property="inn",type="string"),
+     *               @OA\Property(property="short_name",type="string"),
+     *               @OA\Property(property="full_name",type="string")
+     *            )
+     *         )
+     *     )
+     * )
+     * @OA\Response(response=200,description="Create contractor")
      *
      * @return JsonResponse
      */
@@ -107,29 +128,29 @@ final class ContractorApiController extends AbstractApiController
      * @Rest\Put("/api/contractor/save", options={"expose"=true}, name="api_save_contractor")
      * @OA\Put(
      *     tags={"contractor"},
-     *     @OA\Parameter(
-     *         description="class",
-     *         in="query",
-     *         name="class",
-     *         required=true,
-     *         @OA\Schema(
-     *           type="string",
-     *           default="Evrinoma\ContractorBundle\Dto\ContractorApiDto",
-     *           readOnly=true
-     *         )
-     *     ),
-     *      @OA\Parameter(
-     *         description="id Entity",
-     *         in="query",
-     *         name="entity_id",
-     *         required=true,
-     *         @OA\Schema(
-     *           type="string",
-     *           default="3",
+     *     description="the method perform save contractor for current entity",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *               example={
+     *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
+     *                  "entityId":"1673",
+     *                  "inn":"7702070139",
+     *                  "full_name": "Банк ВТБ (публичное акционерное общество)",
+     *                  "short_name":"Банк ВТБ"
+     *                  },
+     *               type="object",
+     *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
+     *               @OA\Property(property="entityId",type="string"),
+     *               @OA\Property(property="inn",type="string"),
+     *               @OA\Property(property="short_name",type="string"),
+     *               @OA\Property(property="full_name",type="string")
+     *            )
      *         )
      *     )
      * )
-     * @OA\Response(response=200,description="Save contractors")
+     * @OA\Response(response=200,description="Save contractor")
      *
      * @return JsonResponse
      */

@@ -59,7 +59,6 @@ final class CommandManager implements CommandManagerInterface, RestInterface
 
         $contractor
             ->setInn($dto->getInn())
-            ->setInn($dto->getInn())
             ->setFullName($dto->getFullName())
             ->setShortName($dto->getShortName())
             ->setUpdatedAt(new \DateTime());
