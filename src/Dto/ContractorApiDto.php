@@ -30,6 +30,21 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     {
         return $this->entityId !== '';
     }
+
+    public function hasShortName(): bool
+    {
+        return $this->shortName !== '';
+    }
+
+    public function hasFullName(): bool
+    {
+        return $this->fullName !== '';
+    }
+
+    public function hasInn(): bool
+    {
+        return $this->inn !== '';
+    }
 //endregion Public
 
 //region SECTION: Private
@@ -56,6 +71,42 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 
         return $this;
     }
+
+    /**
+     * @param string $inn
+     *
+     * @return ContractorApiDto
+     */
+    private function setInn(string $inn): ContractorApiDto
+    {
+        $this->inn = $inn;
+
+        return $this;
+    }
+
+    /**
+     * @param string $fullName
+     *
+     * @return ContractorApiDto
+     */
+    private function setFullName(string $fullName): ContractorApiDto
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * @param string $shortName
+     *
+     * @return ContractorApiDto
+     */
+    private function setShortName(string $shortName): ContractorApiDto
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
 //endregion Private
 
 //region SECTION: Dto
@@ -64,7 +115,22 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
         $class = $request->get(DtoInterface::DTO_CLASS);
 
         if ($class === $this->getClass()) {
-            $entityId = $request->get(ContractorModelInterface::ENTITY_ID);
+            $entityId  = $request->get(ContractorModelInterface::ENTITY_ID);
+            $inn       = $request->get(ContractorModelInterface::INN);
+            $fullName  = $request->get(ContractorModelInterface::FULL_NAME);
+            $shortName = $request->get(ContractorModelInterface::SHORT_NAME);
+
+            if ($fullName) {
+                $this->setFullName($fullName);
+            }
+
+            if ($shortName) {
+                $this->setShortName($shortName);
+            }
+
+            if ($inn) {
+                $this->setInn($inn);
+            }
 
             if ($entityId) {
                 $this->setEntityId($entityId);

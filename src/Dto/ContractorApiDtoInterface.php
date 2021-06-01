@@ -12,6 +12,21 @@ interface ContractorApiDtoInterface extends DtoInterface
      * @return bool
      */
     public function hasEntityId(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasShortName(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasFullName(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasInn(): bool;
 //endregion Public
 
 //region SECTION: Getters/Setters

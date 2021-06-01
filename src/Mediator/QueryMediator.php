@@ -13,11 +13,23 @@ class QueryMediator implements QueryMediatorInterface
 //endregion Fields
 
 //region SECTION: Public
-    public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder):void
+    public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder): void
     {
         $builder
             ->andWhere('contractor.active = :active')
             ->setParameter('active', $dto->getActive());
+        if ($dto->hasInn()) {
+            $builder->andWhere('contractor.inn like :inn')
+                ->setParameter('inn', '%'.$dto->getInn().'%');
+        }
+        if ($dto->hasFullName()) {
+            $builder->andWhere('contractor.fullName like :fullName')
+                ->setParameter('fullName', '%'.$dto->getFullName().'%');
+        }
+        if ($dto->hasShortName()) {
+            $builder->andWhere('contractor.shortName = :shortName')
+                ->setParameter('shortName', '%'.$dto->getShortName().'%');
+        }
     }
 
     public function alias(): string
