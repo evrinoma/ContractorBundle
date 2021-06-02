@@ -112,8 +112,7 @@ final class ContractorApiController extends AbstractApiController
 
             $em->transactional(
                 function () use ($contractorApiDto, $commandManager, &$json) {
-                    $contractor = $commandManager->post($contractorApiDto);
-                    $json = [ $contractor ];
+                    $json = $commandManager->post($contractorApiDto);
                 }
             );
         } catch (\Exception $e) {
@@ -169,8 +168,7 @@ final class ContractorApiController extends AbstractApiController
 
                 $em->transactional(
                     function () use ($contractorApiDto, $commandManager, &$json) {
-                        $contractor = $commandManager->put($contractorApiDto);
-                        $json = [ $contractor ];
+                        $json = $commandManager->put($contractorApiDto);
                     }
                 );
             } catch (\Exception $e) {
