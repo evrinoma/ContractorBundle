@@ -10,19 +10,19 @@ use Evrinoma\UtilsBundle\Entity\IdTrait;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class AbstractContractor implements ContractorSplitInterface
+abstract class AbstractContractor implements ContractorInterface
 {
     use IdTrait, ActiveTrait, CreateUpdateAtTrait;
 
 //region SECTION: Fields
     /**
-     * @ORM\OneToOne(targetEntity="Evrinoma\ContractorBundle\Model\ContractorPersonInterface")
+     * @ORM\OneToOne(targetEntity="Evrinoma\ContractorBundle\Model\Split\ContractorPersonInterface")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     protected ContractorPersonInterface $person;
 
     /**
-     * @ORM\OneToOne(targetEntity="Evrinoma\ContractorBundle\Model\ContractorCompanyInterface")
+     * @ORM\OneToOne(targetEntity="Evrinoma\ContractorBundle\Model\Split\ContractorCompanyInterface")
      * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
      */
     protected ContractorCompanyInterface $company;

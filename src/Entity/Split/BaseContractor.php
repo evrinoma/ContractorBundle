@@ -3,15 +3,14 @@
 namespace Evrinoma\ContractorBundle\Entity\Split;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evrinoma\ContractorBundle\Model\Split\AbstractContractorCompany;
+use Evrinoma\ContractorBundle\Model\Split\AbstractContractor;
 
 /**
- * BaseContractorCompany
+ * BaseContractor
  *
- * @ORM\Table(name="contractor_company")
- * @ORM\Entity()
+ * @ORM\Table(name="contractor")
+ * @ORM\Entity(repositoryClass="Evrinoma\ContractorBundle\Repository\ContractorRepository")
  */
-final class BaseContractor extends AbstractContractorCompany
+final class BaseContractor extends AbstractContractor
 {
-
 }

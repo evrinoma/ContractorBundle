@@ -7,7 +7,7 @@ use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtInterface;
 use Evrinoma\UtilsBundle\Entity\IdInterface;
 
-interface ContractorSplitInterface extends ActiveInterface, CreateUpdateAtInterface, IdInterface
+interface ContractorInterface extends ActiveInterface, CreateUpdateAtInterface, IdInterface
 {
 //region SECTION: Getters/Setters
     /**
