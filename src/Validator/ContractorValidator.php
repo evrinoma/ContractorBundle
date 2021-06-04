@@ -4,9 +4,7 @@
 namespace Evrinoma\ContractorBundle\Validator;
 
 use Evrinoma\ContractorBundle\Constraint\ConstraintInterface;
-use Evrinoma\ContractorBundle\Constraint\Inn;
-use Evrinoma\ContractorBundle\Constraint\ShortName;
-use Evrinoma\ContractorBundle\Entity\BaseContractor;
+use Evrinoma\ContractorBundle\Entity\Base\BaseContractor;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
