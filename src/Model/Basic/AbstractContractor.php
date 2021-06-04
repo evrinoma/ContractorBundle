@@ -1,6 +1,6 @@
 <?php
 
-namespace Evrinoma\ContractorBundle\Model;
+namespace Evrinoma\ContractorBundle\Model\Basic;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;

@@ -21,7 +21,10 @@ use Symfony\Component\DependencyInjection\Reference;
 class ContractorExtension extends Extension
 {
 //region SECTION: Fields
-    public const ENTITY_BASE_CONTRACTOR = 'Evrinoma\ContractorBundle\Entity\BaseContractor';
+    public const ENTITY_BASE_CONTRACTOR         = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
+    public const ENTITY_BASE_CONTRACTOR_PERSON  = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorPerson';
+    public const ENTITY_BASE_CONTRACTOR_COMPANY = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorCompany';
+
     /**
      * @var array
      */
@@ -74,13 +77,13 @@ class ContractorExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
-        $definitionApiController->setArgument(5, $config['dto_class'] ?? ContractorApiDto::class);
+        $definitionApiController->setArgument(5, $config['dto'] ?? ContractorApiDto::class);
 
         $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
-        $definitionFactory->setArgument(0, $config['class']);
+        $definitionFactory->setArgument(0, $config['entity']);
 
-        $definitionValidator= $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
-        $definitionValidator->setArgument(0, $config['class']);
+        $definitionValidator = $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
+        $definitionValidator->setArgument(0, $config['entity']);
 
         $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
 
@@ -89,7 +92,7 @@ class ContractorExtension extends Extension
             $container->setAlias('evrinoma.'.$this->getAlias().'.doctrine_registry', new Alias(self::$doctrineDrivers[$config['db_driver']]['registry'], false));
 
             $definitionRepository->setArgument(0, new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'));
-            $definitionRepository->setArgument(1, $config['class']);
+            $definitionRepository->setArgument(1, $config['entity']);
 
             $container->setParameter('evrinoma.'.$this->getAlias().'.backend_type_'.$config['db_driver'], true);
 
@@ -99,10 +102,8 @@ class ContractorExtension extends Extension
 
         if ($config['constraints']) {
             $loader->load('validation.yml');
-            foreach ($container->getDefinitions() as $key => $definition)
-            {
-                if (strpos($key, ConstraintPass::CONTRACTOR_CONSTRAINT) !== false)
-                {
+            foreach ($container->getDefinitions() as $key => $definition) {
+                if (strpos($key, ConstraintPass::CONTRACTOR_CONSTRAINT) !== false) {
                     $definition->addTag(ConstraintPass::CONTRACTOR_CONSTRAINT);
                 }
             }
@@ -113,12 +114,26 @@ class ContractorExtension extends Extension
             $container,
             [
                 '' => [
-                    'db_driver'           => 'evrinoma.'.$this->getAlias().'.storage',
-                    'class'               => 'evrinoma.'.$this->getAlias().'.class',
-                    'entity_manager_name' => 'evrinoma.'.$this->getAlias().'.entity_manager_name',
+                    'db_driver'      => 'evrinoma.'.$this->getAlias().'.storage',
+                    'split'          => 'evrinoma.'.$this->getAlias().'.split',
+                    'entity'         => 'evrinoma.'.$this->getAlias().'.entity',
                 ],
             ]
         );
+
+        if ($config['split']) {
+            $this->remapParametersNamespaces(
+                $config,
+                $container,
+                [
+                    '' => [
+                        'entity_person'  => 'evrinoma.'.$this->getAlias().'.entity_person',
+                        'entity_company' => 'evrinoma.'.$this->getAlias().'.entity_company',
+                    ],
+                ]
+            );
+        }
+
     }
 //endregion Public
 

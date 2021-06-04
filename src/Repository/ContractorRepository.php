@@ -10,7 +10,7 @@ use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Mediator\QueryMediatorInterface;
-use Evrinoma\ContractorBundle\Model\ContractorInterface;
+use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 
 class ContractorRepository extends ServiceEntityRepository implements ContractorRepositoryInterface
 {

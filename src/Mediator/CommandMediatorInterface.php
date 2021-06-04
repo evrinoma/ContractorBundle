@@ -6,7 +6,8 @@ namespace Evrinoma\ContractorBundle\Mediator;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
-use Evrinoma\ContractorBundle\Model\ContractorInterface;
+use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
+
 
 interface CommandMediatorInterface
 {

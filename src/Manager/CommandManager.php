@@ -9,7 +9,7 @@ use Evrinoma\ContractorBundle\Exception\ContractorInvalidException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Factory\ContractorFactoryInterface;
 use Evrinoma\ContractorBundle\Mediator\CommandMediatorInterface;
-use Evrinoma\ContractorBundle\Model\ContractorInterface;
+use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
 use Evrinoma\ContractorBundle\Validator\ContractorValidatorInterface;
 use Evrinoma\UtilsBundle\Rest\RestInterface;

@@ -4,7 +4,7 @@ namespace Evrinoma\ContractorBundle\Manager;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
-use Evrinoma\ContractorBundle\Model\ContractorInterface;
+use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
 use Evrinoma\UtilsBundle\Rest\RestInterface;
 use Evrinoma\UtilsBundle\Rest\RestTrait;

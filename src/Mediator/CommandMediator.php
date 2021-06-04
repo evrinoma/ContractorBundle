@@ -3,7 +3,7 @@
 namespace Evrinoma\ContractorBundle\Mediator;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
-use Evrinoma\ContractorBundle\Model\ContractorInterface;
+use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 
 
 class CommandMediator implements CommandMediatorInterface

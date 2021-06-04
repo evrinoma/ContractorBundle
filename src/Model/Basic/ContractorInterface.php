@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Evrinoma\ContractorBundle\Model;
+namespace Evrinoma\ContractorBundle\Model\Basic;
 
 use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtInterface;

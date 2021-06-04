@@ -5,7 +5,7 @@ namespace Evrinoma\ContractorBundle\Repository;
 
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
-use Evrinoma\ContractorBundle\Model\ContractorInterface;
+use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 
 interface ContractorCommandRepositoryInterface
 {
