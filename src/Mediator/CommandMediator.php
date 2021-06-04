@@ -4,21 +4,39 @@ namespace Evrinoma\ContractorBundle\Mediator;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
+use Symfony\Component\Uid\Uuid;
 
 
 class CommandMediator implements CommandMediatorInterface
 {
-    public function onUpdate(ContractorApiDtoInterface $dto, ContractorInterface $entity):ContractorInterface
+//region SECTION: Protected
+    protected function setUnique(ContractorInterface $entity)
     {
+        if (!$entity->getIdentity() && !$entity->getDependency()) {
+            $namespace = Uuid::v4();
+            $uuid      = Uuid::v3($namespace, $entity->getName());
+            $entity->setUnique($uuid->toRfc4122());
+        }
+    }
+//endregion Protected
+
+//region SECTION: Public
+    public function onUpdate(ContractorApiDtoInterface $dto, ContractorInterface $entity): ContractorInterface
+    {
+        $this->setUnique($entity);
+
         return $entity;
     }
 
-    public function onDelete(ContractorApiDtoInterface $dto, ContractorInterface $entity):void
+    public function onDelete(ContractorApiDtoInterface $dto, ContractorInterface $entity): void
     {
     }
 
-    public function onCreate(ContractorApiDtoInterface $dto, ContractorInterface $entity):ContractorInterface
+    public function onCreate(ContractorApiDtoInterface $dto, ContractorInterface $entity): ContractorInterface
     {
+        $this->setUnique($entity);
+
         return $entity;
     }
+//endregion Public
 }

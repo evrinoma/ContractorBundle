@@ -9,6 +9,7 @@ use Evrinoma\ContractorBundle\Exception\ContractorInvalidException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Factory\ContractorFactoryInterface;
 use Evrinoma\ContractorBundle\Mediator\CommandMediatorInterface;
+use Evrinoma\ContractorBundle\Model\Basic\AbstractContractor;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
 use Evrinoma\ContractorBundle\Validator\ContractorValidatorInterface;
@@ -61,11 +62,11 @@ final class CommandManager implements CommandManagerInterface, RestInterface
         }
 
         $contractor
-            ->setInn($dto->getInn())
-            ->setActive($dto->getActive())
-            ->setFullName($dto->getFullName())
-            ->setShortName($dto->getShortName())
-            ->setUpdatedAt(new \DateTime());
+            ->setIdentity($dto->getIdentity())
+            ->setDependency($dto->getDependency())
+            ->setName($dto->getName())
+            ->setUpdatedAt(new \DateTime())
+            ->setActive($dto->getActive());
 
         $this->mediator->onUpdate($dto, $contractor);
 

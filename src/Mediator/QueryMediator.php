@@ -18,17 +18,17 @@ class QueryMediator implements QueryMediatorInterface
         $builder
             ->andWhere('contractor.active = :active')
             ->setParameter('active', $dto->getActive());
-        if ($dto->hasInn()) {
-            $builder->andWhere('contractor.inn like :inn')
-                ->setParameter('inn', '%'.$dto->getInn().'%');
+        if ($dto->hasIdentity()) {
+            $builder->andWhere('contractor.identity like :identity')
+                ->setParameter('identity', '%'.$dto->getIdentity().'%');
         }
-        if ($dto->hasFullName()) {
-            $builder->andWhere('contractor.fullName like :fullName')
-                ->setParameter('fullName', '%'.$dto->getFullName().'%');
+        if ($dto->hasDependency()) {
+            $builder->andWhere('contractor.dependency like :dependency')
+                ->setParameter('dependency', '%'.$dto->getDependency().'%');
         }
-        if ($dto->hasShortName()) {
-            $builder->andWhere('contractor.shortName = :shortName')
-                ->setParameter('shortName', '%'.$dto->getShortName().'%');
+        if ($dto->hasName()) {
+            $builder->andWhere('contractor.name = :name')
+                ->setParameter('name', '%'.$dto->getName().'%');
         }
     }
 

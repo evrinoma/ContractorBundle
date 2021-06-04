@@ -16,17 +16,17 @@ interface ContractorApiDtoInterface extends DtoInterface
     /**
      * @return bool
      */
-    public function hasShortName(): bool;
+    public function hasIdentity(): bool;
 
     /**
      * @return bool
      */
-    public function hasFullName(): bool;
+    public function hasName(): bool;
 
     /**
      * @return bool
      */
-    public function hasInn(): bool;
+    public function hasDependency(): bool;
 //endregion Public
 
 //region SECTION: Getters/Setters
@@ -38,17 +38,17 @@ interface ContractorApiDtoInterface extends DtoInterface
     /**
      * @return string
      */
-    public function getInn(): string;
+    public function getIdentity(): string;
 
     /**
      * @return string
      */
-    public function getFullName(): string;
+    public function getName(): string;
 
     /**
      * @return string
      */
-    public function getShortName(): string;
+    public function getDependency(): string;
 
     /**
      * @return string

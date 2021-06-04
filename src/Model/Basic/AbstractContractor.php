@@ -11,6 +11,7 @@ use Evrinoma\UtilsBundle\Entity\IdTrait;
  * Class AbstractBaseContractor
  *
  * @ORM\MappedSuperclass
+ * @ORM\Table(indexes={@Index(name="idx_contractor", columns={"identity", "dependency", "unique"})})
  */
 abstract class AbstractContractor implements ContractorInterface
 {
@@ -20,82 +21,106 @@ abstract class AbstractContractor implements ContractorInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="short_name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="identity", type="string", length=255, nullable=false)
      */
-    protected string $shortName;
-
+    protected string $identity;
     /**
      * @var string
      *
-     * @ORM\Column(name="full_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="dependency", type="string", length=255, nullable=false)
      */
-    protected string $fullName;
-
+    protected string $dependency;
     /**
      * @var string
      *
-     * @ORM\Column(name="inn", type="string", length=255, nullable=true)
+     * @ORM\Column(name="unique", type="string", length=255, nullable=false)
      */
-    protected string $inn;
+    protected string $unique;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    protected string $name;
 //endregion Fields
 
 //region SECTION: Getters/Setters
     /**
      * @return string
      */
-    public function getShortName(): string
+    public function getIdentity(): string
     {
-        return $this->shortName;
+        return $this->identity;
     }
 
     /**
      * @return string
      */
-    public function getFullName(): string
+    public function getDependency(): string
     {
-        return $this->fullName;
+        return $this->dependency;
     }
 
     /**
      * @return string
      */
-    public function getInn(): string
+    public function getUnique(): string
     {
-        return $this->inn;
+        return $this->unique;
     }
 
     /**
-     * @param string $shortName
-     *
-     * @return $this
+     * @return string
      */
-    public function setShortName(string $shortName): self
+    public function getName(): string
     {
-        $this->shortName = $shortName;
+        return $this->name;
+    }
+
+    /**
+     * @param string $identity
+     *
+     * @return AbstractContractor
+     */
+    public function setIdentity(string $identity): self
+    {
+        $this->identity = $identity;
 
         return $this;
     }
 
     /**
-     * @param string $fullName
+     * @param string $dependency
      *
-     * @return $this
+     * @return AbstractContractor
      */
-    public function setFullName(string $fullName): self
+    public function setDependency(string $dependency): self
     {
-        $this->fullName = $fullName;
+        $this->dependency = $dependency;
 
         return $this;
     }
 
     /**
-     * @param string $inn
+     * @param string $unique
      *
-     * @return $this
+     * @return AbstractContractor
      */
-    public function setInn(string $inn): self
+    public function setUnique(string $unique): self
     {
-        $this->inn = $inn;
+        $this->unique = $unique;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return AbstractContractor
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

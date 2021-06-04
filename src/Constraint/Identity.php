@@ -3,9 +3,11 @@
 
 namespace Evrinoma\ContractorBundle\Constraint;
 
+
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ShortName implements ConstraintInterface
+class Identity implements ConstraintInterface
 {
     public function getConstraints(): array
     {
@@ -16,6 +18,6 @@ class ShortName implements ConstraintInterface
 
     public function getPropertyName(): string
     {
-        return 'shortName';
+        return 'identity';
     }
 }

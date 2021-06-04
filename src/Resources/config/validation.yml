@@ -1,12 +1,12 @@
 services:
-  evrinoma.contractor.constraint.inn:
-    class: Evrinoma\ContractorBundle\Constraint\Inn
+  evrinoma.contractor.constraint.identity:
+    class: Evrinoma\ContractorBundle\Constraint\Identity
 
-  evrinoma.contractor.constraint.short_name:
-    class: Evrinoma\ContractorBundle\Constraint\ShortName
+  evrinoma.contractor.constraint.dependency:
+    class: Evrinoma\ContractorBundle\Constraint\Dependency
 
-  evrinoma.contractor.constraint.full_name:
-    class: Evrinoma\ContractorBundle\Constraint\FullName
+  evrinoma.contractor.constraint.name:
+    class: Evrinoma\ContractorBundle\Constraint\Name
 
   evrinoma.contractor.constraint.active:
     class: Evrinoma\ContractorBundle\Constraint\Active

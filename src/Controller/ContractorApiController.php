@@ -83,15 +83,15 @@ final class ContractorApiController extends AbstractApiController
      *             @OA\Schema(
      *               example={
      *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
-     *                  "inn":"7702070139",
-     *                  "full_name": "Банк ВТБ (публичное акционерное общество)",
-     *                  "short_name":"Банк ВТБ"
+     *                  "indetity":"7702070139",
+     *                  "dependency": "770943002",
+     *                  "name":"Банк ВТБ (публичное акционерное общество)"
      *                  },
      *               type="object",
      *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
-     *               @OA\Property(property="inn",type="string"),
-     *               @OA\Property(property="short_name",type="string"),
-     *               @OA\Property(property="full_name",type="string")
+     *               @OA\Property(property="indetity",type="string"),
+     *               @OA\Property(property="dependency",type="string"),
+     *               @OA\Property(property="name",type="string")
      *            )
      *         )
      *     )
@@ -135,18 +135,18 @@ final class ContractorApiController extends AbstractApiController
      *               example={
      *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
      *                  "id":"3",
-     *                  "inn":"7702070139",
+     *                  "indetity":"7702070139",
      *                  "active": "b",
-     *                  "full_name": "Банк ВТБ (публичное акционерное общество)",
-     *                  "short_name":"Банк ВТБ"
+     *                  "dependency": "770943002",
+     *                  "name":"Банк ВТБ (публичное акционерное общество)"
      *                  },
      *               type="object",
      *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
      *               @OA\Property(property="id",type="string"),
-     *               @OA\Property(property="inn",type="string"),
+     *               @OA\Property(property="indetity",type="string"),
      *               @OA\Property(property="active",type="string"),
-     *               @OA\Property(property="short_name",type="string"),
-     *               @OA\Property(property="full_name",type="string")
+     *               @OA\Property(property="dependency",type="string"),
+     *               @OA\Property(property="name",type="string")
      *            )
      *         )
      *     )
@@ -266,25 +266,25 @@ final class ContractorApiController extends AbstractApiController
      *         )
      *     ),
      *      @OA\Parameter(
-     *         description="inn",
+     *         description="indetity",
      *         in="query",
-     *         name="inn",
+     *         name="indetity",
      *         @OA\Schema(
      *           type="string",
      *         )
      *     ),
      *      @OA\Parameter(
-     *         description="fullName",
+     *         description="dependency",
      *         in="query",
-     *         name="full_name",
+     *         name="dependency",
      *         @OA\Schema(
      *           type="string",
      *         )
      *     ),
      *      @OA\Parameter(
-     *         description="shortName",
+     *         description="name",
      *         in="query",
-     *         name="short_name",
+     *         name="name",
      *         @OA\Schema(
      *           type="string",
      *         )

@@ -13,11 +13,11 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 //region SECTION: Fields
     private string $id = '';
 
-    private string $inn = '';
+    private string $identity = '';
 
-    private string $fullName = '';
+    private string $dependency = '';
 
-    private string $shortName = '';
+    private string $name = '';
 
     private string $active = ActiveModel::ACTIVE;
 //endregion Fields
@@ -31,19 +31,19 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
         return $this->id !== '';
     }
 
-    public function hasShortName(): bool
+    public function hasName(): bool
     {
-        return $this->shortName !== '';
+        return $this->name !== '';
     }
 
-    public function hasFullName(): bool
+    public function hasDependency(): bool
     {
-        return $this->fullName !== '';
+        return $this->dependency !== '';
     }
 
-    public function hasInn(): bool
+    public function hasIdentity(): bool
     {
-        return $this->inn !== '';
+        return $this->identity !== '';
     }
 //endregion Public
 
@@ -73,37 +73,37 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     }
 
     /**
-     * @param string $inn
+     * @param string $identity
      *
      * @return ContractorApiDto
      */
-    private function setInn(string $inn): ContractorApiDto
+    private function setIdentity(string $identity): ContractorApiDto
     {
-        $this->inn = $inn;
+        $this->identity = $identity;
 
         return $this;
     }
 
     /**
-     * @param string $fullName
+     * @param string $dependency
      *
      * @return ContractorApiDto
      */
-    private function setFullName(string $fullName): ContractorApiDto
+    private function setDependency(string $dependency): ContractorApiDto
     {
-        $this->fullName = $fullName;
+        $this->dependency = $dependency;
 
         return $this;
     }
 
     /**
-     * @param string $shortName
+     * @param string $name
      *
      * @return ContractorApiDto
      */
-    private function setShortName(string $shortName): ContractorApiDto
+    private function setName(string $name): ContractorApiDto
     {
-        $this->shortName = $shortName;
+        $this->name = $name;
 
         return $this;
     }
@@ -115,26 +115,26 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
         $class = $request->get(DtoInterface::DTO_CLASS);
 
         if ($class === $this->getClass()) {
-            $id        = $request->get(ContractorModelInterface::ID);
-            $inn       = $request->get(ContractorModelInterface::INN);
-            $fullName  = $request->get(ContractorModelInterface::FULL_NAME);
-            $shortName = $request->get(ContractorModelInterface::SHORT_NAME);
-            $active = $request->get(ContractorModelInterface::ACTIVE);
+            $id         = $request->get(ContractorModelInterface::ID);
+            $identity   = $request->get(ContractorModelInterface::IDENTITY);
+            $dependency = $request->get(ContractorModelInterface::DEPENDENCY);
+            $name       = $request->get(ContractorModelInterface::NAME);
+            $active     = $request->get(ContractorModelInterface::ACTIVE);
 
             if ($active) {
                 $this->setActive($active);
             }
 
-            if ($fullName) {
-                $this->setFullName($fullName);
+            if ($dependency) {
+                $this->setDependency($dependency);
             }
 
-            if ($shortName) {
-                $this->setShortName($shortName);
+            if ($name) {
+                $this->setName($name);
             }
 
-            if ($inn) {
-                $this->setInn($inn);
+            if ($identity) {
+                $this->setIdentity($identity);
             }
 
             if ($id) {
@@ -150,6 +150,14 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     /**
      * @return string
      */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
     public function getActive(): string
     {
         return $this->active;
@@ -158,33 +166,24 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     /**
      * @return string
      */
-    public function getInn(): string
+    public function getIdentity(): string
     {
-        return $this->inn;
+        return $this->identity;
     }
 
     /**
      * @return string
      */
-    public function getFullName(): string
+    public function getDependency(): string
     {
-        return $this->fullName;
+        return $this->dependency;
     }
 
     /**
      * @return string
      */
-    public function getShortName(): string
+    public function getName(): string
     {
-        return $this->shortName;
+        return $this->name;
     }
-
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-//endregion Getters/Setters
 }

@@ -12,36 +12,20 @@ interface ContractorInterface extends ActiveInterface, CreateUpdateAtInterface, 
     /**
      * @return string
      */
-    public function getShortName(): string;
+    public function getIdentity(): string;
 
     /**
      * @return string
      */
-    public function getFullName(): string;
+    public function getDependency(): string;
 
     /**
      * @return string
      */
-    public function getInn(): string;
+    public function getUnique(): string;
 
     /**
-     * @param string $shortName
-     *
-     * @return $this
+     * @return string
      */
-    public function setShortName(string $shortName): self;
-
-    /**
-     * @param string $fullName
-     *
-     * @return $this
-     */
-    public function setFullName(string $fullName): self;
-
-    /**
-     * @param string $inn
-     *
-     * @return $this
-     */
-    public function setInn(string $inn): self;
+    public function getName(): string;
 }
