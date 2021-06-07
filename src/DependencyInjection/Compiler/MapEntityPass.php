@@ -54,8 +54,10 @@ class MapEntityPass implements CompilerPassInterface
 
             $eventManager = $container->findDefinition('doctrine.dbal.connection.event_manager');
             $eventManager->addMethodCall('addEventListener', [Events::loadClassMetadata, new Reference('doctrine.orm.listeners.resolve_target_entity')]);
+            $this->remapEntity($driver, 'Split');
         } else {
             $this->loadMetadata($container, $driver, $referenceAnnotationReader, '%s/Model/Basic', '%s/Entity/Basic');
+            $this->remapEntity($driver, 'Basic');
         }
     }
 
@@ -65,10 +67,22 @@ class MapEntityPass implements CompilerPassInterface
         $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterModel, $this->path)]);
         $driver->addMethodCall('addDriver', [$definitionAnnotationDriver, sprintf(str_replace('/', '\\', $formatterModel), $this->nameSpace)]);
 
-        if ($container->getParameter('evrinoma.contractor.entity') === ContractorExtension::ENTITY_BASE_CONTRACTOR) {
+        if (in_array($container->getParameter('evrinoma.contractor.entity'), [ContractorExtension::ENTITY_BASE_CONTRACTOR, ContractorExtension::ENTITY_SPLIT_CONTRACTOR], true)) {
             $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterEntity, $this->path)]);
             $driver->addMethodCall('addDriver', [$definitionAnnotationDriver, sprintf(str_replace('/', '\\', $formatterEntity), $this->nameSpace)]);
         }
+    }
+
+    private function remapEntity(Definition $driver, string $mapFolder): void
+    {
+        $calls = [];
+        foreach ($driver->getMethodCalls() as $i => $call) {
+            if ($call[1][1] && $call[1][1] === 'Evrinoma\ContractorBundle\Entity') {
+                $call[1][1] = 'Evrinoma\ContractorBundle\Entity\\'.$mapFolder;
+            }
+            $calls[] = $call;
+        }
+        $driver->setMethodCalls($calls);
     }
 //endregion Private
 }

@@ -21,9 +21,10 @@ use Symfony\Component\DependencyInjection\Reference;
 class ContractorExtension extends Extension
 {
 //region SECTION: Fields
-    public const ENTITY_BASE_CONTRACTOR         = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
-    public const ENTITY_BASE_CONTRACTOR_PERSON  = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorPerson';
-    public const ENTITY_BASE_CONTRACTOR_COMPANY = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorCompany';
+    public const ENTITY_BASE_CONTRACTOR          = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
+    public const ENTITY_SPLIT_CONTRACTOR         = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractor';
+    public const ENTITY_SPLIT_CONTRACTOR_PERSON  = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorPerson';
+    public const ENTITY_SPLIT_CONTRACTOR_COMPANY = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorCompany';
 
     /**
      * @var array
@@ -114,9 +115,9 @@ class ContractorExtension extends Extension
             $container,
             [
                 '' => [
-                    'db_driver'      => 'evrinoma.'.$this->getAlias().'.storage',
-                    'split'          => 'evrinoma.'.$this->getAlias().'.split',
-                    'entity'         => 'evrinoma.'.$this->getAlias().'.entity',
+                    'db_driver' => 'evrinoma.'.$this->getAlias().'.storage',
+                    'split'     => 'evrinoma.'.$this->getAlias().'.split',
+                    'entity'    => 'evrinoma.'.$this->getAlias().'.entity',
                 ],
             ]
         );
