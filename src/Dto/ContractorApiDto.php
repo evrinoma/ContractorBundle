@@ -13,9 +13,9 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 //region SECTION: Fields
     private string $id;
 
-    private string $identity ;
+    private string $identity = '';
 
-    private string $dependency;
+    private string $dependency = '';
 
     private string $name;
 

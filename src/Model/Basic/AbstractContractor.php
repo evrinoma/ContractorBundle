@@ -11,7 +11,7 @@ use Evrinoma\UtilsBundle\Entity\IdTrait;
  * Class AbstractBaseContractor
  *
  * @ORM\MappedSuperclass
- * @ORM\Table(indexes={@ORM\Index(name="idx_contractor", columns={"identity", "dependency", "unique"})})
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idx_contractor", columns={"identity", "dependency", "isolate"})})
  */
 abstract class AbstractContractor implements ContractorInterface
 {
@@ -21,21 +21,21 @@ abstract class AbstractContractor implements ContractorInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="identity", type="string", length=255, nullable=true)
+     * @ORM\Column(name="identity", type="string", length=255, nullable=false)
      */
     protected string $identity;
     /**
      * @var string
      *
-     * @ORM\Column(name="dependency", type="string", length=255, nullable=true)
+     * @ORM\Column(name="dependency", type="string", length=255, nullable=false)
      */
     protected string $dependency;
     /**
      * @var string
      *
-     * @ORM\Column(name="unique", type="string", length=255, nullable=true)
+     * @ORM\Column(name="isolate", type="string", length=255, nullable=false)
      */
-    protected string $unique;
+    protected string $isolate = '';
     /**
      * @var string
      *
@@ -64,9 +64,9 @@ abstract class AbstractContractor implements ContractorInterface
     /**
      * @return string
      */
-    public function getUnique(): string
+    public function getIsolate(): string
     {
-        return $this->unique;
+        return $this->isolate;
     }
 
     /**
@@ -102,13 +102,13 @@ abstract class AbstractContractor implements ContractorInterface
     }
 
     /**
-     * @param string $unique
+     * @param string $isolate
      *
      * @return AbstractContractor
      */
-    public function setUnique(string $unique): self
+    public function setIsolate(string $isolate): self
     {
-        $this->unique = $unique;
+        $this->isolate = $isolate;
 
         return $this;
     }

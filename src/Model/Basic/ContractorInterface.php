@@ -22,7 +22,7 @@ interface ContractorInterface extends ActiveInterface, CreateUpdateAtInterface, 
     /**
      * @return string
      */
-    public function getUnique(): string;
+    public function getIsolate(): string;
 
     /**
      * @return string

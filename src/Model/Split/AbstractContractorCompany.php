@@ -7,7 +7,7 @@ use Evrinoma\UtilsBundle\Entity\IdTrait;
 
 /**
  * @ORM\MappedSuperclass
- * @ORM\Table(indexes={@ORM\Index(name="idx_contractor", columns={"identity", "dependency"})})
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="idx_contractor", columns={"identity", "dependency"})})
  */
 abstract class AbstractContractorCompany implements ContractorCompanyInterface
 {
@@ -17,19 +17,19 @@ abstract class AbstractContractorCompany implements ContractorCompanyInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="identity", type="string", length=255, nullable=true)
+     * @ORM\Column(name="identity", type="string", length=255, nullable=false)
      */
     protected string $identity;
     /**
      * @var string
      *
-     * @ORM\Column(name="dependency", type="string", length=255, nullable=true)
+     * @ORM\Column(name="dependency", type="string", length=255, nullable=false)
      */
     protected string $dependency;
     /**
      * @var string
      *
-     * @ORM\Column(name="short_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="short_name", type="string", length=255, nullable=false)
      */
     protected string $shortName;
 

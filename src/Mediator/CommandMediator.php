@@ -10,12 +10,12 @@ use Symfony\Component\Uid\Uuid;
 class CommandMediator implements CommandMediatorInterface
 {
 //region SECTION: Protected
-    protected function setUnique(ContractorInterface $entity)
+    protected function setIsolate(ContractorInterface $entity)
     {
         if (!$entity->getIdentity() && !$entity->getDependency()) {
             $namespace = Uuid::v4();
             $uuid      = Uuid::v3($namespace, $entity->getName());
-            $entity->setUnique($uuid->toRfc4122());
+            $entity->setIsolate($uuid->toRfc4122());
         }
     }
 //endregion Protected
@@ -23,7 +23,7 @@ class CommandMediator implements CommandMediatorInterface
 //region SECTION: Public
     public function onUpdate(ContractorApiDtoInterface $dto, ContractorInterface $entity): ContractorInterface
     {
-        $this->setUnique($entity);
+        $this->setIsolate($entity);
 
         return $entity;
     }
@@ -34,7 +34,7 @@ class CommandMediator implements CommandMediatorInterface
 
     public function onCreate(ContractorApiDtoInterface $dto, ContractorInterface $entity): ContractorInterface
     {
-        $this->setUnique($entity);
+        $this->setIsolate($entity);
 
         return $entity;
     }
