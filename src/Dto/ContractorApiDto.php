@@ -17,7 +17,7 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 
     private string $dependency = '';
 
-    private string $name;
+    private string $name = '';
 
     private string $active = ActiveModel::ACTIVE;
 //endregion Fields
