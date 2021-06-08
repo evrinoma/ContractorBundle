@@ -83,13 +83,13 @@ final class ContractorApiController extends AbstractApiController
      *             @OA\Schema(
      *               example={
      *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
-     *                  "indetity":"7702070139",
+     *                  "identity":"7702070139",
      *                  "dependency": "770943002",
      *                  "name":"Банк ВТБ (публичное акционерное общество)"
      *                  },
      *               type="object",
      *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
-     *               @OA\Property(property="indetity",type="string"),
+     *               @OA\Property(property="identity",type="string"),
      *               @OA\Property(property="dependency",type="string"),
      *               @OA\Property(property="name",type="string")
      *            )
@@ -135,7 +135,7 @@ final class ContractorApiController extends AbstractApiController
      *               example={
      *                  "class":"Evrinoma\ContractorBundle\Dto\ContractorApiDto",
      *                  "id":"3",
-     *                  "indetity":"7702070139",
+     *                  "identity":"7702070139",
      *                  "active": "b",
      *                  "dependency": "770943002",
      *                  "name":"Банк ВТБ (публичное акционерное общество)"
@@ -143,7 +143,7 @@ final class ContractorApiController extends AbstractApiController
      *               type="object",
      *               @OA\Property(property="class",type="string",default="Evrinoma\ContractorBundle\Dto\ContractorApiDto"),
      *               @OA\Property(property="id",type="string"),
-     *               @OA\Property(property="indetity",type="string"),
+     *               @OA\Property(property="identity",type="string"),
      *               @OA\Property(property="active",type="string"),
      *               @OA\Property(property="dependency",type="string"),
      *               @OA\Property(property="name",type="string")
@@ -266,9 +266,9 @@ final class ContractorApiController extends AbstractApiController
      *         )
      *     ),
      *      @OA\Parameter(
-     *         description="indetity",
+     *         description="identity",
      *         in="query",
-     *         name="indetity",
+     *         name="identity",
      *         @OA\Schema(
      *           type="string",
      *         )
