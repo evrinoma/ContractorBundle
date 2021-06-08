@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 {
 //region SECTION: Fields
-    private string $id = '';
+    private string $id;
 
-    private string $identity = '';
+    private string $identity ;
 
-    private string $dependency = '';
+    private string $dependency;
 
-    private string $name = '';
+    private string $name;
 
     private string $active = ActiveModel::ACTIVE;
 //endregion Fields
