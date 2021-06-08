@@ -177,7 +177,7 @@ final class ContractorApiController extends AbstractApiController
             }
         } else {
             $this->commandManager->setRestClientErrorBadRequest();
-            $json = ['errors' => 'ошибка'];
+            $json = ['errors' => 'The Dto has\'t ID or class invalid'];
         }
 
         return $this->setSerializeGroup('api_put_contractor')->json(['message' => 'Save contractor', 'data' => $json], $this->commandManager->getRestStatus());
@@ -236,7 +236,7 @@ final class ContractorApiController extends AbstractApiController
             }
         } else {
             $this->commandManager->setRestClientErrorBadRequest();
-            $json = ['errors' => 'id contractor not found'];
+            $json = ['errors' => 'The Dto has\'t ID or class invalid'];
         }
 
         return $this->json(['message' => 'Delete contractor', 'data' => $json], $this->commandManager->getRestStatus());
