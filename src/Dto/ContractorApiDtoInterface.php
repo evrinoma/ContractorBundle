@@ -27,6 +27,11 @@ interface ContractorApiDtoInterface extends DtoInterface
      * @return bool
      */
     public function hasDependency(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasActive(): bool;
 //endregion Public
 
 //region SECTION: Getters/Setters

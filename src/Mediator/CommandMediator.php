@@ -15,7 +15,10 @@ class CommandMediator implements CommandMediatorInterface
         if (!$entity->getIdentity() && !$entity->getDependency()) {
             $namespace = Uuid::v4();
             $uuid      = Uuid::v3($namespace, $entity->getName());
-            $entity->setIsolate($uuid->toRfc4122());
+            $isolate = $uuid->toRfc4122();
+            $entity->setIsolate($isolate);
+            $entity->setIdentity($isolate);
+            $entity->setDependency($isolate);
         }
     }
 //endregion Protected

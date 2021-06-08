@@ -15,9 +15,11 @@ class QueryMediator implements QueryMediatorInterface
 //region SECTION: Public
     public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder): void
     {
+        if ($dto->hasActive()) {
         $builder
             ->andWhere('contractor.active = :active')
             ->setParameter('active', $dto->getActive());
+        }
         if ($dto->hasIdentity()) {
             $builder->andWhere('contractor.identity like :identity')
                 ->setParameter('identity', '%'.$dto->getIdentity().'%');

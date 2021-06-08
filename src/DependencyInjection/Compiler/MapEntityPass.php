@@ -44,8 +44,6 @@ class MapEntityPass implements CompilerPassInterface
         $isSplit = $container->getParameter('evrinoma.contractor.split');
 
         if ($isSplit) {
-            throw new \Exception('This functionality unsupported');
-
             $this->loadMetadata($container, $driver, $referenceAnnotationReader, '%s/Model/Split', '%s/Entity/Split');
 
             $resolveTargetEntity = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
@@ -55,6 +53,8 @@ class MapEntityPass implements CompilerPassInterface
             $eventManager = $container->findDefinition('doctrine.dbal.connection.event_manager');
             $eventManager->addMethodCall('addEventListener', [Events::loadClassMetadata, new Reference('doctrine.orm.listeners.resolve_target_entity')]);
             $this->remapEntity($driver, 'Split');
+
+            throw new \Exception('This functionality unsupported');
         } else {
             $this->loadMetadata($container, $driver, $referenceAnnotationReader, '%s/Model/Basic', '%s/Entity/Basic');
             $this->remapEntity($driver, 'Basic');

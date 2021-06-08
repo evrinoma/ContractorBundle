@@ -5,7 +5,6 @@ namespace Evrinoma\ContractorBundle\Dto;
 use Evrinoma\ContractorBundle\Model\ContractorModelInterface;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
-use Evrinoma\UtilsBundle\Model\ActiveModel;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
@@ -19,8 +18,70 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 
     private string $name = '';
 
-    private string $active = ActiveModel::ACTIVE;
+    private string $active = '';
 //endregion Fields
+
+//region SECTION: Protected
+    /**
+     * @param string $active
+     *
+     * @return ContractorApiDto
+     */
+    protected function setActive(string $active): ContractorApiDto
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return ContractorApiDto
+     */
+    protected function setId(string $id): ContractorApiDto
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param string $identity
+     *
+     * @return ContractorApiDto
+     */
+    protected function setIdentity(string $identity): ContractorApiDto
+    {
+        $this->identity = $identity;
+
+        return $this;
+    }
+
+    /**
+     * @param string $dependency
+     *
+     * @return ContractorApiDto
+     */
+    protected function setDependency(string $dependency): ContractorApiDto
+    {
+        $this->dependency = $dependency;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return ContractorApiDto
+     */
+    protected function setName(string $name): ContractorApiDto
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+//endregion Protected
 
 //region SECTION: Public
     /**
@@ -45,68 +106,14 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     {
         return $this->identity !== '';
     }
+
+    public function hasActive(): bool
+    {
+        return $this->active !== '';
+    }
 //endregion Public
 
 //region SECTION: Private
-    /**
-     * @param string $active
-     *
-     * @return ContractorApiDto
-     */
-    private function setActive(string $active): ContractorApiDto
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return ContractorApiDto
-     */
-    private function setId(string $id): ContractorApiDto
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @param string $identity
-     *
-     * @return ContractorApiDto
-     */
-    private function setIdentity(string $identity): ContractorApiDto
-    {
-        $this->identity = $identity;
-
-        return $this;
-    }
-
-    /**
-     * @param string $dependency
-     *
-     * @return ContractorApiDto
-     */
-    private function setDependency(string $dependency): ContractorApiDto
-    {
-        $this->dependency = $dependency;
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return ContractorApiDto
-     */
-    private function setName(string $name): ContractorApiDto
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 //endregion Private
 
 //region SECTION: Dto
