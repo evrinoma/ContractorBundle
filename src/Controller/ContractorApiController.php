@@ -164,7 +164,7 @@ final class ContractorApiController extends AbstractApiController
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
         $commandManager   = $this->commandManager;
-        $this->commandManager->setRestNoContent();
+
         try {
             if ($contractorApiDto->hasId()) {
                 $json = [];
