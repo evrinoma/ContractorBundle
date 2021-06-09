@@ -118,7 +118,7 @@ final class CommandManager implements CommandManagerInterface, RestInterface
         $this->mediator->onCreate($dto, $contractor);
 
         $errors = $this->validator->validate($contractor);
-
+        throw new ContractorInvalidException('$errorsString');
         if (count($errors) > 0) {
 
             $errorsString = (string)$errors;

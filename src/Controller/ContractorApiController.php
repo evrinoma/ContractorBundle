@@ -2,7 +2,12 @@
 
 namespace Evrinoma\ContractorBundle\Controller;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
+use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
+use Evrinoma\ContractorBundle\Exception\ContractorDtoException;
+use Evrinoma\ContractorBundle\Exception\ContractorInvalidException;
+use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Manager\CommandManagerInterface;
 use Evrinoma\ContractorBundle\Manager\QueryManagerInterface;
 use Evrinoma\DtoBundle\Factory\FactoryDtoInterface;
@@ -105,7 +110,7 @@ final class ContractorApiController extends AbstractApiController
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
         $commandManager   = $this->commandManager;
-
+        $this->commandManager->setRestCreated();
         try {
             $json = [];
             $em   = $this->getDoctrine()->getManager();
@@ -116,8 +121,7 @@ final class ContractorApiController extends AbstractApiController
                 }
             );
         } catch (\Exception $e) {
-            $json = ['errors' => $e->getMessage()];
-            $this->commandManager->setRestClientErrorBadRequest();
+            $json = $this->setRestStatus($this->commandManager, $e);
         }
 
         return $this->setSerializeGroup('api_post_contractor')->json(['message' => 'Create contractor', 'data' => $json], $this->commandManager->getRestStatus());
@@ -160,9 +164,9 @@ final class ContractorApiController extends AbstractApiController
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
         $commandManager   = $this->commandManager;
-
-        if ($contractorApiDto->hasId()) {
-            try {
+        $this->commandManager->setRestNoContent();
+        try {
+            if ($contractorApiDto->hasId()) {
                 $json = [];
                 $em   = $this->getDoctrine()->getManager();
 
@@ -171,13 +175,11 @@ final class ContractorApiController extends AbstractApiController
                         $json = $commandManager->put($contractorApiDto);
                     }
                 );
-            } catch (\Exception $e) {
-                $this->commandManager->setRestClientErrorBadRequest();
-                $json = ['errors' => $e->getMessage()];
+            } else {
+                throw new ContractorInvalidException('The Dto has\'t ID or class invalid');
             }
-        } else {
-            $this->commandManager->setRestClientErrorBadRequest();
-            $json = ['errors' => 'The Dto has\'t ID or class invalid'];
+        } catch (\Exception $e) {
+            $json = $this->setRestStatus($this->commandManager, $e);
         }
 
         return $this->setSerializeGroup('api_put_contractor')->json(['message' => 'Save contractor', 'data' => $json], $this->commandManager->getRestStatus());
@@ -218,9 +220,10 @@ final class ContractorApiController extends AbstractApiController
         /** @var ContractorApiDtoInterface $contractorApiDto */
         $contractorApiDto = $this->factoryDto->setRequest($this->request)->createDto($this->dtoClass);
         $commandManager   = $this->commandManager;
+        $this->commandManager->setRestAccepted();
 
-        if ($contractorApiDto->hasId()) {
-            try {
+        try {
+            if ($contractorApiDto->hasId()) {
                 $json = [];
                 $em   = $this->getDoctrine()->getManager();
 
@@ -230,13 +233,11 @@ final class ContractorApiController extends AbstractApiController
                         $json = ['OK'];
                     }
                 );
-            } catch (\Exception $e) {
-                $this->commandManager->setRestClientErrorBadRequest();
-                $json = ['errors' => $e->getMessage()];
+            } else {
+                throw new ContractorInvalidException('The Dto has\'t ID or class invalid');
             }
-        } else {
-            $this->commandManager->setRestClientErrorBadRequest();
-            $json = ['errors' => 'The Dto has\'t ID or class invalid'];
+        } catch (\Exception $e) {
+            $json = $this->setRestStatus($this->commandManager, $e);
         }
 
         return $this->json(['message' => 'Delete contractor', 'data' => $json], $this->commandManager->getRestStatus());
@@ -311,13 +312,36 @@ final class ContractorApiController extends AbstractApiController
         try {
             $json = $this->queryManager->criteria($contractorApiDto);
         } catch (\Exception $e) {
-            $this->queryManager->setRestClientErrorBadRequest();
-            $json = ['errors' => $e->getMessage()];
+            $json = $this->setRestStatus($this->queryManager, $e);
         }
 
         return $this->setSerializeGroup('api_get_contractor')->json(['message' => 'Get contractors', 'data' => $json], $this->queryManager->getRestStatus());
     }
 //endregion Public
+
+//region SECTION: Private
+    private function setRestStatus(RestInterface $manager, \Exception $e): array
+    {
+        switch (true) {
+            case $e instanceof ContractorCannotBeSavedException:
+                $manager->setRestNotImplemented();
+                break;
+            case $e instanceof UniqueConstraintViolationException:
+                $manager->setRestConflict();
+                break;
+            case $e instanceof ContractorNotFoundException:
+                $manager->setRestNotFound();
+                break;
+            case $e instanceof ContractorInvalidException:
+                $manager->setRestUnprocessableEntity();
+                break;
+            default:
+                $manager->setRestBadRequest();
+        }
+
+        return ['errors' => $e->getMessage()];
+    }
+//endregion Private
 
 //region SECTION: Getters/Setters
     /**
@@ -358,8 +382,7 @@ final class ContractorApiController extends AbstractApiController
         try {
             $json = $this->queryManager->get($contractorApiDto);
         } catch (\Exception $e) {
-            $this->queryManager->setRestClientErrorBadRequest();
-            $json = ['errors' => $e->getMessage()];
+            $json = $this->setRestStatus($this->queryManager, $e);
         }
 
         return $this->setSerializeGroup('api_get_contractor')->json(['message' => 'Get contractors', 'data' => $json], $this->queryManager->getRestStatus());
