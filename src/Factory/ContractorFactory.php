@@ -34,7 +34,7 @@ class ContractorFactory implements ContractorFactoryInterface
             ->setIdentity($dto->getIdentity())
             ->setDependency($dto->getDependency())
             ->setName($dto->getName())
-            ->setCreatedAt(new \DateTime())
+            ->setCreatedAt(new \DateTimeImmutable())
             ->setActiveToActive();
 
         return $contractor;
