@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Evrinoma\ContractorBundle\Tests\Controller;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -50,7 +50,7 @@ abstract class AbstractControllerTest extends WebTestCase
 //endregion Private
 
 //region SECTION: Getters/Setters
-    public function setUp()
+    public function setUp():void
     {
         $kernel              = self::bootKernel();
         $this->entityManager = $kernel->getContainer()
