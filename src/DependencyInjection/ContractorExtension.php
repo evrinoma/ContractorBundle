@@ -9,6 +9,7 @@ use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -21,6 +22,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class ContractorExtension extends Extension
 {
 //region SECTION: Fields
+    public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
     public const ENTITY_BASE_CONTRACTOR          = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
     public const ENTITY_SPLIT_CONTRACTOR         = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractor';
     public const ENTITY_SPLIT_CONTRACTOR_PERSON  = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorPerson';
@@ -79,6 +81,14 @@ class ContractorExtension extends Extension
 
         $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
         $definitionApiController->setArgument(5, $config['dto'] ?? ContractorApiDto::class);
+
+        if ($config['factory'] !== self::ENTITY_FACTORY) {
+            $container->removeDefinition('evrinoma.'.$this->getAlias().'.factory');
+            $definitionFactory = new Definition($config['factory']);
+            $alias = new Alias('evrinoma.'.$this->getAlias().'.factory');
+            $container->addDefinitions([ 'evrinoma.'.$this->getAlias().'.factory' => $definitionFactory]);
+            $container->addAliases([$config['factory'] => $alias]);
+        }
 
         $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
         $definitionFactory->setArgument(0, $config['entity']);

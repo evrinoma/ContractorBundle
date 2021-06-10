@@ -4,6 +4,8 @@
 
     contractor:
         db_driver: orm модель данных
+        factory: App\Contractor\Factory\ContractorFactory фабрика для создания объектов, 
+                 не достающие значения можно разрешить на уровне Mediator или переопределив фабрику 
         entity: App\Contractor\Entity\Contractor сущность
         split: default(false) включает разделение сущностей на две таблицы пока не работает
         // -- entity_company: App\Contractor\Entity\ContractorCompany сущность компании

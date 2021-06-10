@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
             ->defaultValue('orm')
             ->end()
             ->scalarNode('split')->cannotBeEmpty()->defaultFalse()->info('This option is used for enable/disable split entity strategy on particular or different')->end()
+            ->scalarNode('factory')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_FACTORY)->end()
             ->scalarNode('entity')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
             ->scalarNode('entity_person')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_SPLIT_CONTRACTOR_PERSON)->end()
             ->scalarNode('entity_company')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_SPLIT_CONTRACTOR_COMPANY)->end()
