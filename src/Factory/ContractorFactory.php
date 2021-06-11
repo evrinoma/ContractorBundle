@@ -5,6 +5,7 @@ namespace Evrinoma\ContractorBundle\Factory;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Entity\Base\BaseContractor;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
+use Evrinoma\DtoBundle\Dto\DtoInterface;
 
 class ContractorFactory implements ContractorFactoryInterface
 {
