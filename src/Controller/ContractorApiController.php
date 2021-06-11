@@ -5,7 +5,6 @@ namespace Evrinoma\ContractorBundle\Controller;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
-use Evrinoma\ContractorBundle\Exception\ContractorDtoException;
 use Evrinoma\ContractorBundle\Exception\ContractorInvalidException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Manager\CommandManagerInterface;
