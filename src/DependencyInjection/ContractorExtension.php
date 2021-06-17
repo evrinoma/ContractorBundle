@@ -145,6 +145,18 @@ class ContractorExtension extends Extension
             );
         }
 
+        if ($config['decorates']) {
+            $this->remapParametersNamespaces(
+                $config['decorates'],
+                $container,
+                [
+                    '' => [
+                        'command'  => 'evrinoma.'.$this->getAlias().'.decorates.command',
+                        'query' => 'evrinoma.'.$this->getAlias().'.decorates.query',
+                    ],
+                ]
+            );
+        }
     }
 //endregion Public
 
