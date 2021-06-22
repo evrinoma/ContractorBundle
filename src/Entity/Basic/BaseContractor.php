@@ -1,6 +1,6 @@
 <?php
 
-namespace Evrinoma\ContractorBundle\Entity\Base;
+namespace Evrinoma\ContractorBundle\Entity\Basic;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\ContractorBundle\Model\Basic\AbstractContractor;
