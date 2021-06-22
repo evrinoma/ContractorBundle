@@ -52,3 +52,11 @@ Actions в контроллере разбыиты на две группы
         если контрагент не прошел валидацию ContractorInvalidException возвращает HTTP_UNPROCESSABLE_ENTITY 422
         если контрагент не может быть сохранен ContractorCannotBeSavedException возвращает HTTP_NOT_IMPLEMENTED 501
         все остальные ошибки возвращаются как HTTP_BAD_REQUEST 400
+
+
+Тесты:
+    
+    composer install --dev
+    /usr/bin/php vendor/phpunit/phpunit/phpunit --bootstrap tests/bootstrap.php --configuration phpunit.xml.dist tests --teamcity
+
+
