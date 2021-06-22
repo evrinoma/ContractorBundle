@@ -1,8 +1,6 @@
 <?php
 
-namespace Evrinoma\ContractorBundle\Tests\Controller;
-
-use Symfony\Component\HttpFoundation\Response;
+namespace Evrinoma\ContractorBundle\Tests\Functional\Controller;
 
 /**
  * @group functional
@@ -12,17 +10,16 @@ class ApiControllerTest extends AbstractControllerTest
     public function setUp():void
     {
         parent::setUp();
-        $this->loadContractorFixtures();
+     //   $this->loadContractorFixtures();
     }
 
     public function testGetAction():void
     {
         $expected = '{"id":"01623","city":"Lommatzsch"}';
         $expected2 = '{"id":"01623","city":"Lommatzsch"}';
+        $crawler = $this->client->request('GET', 'evrinoma/api/contractor?class=App%5CContractor%5CDto%5CContractorDto&id=3');
 
         $this->assertEquals($expected, $expected2);
-
-    //    $this->client->request('GET', '/api/contractor');
     }
 
     public function testCriteriaAction():void

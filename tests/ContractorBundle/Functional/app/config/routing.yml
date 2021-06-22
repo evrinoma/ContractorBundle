@@ -1,0 +1,2 @@
+contractor:
+    resource: "@ContractorBundle/Resources/config/routes.yml"
