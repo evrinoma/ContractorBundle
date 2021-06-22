@@ -102,8 +102,11 @@ class ContractorExtension extends Extension
             $loader->load('doctrine.yml');
             $container->setAlias('evrinoma.'.$this->getAlias().'.doctrine_registry', new Alias(self::$doctrineDrivers[$config['db_driver']]['registry'], false));
 
+            $definitionQueryMediator = $container->getDefinition('evrinoma.'.$this->getAlias().'.query.mediator');
+
             $definitionRepository->setArgument(0, new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'));
             $definitionRepository->setArgument(1, $config['entity']);
+            $definitionRepository->setArgument(2, $definitionQueryMediator);
 
             $container->setParameter('evrinoma.'.$this->getAlias().'.backend_type_'.$config['db_driver'], true);
 
