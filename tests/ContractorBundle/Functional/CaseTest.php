@@ -3,6 +3,7 @@
 namespace Evrinoma\ContractorBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 
 /**
  * TestCase.
@@ -10,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 abstract class CaseTest extends WebTestCase
 {
 //region SECTION: Fields
+    /**
+     * @var AbstractBrowser
+     */
     protected $client;
 //endregion Fields
 
