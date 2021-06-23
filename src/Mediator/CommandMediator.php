@@ -4,8 +4,6 @@ namespace Evrinoma\ContractorBundle\Mediator;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
-use Symfony\Component\Uid\Uuid;
-
 
 class CommandMediator implements CommandMediatorInterface
 {
@@ -13,9 +11,7 @@ class CommandMediator implements CommandMediatorInterface
     protected function setIsolate(ContractorInterface $entity)
     {
         if (!$entity->getIdentity() && !$entity->getDependency()) {
-            $namespace = Uuid::v4();
-            $uuid      = Uuid::v3($namespace, $entity->getName());
-            $isolate = $uuid->toRfc4122();
+            $isolate = md5($entity->getName());
             $entity->setIsolate($isolate);
             $entity->setIdentity($isolate);
             $entity->setDependency($isolate);
