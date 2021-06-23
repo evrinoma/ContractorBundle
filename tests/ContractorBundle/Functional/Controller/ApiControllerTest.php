@@ -27,7 +27,7 @@ class ApiControllerTest extends AbstractControllerTest
         return array_merge($extend, unserialize(serialize($this->default)));
     }
 
-    protected function createContractor(array $query)
+    protected function createContractor(array $query): void
     {
         $this->client->restart();
 
@@ -42,7 +42,7 @@ class ApiControllerTest extends AbstractControllerTest
     }
 
 
-    protected function deleteContractor(array $query)
+    protected function deleteContractor(array $query): void
     {
         $this->client->restart();
 
@@ -50,7 +50,7 @@ class ApiControllerTest extends AbstractControllerTest
     }
 
 
-    protected function getContractor(array $query)
+    protected function getContractor(array $query): void
     {
         $this->client->restart();
 
@@ -70,7 +70,7 @@ class ApiControllerTest extends AbstractControllerTest
 //endregion Protected
 
 //region SECTION: Public
-    public function testDelete()
+    public function testDelete(): void
     {
         $query = $this->createIdentityDependency();
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
@@ -92,14 +92,14 @@ class ApiControllerTest extends AbstractControllerTest
         $this->assertEquals(ActiveModel::DELETED, $entity['active']);
     }
 
-    public function testDeleteNotFound()
+    public function testDeleteNotFound(): void
     {
         $response = $this->deleteById(1);
         $this->assertArrayHasKey('data', $response);
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $query = $this->createIdentityDependency();
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
@@ -115,35 +115,35 @@ class ApiControllerTest extends AbstractControllerTest
         $this->assertCount(0, array_diff($entity, $query));
     }
 
-    public function testGetNotFound()
+    public function testGetNotFound(): void
     {
         $response = $this->getById(1);
         $this->assertArrayHasKey('data', $response);
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testPostIdentity()
+    public function testPostIdentity(): void
     {
         $this->createIdentity();
 
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testPostIdenityDependency()
+    public function testPostIdenityDependency(): void
     {
         $this->createIdentityDependency();
 
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testPostIdenityDependencyIsolate()
+    public function testPostIdenityDependencyIsolate(): void
     {
         $this->createIdentityDependencyIsolate();
 
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testPostDublicate()
+    public function testPostDublicate(): void
     {
         $this->createIdentity();
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
