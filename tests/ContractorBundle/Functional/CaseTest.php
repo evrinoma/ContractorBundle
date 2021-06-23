@@ -1,6 +1,6 @@
 <?php
 
-namespace  Evrinoma\ContractorBundle\Tests\Functional;
+namespace Evrinoma\ContractorBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -9,8 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 abstract class CaseTest extends WebTestCase
 {
+//region SECTION: Fields
     protected $client;
+//endregion Fields
 
+//region SECTION: Protected
     /**
      * {@inheritdoc}
      */
@@ -31,6 +34,7 @@ abstract class CaseTest extends WebTestCase
 
         return $this->client;
     }
+//endregion Protected
 
 
 }

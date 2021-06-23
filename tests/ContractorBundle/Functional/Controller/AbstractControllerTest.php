@@ -3,7 +3,9 @@
 namespace Evrinoma\ContractorBundle\Tests\Functional\Controller;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\SchemaTool;
 use Evrinoma\ContractorBundle\Fixtures\ContractorFixtures;
 use Evrinoma\ContractorBundle\Tests\Functional\CaseTest;
 
@@ -28,9 +30,9 @@ abstract class AbstractControllerTest extends CaseTest
     {
         parent::tearDown();
 
-//        $purger = new ORMPurger($this->entityManager);
-//        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-//        $purger->purge();
+        $purger = new ORMPurger($this->entityManager);
+        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        $purger->purge();
     }
 //endregion Public
 
@@ -50,13 +52,11 @@ abstract class AbstractControllerTest extends CaseTest
 
         $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
 
-//
-//        $schemaTool = new SchemaTool($this->entityManager);
-//        $metadata   = $this->entityManager->getMetadataFactory()->getAllMetadata();
-//
-//        $schemaTool->dropSchema($metadata);
-//        $schemaTool->createSchema($metadata);
+        $schemaTool = new SchemaTool($this->entityManager);
+        $metadata   = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
+        $schemaTool->dropSchema($metadata);
+        $schemaTool->createSchema($metadata);
     }
 //endregion Getters/Setters
 }
