@@ -11,6 +11,6 @@ use Evrinoma\ContractorBundle\Model\Basic\AbstractContractor;
  * @ORM\Table(name="contractor")
  * @ORM\Entity(repositoryClass="Evrinoma\ContractorBundle\Repository\ContractorRepository")
  */
-final class BaseContractor extends AbstractContractor
+class BaseContractor extends AbstractContractor
 {
 }

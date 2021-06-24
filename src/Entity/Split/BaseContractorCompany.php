@@ -11,7 +11,7 @@ use Evrinoma\ContractorBundle\Model\Split\AbstractContractorCompany;
  * @ORM\Table(name="contractor_company")
  * @ORM\Entity()
  */
-final class BaseContractorCompany extends AbstractContractorCompany
+class BaseContractorCompany extends AbstractContractorCompany
 {
 
 }
