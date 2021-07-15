@@ -3,6 +3,7 @@
 
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
+use Evrinoma\ContractorBundle\ContractorBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -19,7 +20,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder      = new TreeBuilder('contr_agent');
+        $treeBuilder      = new TreeBuilder(ContractorBundle::CONTRACTOR_BUNDLE);
         $rootNode         = $treeBuilder->getRootNode();
         $supportedDrivers = ['orm'];
 
