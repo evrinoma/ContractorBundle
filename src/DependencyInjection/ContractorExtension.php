@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class ContractorExtension extends Extension
 {
 //region SECTION: Fields
-    public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
+    public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Factory\ContractorFactory';
     public const ENTITY_BASE_CONTRACTOR          = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
     public const ENTITY_SPLIT_CONTRACTOR         = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractor';
     public const ENTITY_SPLIT_CONTRACTOR_PERSON  = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorPerson';
