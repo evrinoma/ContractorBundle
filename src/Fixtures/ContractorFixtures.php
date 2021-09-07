@@ -5,7 +5,7 @@ namespace Evrinoma\ContractorBundle\Fixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Evrinoma\ContractorBundle\Entity\Base\BaseContractor;
+use Evrinoma\ContractorBundle\Entity\Basic\BaseContractor;
 
 class ContractorFixtures extends Fixture
 {
