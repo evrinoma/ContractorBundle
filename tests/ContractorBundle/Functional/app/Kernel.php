@@ -37,7 +37,7 @@ class Kernel extends BaseKernel
             new \Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \Evrinoma\DtoBundle\EvrinomaDtoBundle(),
-            new \Evrinoma\ContractorBundle\ContractorBundle(),
+            new \Evrinoma\ContractorBundle\EvrinomaContractorBundle(),
         ];
     }
 

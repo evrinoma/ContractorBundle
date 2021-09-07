@@ -3,7 +3,7 @@
 
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
-use Evrinoma\ContractorBundle\ContractorBundle;
+use Evrinoma\ContractorBundle\EvrinomaContractorBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder      = new TreeBuilder(ContractorBundle::CONTRACTOR_BUNDLE);
+        $treeBuilder      = new TreeBuilder(EvrinomaContractorBundle::CONTRACTOR_BUNDLE);
         $rootNode         = $treeBuilder->getRootNode();
         $supportedDrivers = ['orm'];
 
@@ -36,10 +36,10 @@ class Configuration implements ConfigurationInterface
             ->defaultValue('orm')
             ->end()
             ->scalarNode('split')->cannotBeEmpty()->defaultFalse()->info('This option is used for enable/disable split entity strategy on particular or different')->end()
-            ->scalarNode('factory')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_FACTORY)->end()
-            ->scalarNode('entity')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
-            ->scalarNode('entity_person')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_SPLIT_CONTRACTOR_PERSON)->end()
-            ->scalarNode('entity_company')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_SPLIT_CONTRACTOR_COMPANY)->end()
+            ->scalarNode('factory')->cannotBeEmpty()->defaultValue(EvrinomaContractorExtension::ENTITY_FACTORY)->end()
+            ->scalarNode('entity')->cannotBeEmpty()->defaultValue(EvrinomaContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
+            ->scalarNode('entity_person')->cannotBeEmpty()->defaultValue(EvrinomaContractorExtension::ENTITY_SPLIT_CONTRACTOR_PERSON)->end()
+            ->scalarNode('entity_company')->cannotBeEmpty()->defaultValue(EvrinomaContractorExtension::ENTITY_SPLIT_CONTRACTOR_COMPANY)->end()
             ->scalarNode('constraints')->defaultTrue()->info('This option is used for enable/disable basic constraints')->end()
             ->scalarNode('dto')->defaultNull()->info('This option is used for dto class override')->end()
             ->arrayNode('decorates')->addDefaultsIfNotSet()->children()

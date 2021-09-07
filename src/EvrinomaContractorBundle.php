@@ -6,7 +6,7 @@ namespace Evrinoma\ContractorBundle;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\DecoratorPass;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\MapEntityPass;
-use Evrinoma\ContractorBundle\DependencyInjection\ContractorExtension;
+use Evrinoma\ContractorBundle\DependencyInjection\EvrinomaContractorExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * @package Evrinoma\ContractorBundle
  */
-class ContractorBundle extends Bundle
+class EvrinomaContractorBundle extends Bundle
 {
 //region SECTION: Fields
     public const CONTRACTOR_BUNDLE = 'contractor';
@@ -38,7 +38,7 @@ class ContractorBundle extends Bundle
     public function getContainerExtension()
     {
         if (null === $this->extension) {
-            $this->extension = new ContractorExtension();
+            $this->extension = new EvrinomaContractorExtension();
         }
 
         return $this->extension;

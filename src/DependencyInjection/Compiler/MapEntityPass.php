@@ -5,7 +5,7 @@ namespace Evrinoma\ContractorBundle\DependencyInjection\Compiler;
 
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Evrinoma\ContractorBundle\DependencyInjection\ContractorExtension;
+use Evrinoma\ContractorBundle\DependencyInjection\EvrinomaContractorExtension;
 use Evrinoma\ContractorBundle\Model\Split\ContractorCompanyInterface;
 use Evrinoma\ContractorBundle\Model\Split\ContractorPersonInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -67,7 +67,7 @@ class MapEntityPass implements CompilerPassInterface
         $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterModel, $this->path)]);
         $driver->addMethodCall('addDriver', [$definitionAnnotationDriver, sprintf(str_replace('/', '\\', $formatterModel), $this->nameSpace)]);
 
-        if (in_array($container->getParameter('evrinoma.contractor.entity'), [ContractorExtension::ENTITY_BASE_CONTRACTOR, ContractorExtension::ENTITY_SPLIT_CONTRACTOR], true)) {
+        if (in_array($container->getParameter('evrinoma.contractor.entity'), [EvrinomaContractorExtension::ENTITY_BASE_CONTRACTOR, EvrinomaContractorExtension::ENTITY_SPLIT_CONTRACTOR], true)) {
             $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterEntity, $this->path)]);
             $driver->addMethodCall('addDriver', [$definitionAnnotationDriver, sprintf(str_replace('/', '\\', $formatterEntity), $this->nameSpace)]);
         }

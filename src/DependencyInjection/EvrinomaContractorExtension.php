@@ -3,7 +3,7 @@
 
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
-use Evrinoma\ContractorBundle\ContractorBundle;
+use Evrinoma\ContractorBundle\EvrinomaContractorBundle;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Symfony\Component\Config\FileLocator;
@@ -14,12 +14,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Class ContractorExtension
- *
- * @package Evrinoma\ContractorBundle\DependencyInjection
- */
-class ContractorExtension extends Extension
+class EvrinomaContractorExtension extends Extension
 {
 //region SECTION: Fields
     public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Factory\ContractorFactory';
@@ -166,7 +161,7 @@ class ContractorExtension extends Extension
 //region SECTION: Getters/Setters
     public function getAlias()
     {
-        return ContractorBundle::CONTRACTOR_BUNDLE;
+        return EvrinomaContractorBundle::CONTRACTOR_BUNDLE;
     }
 //endregion Getters/Setters
 }
