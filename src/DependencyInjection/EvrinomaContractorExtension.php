@@ -6,6 +6,7 @@ namespace Evrinoma\ContractorBundle\DependencyInjection;
 use Evrinoma\ContractorBundle\EvrinomaContractorBundle;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
+use Evrinoma\UtilsBundle\DependencyInjection\Helper;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -16,6 +17,8 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class EvrinomaContractorExtension extends Extension
 {
+    use Helper;
+
 //region SECTION: Fields
     public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Factory\ContractorFactory';
     public const ENTITY_BASE_CONTRACTOR          = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
@@ -33,38 +36,6 @@ class EvrinomaContractorExtension extends Extension
         ),
     );
 //endregion Fields
-
-//region SECTION: Protected
-    protected function remapParameters(array $config, ContainerBuilder $container, array $map): void
-    {
-        foreach ($map as $name => $paramName) {
-            if (array_key_exists($name, $config)) {
-                $container->setParameter($paramName, $config[$name]);
-            }
-        }
-    }
-
-    protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces): void
-    {
-        foreach ($namespaces as $ns => $map) {
-            if ($ns) {
-                if (!array_key_exists($ns, $config)) {
-                    continue;
-                }
-                $namespaceConfig = $config[$ns];
-            } else {
-                $namespaceConfig = $config;
-            }
-            if (is_array($map)) {
-                $this->remapParameters($namespaceConfig, $container, $map);
-            } else {
-                foreach ($namespaceConfig as $name => $value) {
-                    $container->setParameter(sprintf($map, $name), $value);
-                }
-            }
-        }
-    }
-//endregion Protected
 
 //region SECTION: Public
     public function load(array $configs, ContainerBuilder $container)
@@ -119,8 +90,8 @@ class EvrinomaContractorExtension extends Extension
         }
 
         $this->remapParametersNamespaces(
-            $config,
             $container,
+            $config,
             [
                 '' => [
                     'db_driver' => 'evrinoma.'.$this->getAlias().'.storage',
@@ -132,8 +103,8 @@ class EvrinomaContractorExtension extends Extension
 
         if ($config['split']) {
             $this->remapParametersNamespaces(
-                $config,
                 $container,
+                $config,
                 [
                     '' => [
                         'entity_person'  => 'evrinoma.'.$this->getAlias().'.entity_person',
@@ -145,8 +116,8 @@ class EvrinomaContractorExtension extends Extension
 
         if ($config['decorates']) {
             $this->remapParametersNamespaces(
-                $config['decorates'],
                 $container,
+                $config['decorates'],
                 [
                     '' => [
                         'command'  => 'evrinoma.'.$this->getAlias().'.decorates.command',
