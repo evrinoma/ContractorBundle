@@ -40,7 +40,6 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('entity')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_BASE_CONTRACTOR)->end()
             ->scalarNode('entity_person')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_SPLIT_CONTRACTOR_PERSON)->end()
             ->scalarNode('entity_company')->cannotBeEmpty()->defaultValue(ContractorExtension::ENTITY_SPLIT_CONTRACTOR_COMPANY)->end()
-            ->scalarNode('entity_manager_name')->defaultNull()->end()
             ->scalarNode('constraints')->defaultTrue()->info('This option is used for enable/disable basic constraints')->end()
             ->scalarNode('dto')->defaultNull()->info('This option is used for dto class override')->end()
             ->arrayNode('decorates')->addDefaultsIfNotSet()->children()
