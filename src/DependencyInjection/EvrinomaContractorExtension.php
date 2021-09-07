@@ -6,7 +6,7 @@ namespace Evrinoma\ContractorBundle\DependencyInjection;
 use Evrinoma\ContractorBundle\EvrinomaContractorBundle;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
-use Evrinoma\UtilsBundle\DependencyInjection\Helper;
+use Evrinoma\UtilsBundle\DependencyInjection\HelperTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class EvrinomaContractorExtension extends Extension
 {
-    use Helper;
+    use HelperTrait;
 
 //region SECTION: Fields
     public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Factory\ContractorFactory';
