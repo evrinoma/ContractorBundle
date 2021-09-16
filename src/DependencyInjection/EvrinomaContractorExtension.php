@@ -3,9 +3,9 @@
 
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
-use Evrinoma\ContractorBundle\EvrinomaContractorBundle;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
+use Evrinoma\ContractorBundle\EvrinomaContractorBundle;
 use Evrinoma\UtilsBundle\DependencyInjection\HelperTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
@@ -21,10 +21,11 @@ class EvrinomaContractorExtension extends Extension
 
 //region SECTION: Fields
     public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Factory\ContractorFactory';
-    public const ENTITY_BASE_CONTRACTOR          = 'Evrinoma\ContractorBundle\Entity\Basic\BaseContractor';
-    public const ENTITY_SPLIT_CONTRACTOR         = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractor';
-    public const ENTITY_SPLIT_CONTRACTOR_PERSON  = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorPerson';
-    public const ENTITY_SPLIT_CONTRACTOR_COMPANY = 'Evrinoma\ContractorBundle\Entity\Split\BaseContractorCompany';
+    public const ENTITY                          = 'Evrinoma\ContractorBundle\Entity';
+    public const ENTITY_BASE_CONTRACTOR          = self::ENTITY.'\Basic\BaseContractor';
+    public const ENTITY_SPLIT_CONTRACTOR         = self::ENTITY.'\Split\BaseContractor';
+    public const ENTITY_SPLIT_CONTRACTOR_PERSON  = self::ENTITY.'\Split\BaseContractorPerson';
+    public const ENTITY_SPLIT_CONTRACTOR_COMPANY = self::ENTITY.'\Split\BaseContractorCompany';
 
     /**
      * @var array
@@ -51,8 +52,8 @@ class EvrinomaContractorExtension extends Extension
         if ($config['factory'] !== self::ENTITY_FACTORY) {
             $container->removeDefinition('evrinoma.'.$this->getAlias().'.factory');
             $definitionFactory = new Definition($config['factory']);
-            $alias = new Alias('evrinoma.'.$this->getAlias().'.factory');
-            $container->addDefinitions([ 'evrinoma.'.$this->getAlias().'.factory' => $definitionFactory]);
+            $alias             = new Alias('evrinoma.'.$this->getAlias().'.factory');
+            $container->addDefinitions(['evrinoma.'.$this->getAlias().'.factory' => $definitionFactory]);
             $container->addAliases([$config['factory'] => $alias]);
         }
 
@@ -120,8 +121,8 @@ class EvrinomaContractorExtension extends Extension
                 $config['decorates'],
                 [
                     '' => [
-                        'command'  => 'evrinoma.'.$this->getAlias().'.decorates.command',
-                        'query' => 'evrinoma.'.$this->getAlias().'.decorates.query',
+                        'command' => 'evrinoma.'.$this->getAlias().'.decorates.command',
+                        'query'   => 'evrinoma.'.$this->getAlias().'.decorates.query',
                     ],
                 ]
             );
