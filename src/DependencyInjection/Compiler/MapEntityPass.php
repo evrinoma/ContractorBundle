@@ -46,7 +46,7 @@ class MapEntityPass implements CompilerPassInterface
         $referenceAnnotationReader = new Reference('annotations.reader');
 
         $entity = $container->getParameter('evrinoma.contractor.entity');
-        if (strpos(EvrinomaContractorExtension::ENTITY, $entity)) {
+        if (strpos($entity, EvrinomaContractorExtension::ENTITY) !== false) {
 
             $isSplit = $container->getParameter('evrinoma.contractor.split');
 
