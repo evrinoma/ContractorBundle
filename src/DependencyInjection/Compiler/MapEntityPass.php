@@ -51,7 +51,7 @@ class MapEntityPass implements CompilerPassInterface
             $isSplit = $container->getParameter('evrinoma.contractor.split');
 
             if ($isSplit) {
-                $this->loadMetadata($container, $driver, $referenceAnnotationReader, '%s/Model/Split', '%s/Entity/Split');
+                $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Split', '%s/Entity/Split');
 
                 $resolveTargetEntity = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
                 $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [ContractorPersonInterface::class, $container->getParameter('evrinoma.contractor.entity_person'), []]);
@@ -63,7 +63,7 @@ class MapEntityPass implements CompilerPassInterface
 
                 throw new \Exception('This functionality unsupported');
             } else {
-                $this->loadMetadata($container, $driver, $referenceAnnotationReader, '%s/Model/Basic', '%s/Entity/Basic');
+                $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Basic', '%s/Entity/Basic');
                 $this->remapEntity($driver, 'Basic');
             }
         } else {
@@ -84,15 +84,13 @@ class MapEntityPass implements CompilerPassInterface
         $driver->setMethodCalls($calls);
     }
 
-    private function loadMetadata(ContainerBuilder $container, Definition $driver, Reference $referenceAnnotationReader, $formatterModel, $formatterEntity): void
+    private function loadMetadata(Definition $driver, Reference $referenceAnnotationReader, $formatterModel, $formatterEntity): void
     {
         $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterModel, $this->path)]);
         $driver->addMethodCall('addDriver', [$definitionAnnotationDriver, sprintf(str_replace('/', '\\', $formatterModel), $this->nameSpace)]);
 
-        if (in_array($container->getParameter('evrinoma.contractor.entity'), [EvrinomaContractorExtension::ENTITY_BASE_CONTRACTOR, EvrinomaContractorExtension::ENTITY_SPLIT_CONTRACTOR], true)) {
-            $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterEntity, $this->path)]);
-            $driver->addMethodCall('addDriver', [$definitionAnnotationDriver, sprintf(str_replace('/', '\\', $formatterEntity), $this->nameSpace)]);
-        }
+        $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterEntity, $this->path)]);
+        $driver->addMethodCall('addDriver', [$definitionAnnotationDriver, sprintf(str_replace('/', '\\', $formatterEntity), $this->nameSpace)]);
     }
 
     private function remapEntity(Definition $driver, string $mapFolder): void
