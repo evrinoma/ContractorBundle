@@ -10,7 +10,7 @@ use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Factory\ContractorFactoryInterface;
 use Evrinoma\ContractorBundle\Mediator\CommandMediatorInterface;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
-use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
+use Evrinoma\ContractorBundle\Repository\ContractorCommandRepositoryInterface;
 use Evrinoma\UtilsBundle\Rest\RestInterface;
 use Evrinoma\UtilsBundle\Rest\RestTrait;
 use Evrinoma\UtilsBundle\Validator\ValidatorInterface;
@@ -20,22 +20,22 @@ final class CommandManager implements CommandManagerInterface, RestInterface
     use RestTrait;
 
 //region SECTION: Fields
-    private ValidatorInterface            $validator;
-    private ContractorRepositoryInterface $repository;
-    private ContractorFactoryInterface    $factory;
-    private CommandMediatorInterface      $mediator;
+    private ValidatorInterface                   $validator;
+    private ContractorCommandRepositoryInterface $repository;
+    private ContractorFactoryInterface           $factory;
+    private CommandMediatorInterface             $mediator;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * CommandManager constructor.
      *
-     * @param ValidatorInterface            $validator
-     * @param ContractorRepositoryInterface $repository
-     * @param ContractorFactoryInterface    $factory
-     * @param CommandMediatorInterface      $mediator
+     * @param ValidatorInterface                   $validator
+     * @param ContractorCommandRepositoryInterface $repository
+     * @param ContractorFactoryInterface           $factory
+     * @param CommandMediatorInterface             $mediator
      */
-    public function __construct(ValidatorInterface $validator, ContractorRepositoryInterface $repository, ContractorFactoryInterface $factory, CommandMediatorInterface $mediator)
+    public function __construct(ValidatorInterface $validator, ContractorCommandRepositoryInterface $repository, ContractorFactoryInterface $factory, CommandMediatorInterface $mediator)
     {
         $this->validator  = $validator;
         $this->repository = $repository;

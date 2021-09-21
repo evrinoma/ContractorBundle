@@ -5,7 +5,7 @@ namespace Evrinoma\ContractorBundle\Manager;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
-use Evrinoma\ContractorBundle\Repository\ContractorRepositoryInterface;
+use Evrinoma\ContractorBundle\Repository\ContractorQueryRepositoryInterface;
 use Evrinoma\UtilsBundle\Rest\RestInterface;
 use Evrinoma\UtilsBundle\Rest\RestTrait;
 
@@ -15,11 +15,11 @@ final class QueryManager implements QueryManagerInterface, RestInterface
     use RestTrait;
 
 //region SECTION: Fields
-    private ContractorRepositoryInterface $repository;
+    private ContractorQueryRepositoryInterface $repository;
 //endregion Fields
 
 //region SECTION: Constructor
-    public function __construct(ContractorRepositoryInterface $repository)
+    public function __construct(ContractorQueryRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
