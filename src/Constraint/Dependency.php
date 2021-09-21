@@ -3,6 +3,7 @@
 
 namespace Evrinoma\ContractorBundle\Constraint;
 
+use Evrinoma\UtilsBundle\Constraint\ConstraintInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class Dependency implements ConstraintInterface

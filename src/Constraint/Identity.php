@@ -3,8 +3,7 @@
 
 namespace Evrinoma\ContractorBundle\Constraint;
 
-
-use Symfony\Component\Validator\Constraints\Length;
+use Evrinoma\UtilsBundle\Constraint\ConstraintInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class Identity implements ConstraintInterface
