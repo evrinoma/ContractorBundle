@@ -11,6 +11,7 @@ use Evrinoma\ContractorBundle\Manager\CommandManagerInterface;
 use Evrinoma\ContractorBundle\Manager\QueryManagerInterface;
 use Evrinoma\DtoBundle\Factory\FactoryDtoInterface;
 use Evrinoma\UtilsBundle\Controller\AbstractApiController;
+use Evrinoma\UtilsBundle\Controller\ApiControllerInterface;
 use Evrinoma\UtilsBundle\Rest\RestInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-final class ContractorApiController extends AbstractApiController
+final class ContractorApiController extends AbstractApiController implements ApiControllerInterface
 {
 //region SECTION: Fields
     /**
@@ -319,7 +320,7 @@ final class ContractorApiController extends AbstractApiController
 //endregion Public
 
 //region SECTION: Private
-    private function setRestStatus(RestInterface $manager, \Exception $e): array
+    public function setRestStatus(RestInterface $manager, \Exception $e): array
     {
         switch (true) {
             case $e instanceof ContractorCannotBeSavedException:
