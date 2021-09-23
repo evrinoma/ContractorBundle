@@ -5,6 +5,7 @@ namespace Evrinoma\ContractorBundle\Repository;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
+use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 
 
 interface ContractorQueryRepositoryInterface
@@ -26,6 +27,6 @@ interface ContractorQueryRepositoryInterface
      * @return
      * @throws ContractorNotFoundException
      */
-    public function find(string $id, $lockMode = null, $lockVersion = null);
+    public function find(string $id, $lockMode = null, $lockVersion = null): ContractorInterface;
 //endregion Find Filters Repository
 }

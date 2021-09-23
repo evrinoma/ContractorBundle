@@ -72,7 +72,7 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
      * @return ContractorInterface
      * @throws ContractorNotFoundException
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ContractorInterface
     {
         /** @var ContractorInterface $contractor */
         $contractor = parent::find($id);
