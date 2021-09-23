@@ -4,46 +4,40 @@
 namespace Evrinoma\ContractorBundle\Mediator;
 
 use Doctrine\ORM\QueryBuilder;
+use Evinoma\UtilsBundle\Mediator\AbstractQueryMediator;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
+use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-class QueryMediator implements QueryMediatorInterface
+
+class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterface
 {
 //region SECTION: Fields
     protected static string $alias = 'contractor';
 //endregion Fields
 
 //region SECTION: Public
-    public function createQuery(ContractorApiDtoInterface $dto, QueryBuilder $builder): void
+    public function createQuery(DtoInterface $dto, QueryBuilder $builder): void
     {
+        $alias = $this->alias();
+
+        /** @var $dto ContractorApiDtoInterface */
         if ($dto->hasActive()) {
-        $builder
-            ->andWhere('contractor.active = :active')
-            ->setParameter('active', $dto->getActive());
+            $builder
+                ->andWhere($alias.'.active = :active')
+                ->setParameter('active', $dto->getActive());
         }
         if ($dto->hasIdentity()) {
-            $builder->andWhere('contractor.identity like :identity')
+            $builder->andWhere($alias.'.identity like :identity')
                 ->setParameter('identity', '%'.$dto->getIdentity().'%');
         }
         if ($dto->hasDependency()) {
-            $builder->andWhere('contractor.dependency like :dependency')
+            $builder->andWhere($alias.'.dependency like :dependency')
                 ->setParameter('dependency', '%'.$dto->getDependency().'%');
         }
         if ($dto->hasName()) {
-            $builder->andWhere('contractor.name = :name')
+            $builder->andWhere($alias.'.name = :name')
                 ->setParameter('name', '%'.$dto->getName().'%');
         }
     }
-
-    public function alias(): string
-    {
-        return self::$alias;
-    }
 //endregion Public
-
-//region SECTION: Getters/Setters
-    public function getResult(ContractorApiDtoInterface $dto, QueryBuilder $builder): array
-    {
-        return $builder->getQuery()->getResult();
-    }
-//endregion Getters/Setters
 }

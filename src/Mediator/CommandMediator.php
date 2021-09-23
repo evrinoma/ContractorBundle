@@ -2,10 +2,11 @@
 
 namespace Evrinoma\ContractorBundle\Mediator;
 
-use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
+use Evinoma\UtilsBundle\Mediator\AbstractCommandMediator;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
+use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-class CommandMediator implements CommandMediatorInterface
+class CommandMediator extends AbstractCommandMediator implements CommandMediatorInterface
 {
 //region SECTION: Protected
     protected function setIsolate(ContractorInterface $entity)
@@ -20,18 +21,18 @@ class CommandMediator implements CommandMediatorInterface
 //endregion Protected
 
 //region SECTION: Public
-    public function onUpdate(ContractorApiDtoInterface $dto, ContractorInterface $entity): ContractorInterface
+    public function onUpdate(DtoInterface $dto, $entity): ContractorInterface
     {
         $this->setIsolate($entity);
 
         return $entity;
     }
 
-    public function onDelete(ContractorApiDtoInterface $dto, ContractorInterface $entity): void
+    public function onDelete(DtoInterface $dto, $entity): void
     {
     }
 
-    public function onCreate(ContractorApiDtoInterface $dto, ContractorInterface $entity): ContractorInterface
+    public function onCreate(DtoInterface $dto, $entity): ContractorInterface
     {
         $this->setIsolate($entity);
 
