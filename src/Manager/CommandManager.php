@@ -48,9 +48,10 @@ final class CommandManager implements CommandManagerInterface, RestInterface
     /**
      * @param ContractorApiDtoInterface $dto
      *
+     * @return ContractorInterface
+     * @throws ContractorCannotBeSavedException
      * @throws ContractorInvalidException
      * @throws ContractorNotFoundException
-     * @throws ContractorCannotBeSavedException
      */
     public function put(ContractorApiDtoInterface $dto): ContractorInterface
     {
