@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class PassMapEntity extends AbstractMapEntity implements CompilerPassInterface
+class MapEntityPass extends AbstractMapEntity implements CompilerPassInterface
 {
 //region SECTION: Public
     /**
