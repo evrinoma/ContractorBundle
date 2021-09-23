@@ -6,12 +6,13 @@ namespace Evrinoma\ContractorBundle\DependencyInjection\Compiler;
 use Evrinoma\ContractorBundle\DependencyInjection\EvrinomaContractorExtension;
 use Evrinoma\ContractorBundle\Model\Split\ContractorCompanyInterface;
 use Evrinoma\ContractorBundle\Model\Split\ContractorPersonInterface;
-use Evrinoma\UtilsBundle\DependencyInjection\Compiler\MapEntityAbstract;
+use Evrinoma\UtilsBundle\DependencyInjection\Compiler\AbstractMapEntity;
+use Evrinoma\UtilsBundle\Exception\MapEntityCannotBeCompiledException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class MapEntityPass extends MapEntityAbstract implements CompilerPassInterface
+class PassMapEntity extends AbstractMapEntity implements CompilerPassInterface
 {
 //region SECTION: Public
     /**
@@ -43,7 +44,7 @@ class MapEntityPass extends MapEntityAbstract implements CompilerPassInterface
 
                 $this->remapMetadata($driver, 'Split');
 
-                throw new \Exception('This functionality unsupported yet');
+                throw new MapEntityCannotBeCompiledException('This functionality unsupported yet');
             } else {
                 $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Basic', '%s/Entity/Basic');
                 $this->remapMetadata($driver, 'Basic');
