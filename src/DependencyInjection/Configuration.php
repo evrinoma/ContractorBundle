@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('entity_person')->cannotBeEmpty()->defaultValue(EvrinomaContractorExtension::ENTITY_SPLIT_CONTRACTOR_PERSON)->end()
             ->scalarNode('entity_company')->cannotBeEmpty()->defaultValue(EvrinomaContractorExtension::ENTITY_SPLIT_CONTRACTOR_COMPANY)->end()
             ->scalarNode('constraints')->defaultTrue()->info('This option is used for enable/disable basic constraints')->end()
-            ->scalarNode('dto')->defaultNull()->info('This option is used for dto class override')->end()
+            ->scalarNode('dto')->cannotBeEmpty()->defaultValue(EvrinomaContractorExtension::DTO_BASE_CONTRACTOR)->info('This option is used for dto class override')->end()
             ->arrayNode('decorates')->addDefaultsIfNotSet()->children()
             ->scalarNode('command')->defaultNull()->info('This option is used for command decoration')->end()
             ->scalarNode('query')->defaultNull()->info('This option is used for query decoration')->end()

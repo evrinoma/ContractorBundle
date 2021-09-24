@@ -26,6 +26,7 @@ class EvrinomaContractorExtension extends Extension
     public const ENTITY_SPLIT_CONTRACTOR         = self::ENTITY.'\Split\BaseContractor';
     public const ENTITY_SPLIT_CONTRACTOR_PERSON  = self::ENTITY.'\Split\BaseContractorPerson';
     public const ENTITY_SPLIT_CONTRACTOR_COMPANY = self::ENTITY.'\Split\BaseContractorCompany';
+    public const DTO_BASE_CONTRACTOR             = ContractorApiDto::class;
 
     /**
      * @var array
@@ -47,7 +48,7 @@ class EvrinomaContractorExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
-        $definitionApiController->setArgument(5, $config['dto'] ?? ContractorApiDto::class);
+        $definitionApiController->setArgument(5, $config['dto']);
 
         if ($config['factory'] !== self::ENTITY_FACTORY) {
             $container->removeDefinition('evrinoma.'.$this->getAlias().'.factory');
@@ -63,23 +64,25 @@ class EvrinomaContractorExtension extends Extension
         $definitionValidator = $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
         $definitionValidator->setArgument(0, $config['entity']);
 
-        $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
+        $doctrineRegistry = null;
 
         if (isset(self::$doctrineDrivers[$config['db_driver']])) {
             $loader->load('doctrine.yml');
             $container->setAlias('evrinoma.'.$this->getAlias().'.doctrine_registry', new Alias(self::$doctrineDrivers[$config['db_driver']]['registry'], false));
+            $doctrineRegistry = new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry');
+            $container->setParameter('evrinoma.'.$this->getAlias().'.backend_type_'.$config['db_driver'], true);
+            $objectManager = $container->getDefinition('evrinoma.'.$this->getAlias().'.object_manager');
+            $objectManager->setFactory([$doctrineRegistry, 'getManager']);
+        }
 
+        if ($doctrineRegistry) {
+            $definitionRepository    = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
             $definitionQueryMediator = $container->getDefinition('evrinoma.'.$this->getAlias().'.query.mediator');
-
-            $definitionRepository->setArgument(0, new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'));
+            $definitionRepository->setArgument(0, $doctrineRegistry);
             $definitionRepository->setArgument(1, $config['entity']);
             $definitionRepository->setArgument(2, $definitionQueryMediator);
-
-            $container->setParameter('evrinoma.'.$this->getAlias().'.backend_type_'.$config['db_driver'], true);
-
-            $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.object_manager');
-            $definitionRepository->setFactory([new Reference('evrinoma.'.$this->getAlias().'.doctrine_registry'), 'getManager']);
         }
+
 
         if ($config['constraints']) {
             $loader->load('validation.yml');
