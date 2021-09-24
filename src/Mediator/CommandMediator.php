@@ -2,7 +2,7 @@
 
 namespace Evrinoma\ContractorBundle\Mediator;
 
-use Evinoma\UtilsBundle\Mediator\AbstractCommandMediator;
+use Evrinoma\UtilsBundle\Mediator\AbstractCommandMediator;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
