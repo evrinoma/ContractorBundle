@@ -4,7 +4,7 @@
 namespace Evrinoma\ContractorBundle\Mediator;
 
 use Doctrine\ORM\QueryBuilder;
-use Evinoma\UtilsBundle\Mediator\AbstractQueryMediator;
+use Evrinoma\UtilsBundle\Mediator\AbstractQueryMediator;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
