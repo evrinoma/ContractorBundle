@@ -25,12 +25,18 @@ services:
   Evrinoma\ContractorBundle\Mediator\QueryMediator:
     alias: evrinoma.contractor.query.mediator
 
+  Evrinoma\ContractorBundle\Mediator\QueryMediatorInterface:
+    alias: evrinoma.contractor.query.mediator
+
   evrinoma.contractor.query.mediator:
     class: Evrinoma\ContractorBundle\Mediator\QueryMediator
     public: true
     arguments:
 
   Evrinoma\ContractorBundle\Mediator\CommandMediator:
+    alias: evrinoma.contractor.command.mediator
+
+  Evrinoma\ContractorBundle\Mediator\CommandMediatorInterface:
     alias: evrinoma.contractor.command.mediator
 
   evrinoma.contractor.command.mediator:
