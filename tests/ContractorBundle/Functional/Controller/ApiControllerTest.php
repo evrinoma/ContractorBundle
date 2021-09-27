@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group functional
  */
-class ApiControllerTest extends AbstractControllerTest
+class ApiControllerTest extends AbstractControllerTest implements ApiControllerTestInterface
 {
 //region SECTION: Fields
     private array $default = [];
@@ -237,7 +237,7 @@ class ApiControllerTest extends AbstractControllerTest
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testPostDublicate(): void
+    public function testPostDuplicate(): void
     {
         $this->createIdentity();
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
