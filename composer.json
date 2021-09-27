@@ -42,12 +42,17 @@
     "doctrine/orm": "^2.8",
     "doctrine/doctrine-fixtures-bundle": "^3.4",
     "jms/serializer-bundle": "^3.1",
-    "symfony/dotenv": "5.2.*"
+    "symfony/dotenv": "5.2.*",
+    "evrinoma/test-utils-bundle": "dev-master"
   },
   "repositories": {
     "dto": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/DtoBundle.git"
+    },
+    "test-utils": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/TestUtilsBundle.git"
     },
     "utils": {
       "type": "vcs",
