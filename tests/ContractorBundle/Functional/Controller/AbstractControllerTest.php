@@ -5,6 +5,7 @@ namespace Evrinoma\ContractorBundle\Tests\Functional\Controller;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Evrinoma\ContractorBundle\Fixtures\ContractorFixtures;
 use Evrinoma\ContractorBundle\Tests\Functional\CaseTest;
@@ -13,9 +14,9 @@ abstract class AbstractControllerTest extends CaseTest
 {
 //region SECTION: Fields
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
-    protected EntityManager $entityManager;
+    protected EntityManagerInterface $entityManager;
 //endregion Fields
 
 //region SECTION: Protected
