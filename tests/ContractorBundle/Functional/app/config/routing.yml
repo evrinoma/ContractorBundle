@@ -1,2 +1,2 @@
 contractor:
-    resource: "@ContractorBundle/Resources/config/routes.yml"
+    resource: "@EvrinomaContractorBundle/Resources/config/routes.yml"
