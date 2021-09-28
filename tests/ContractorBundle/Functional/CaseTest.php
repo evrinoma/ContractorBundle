@@ -2,6 +2,10 @@
 
 namespace Evrinoma\ContractorBundle\Tests\Functional;
 
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\AbstractBrowser;
 
@@ -11,10 +15,15 @@ use Symfony\Component\BrowserKit\AbstractBrowser;
 abstract class CaseTest extends WebTestCase
 {
 //region SECTION: Fields
+    protected static string $kernelPath = __DIR__.'/app/Kernel.php';
     /**
      * @var AbstractBrowser
      */
     protected $client;
+    /**
+     * @var EntityManagerInterface
+     */
+    protected EntityManagerInterface $entityManager;
 //endregion Fields
 
 //region SECTION: Protected
@@ -23,7 +32,7 @@ abstract class CaseTest extends WebTestCase
      */
     protected static function createKernel(array $options = [])
     {
-        require_once __DIR__.'/app/Kernel.php';
+        require_once static::$kernelPath;
 
         return new Kernel('test', true);
     }
@@ -38,7 +47,39 @@ abstract class CaseTest extends WebTestCase
 
         return $this->client;
     }
+
+    protected function load(Fixture $fixture): void
+    {
+        $fixture->load($this->entityManager);
+    }
 //endregion Protected
 
+//region SECTION: Public
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        $purger = new ORMPurger($this->entityManager);
+        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        $purger->purge();
+    }
+//endregion Public
+
+//region SECTION: Getters/Setters
+    public function setUp(): void
+    {
+        $this->client = $this->createAuthenticatedClient();
+
+        $kernel = self::bootKernel();
+
+        $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
+
+        $schemaTool = new SchemaTool($this->entityManager);
+        $metadata   = $this->entityManager->getMetadataFactory()->getAllMetadata();
+
+        $schemaTool->dropSchema($metadata);
+        $schemaTool->createSchema($metadata);
+    }
+//endregion Getters/Setters
 
 }

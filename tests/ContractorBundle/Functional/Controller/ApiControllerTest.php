@@ -4,19 +4,27 @@ namespace Evrinoma\ContractorBundle\Tests\Functional\Controller;
 
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
+use Evrinoma\ContractorBundle\Fixtures\ContractorFixtures;
+use Evrinoma\ContractorBundle\Tests\Functional\CaseTest;
+use Evrinoma\TestUtilsBundle\Controller\ApiControllerTestInterface;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group functional
  */
-class ApiControllerTest extends AbstractControllerTest implements ApiControllerTestInterface
+class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
 {
 //region SECTION: Fields
     private array $default = [];
 //endregion Fields
 
 //region SECTION: Protected
+    protected function loadContractorFixtures(): void
+    {
+        $this->load(new ContractorFixtures());
+    }
+
     protected function getDtoClass(): string
     {
         return ContractorApiDto::class;
@@ -85,11 +93,11 @@ class ApiControllerTest extends AbstractControllerTest implements ApiControllerT
         $query = $this->createIdentityDependencyIsolate();
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
 
-        $response = $this->criteria( ["identity" => "1234567890"]);
+        $response = $this->criteria(["identity" => "1234567890"]);
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertArrayHasKey('data', $response);
         $this->assertCount(2, $response['data']);
-        $response = $this->criteria( ["identity" => md5($query['name'])]);
+        $response = $this->criteria(["identity" => md5($query['name'])]);
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertArrayHasKey('data', $response);
         $this->assertCount(1, $response['data']);
@@ -102,7 +110,7 @@ class ApiControllerTest extends AbstractControllerTest implements ApiControllerT
         $this->createIdentityDependency();
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
 
-        $response = $this->criteria( ["identity" => "0987654321"]);
+        $response = $this->criteria(["identity" => "0987654321"]);
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertArrayHasKey('data', $response);
     }

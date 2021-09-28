@@ -12,6 +12,13 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
  */
 class Kernel extends BaseKernel
 {
+//region SECTION: Fields
+    protected string $rootDir      = __DIR__;
+    protected string $bundlePrefix = 'ContractorBundle';
+    private ?string  $cacheDir     = null;
+    private ?string  $logDir       = null;
+//endregion Fields
+
 //region SECTION: Protected
     protected function build(ContainerBuilder $container)
     {
@@ -43,22 +50,33 @@ class Kernel extends BaseKernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config.yml');
+        $loader->load($this->getRootDir().'/config/config.yml');
     }
 //endregion Public
 
-//region SECTION: Getters/Setters
-    public function getRootDir()
+//region SECTION: Private
+    private function getRootDir(): string
     {
-        return __DIR__;
+        return $this->rootDir;
     }
 
+    private function getBundlePrefix(): string
+    {
+        return $this->bundlePrefix;
+    }
+//endregion Private
+
+//region SECTION: Getters/Setters
     /**
      * {@inheritdoc}
      */
     public function getCacheDir()
     {
-        return sys_get_temp_dir().'/ContractorBundle/cache';
+        if ($this->cacheDir === null) {
+            $this->cacheDir = sys_get_temp_dir().'/'.$this->getBundlePrefix().'/cache';
+        }
+
+        return $this->cacheDir;
     }
 
     /**
@@ -66,7 +84,11 @@ class Kernel extends BaseKernel
      */
     public function getLogDir()
     {
-        return sys_get_temp_dir().'/ContractorBundle/logs';
+        if ($this->logDir === null) {
+            $this->logDir = sys_get_temp_dir().'/'.$this->getBundlePrefix().'/logs';
+        }
+
+        return $this->logDir;
     }
 //endregion Getters/Setters
 }
