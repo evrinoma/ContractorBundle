@@ -5,7 +5,7 @@ namespace Evrinoma\ContractorBundle\Tests\Functional\Controller;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Evrinoma\ContractorBundle\Fixtures\ContractorFixtures;
-use Evrinoma\ContractorBundle\Tests\Functional\CaseTest;
+use Evrinoma\ContractorBundle\Tests\Functional\WebCaseTest;
 use Evrinoma\TestUtilsBundle\Controller\ApiControllerTestInterface;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group functional
  */
-class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
+class ApiControllerTest extends WebCaseTest implements ApiControllerTestInterface
 {
 //region SECTION: Fields
     private array $default = [];

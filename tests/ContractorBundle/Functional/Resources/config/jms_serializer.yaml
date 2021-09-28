@@ -1,0 +1,6 @@
+jms_serializer:
+  metadata:
+    directories:
+      ContractorBundle:
+        namespace_prefix: "Evrinoma\\ContractorBundle"
+        path: '%kernel.root_dir%/Resources/config/serializer/ContractorBundle'

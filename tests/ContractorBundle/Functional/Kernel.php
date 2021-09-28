@@ -11,6 +11,7 @@ class Kernel extends AbstractApiKernel
 {
 //region SECTION: Fields
     protected string $bundlePrefix = 'ContractorBundle';
+    protected string $rootDir = __DIR__;
 //endregion Fields
 
 //region SECTION: Public
@@ -21,4 +22,10 @@ class Kernel extends AbstractApiKernel
     {
         return array_merge(parent::registerBundles(), [new \Evrinoma\DtoBundle\EvrinomaDtoBundle(), new \Evrinoma\ContractorBundle\EvrinomaContractorBundle()]);
     }
+
+    protected function getBundleConfig(): array
+    {
+        return  ['framework.yaml', 'jms_serializer.yaml'];
+    }
+
 }
