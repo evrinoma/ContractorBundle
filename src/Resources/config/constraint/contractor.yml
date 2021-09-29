@@ -1,0 +1,14 @@
+services:
+  evrinoma.contractor.constraint.identity:
+    class: Evrinoma\ContractorBundle\Constraint\Identity
+
+  evrinoma.contractor.constraint.dependency:
+    class: Evrinoma\ContractorBundle\Constraint\Dependency
+
+  evrinoma.contractor.constraint.name:
+    class: Evrinoma\ContractorBundle\Constraint\Name
+
+  evrinoma.contractor.constraint.active:
+    class: Evrinoma\ContractorBundle\Constraint\Active
+
+
