@@ -26,7 +26,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
         return ContractorApiDto::class;
     }
 
-    protected function createContractor(array $query): void
+    protected function queryCreateContractor(array $query): void
     {
         $this->client->restart();
 
@@ -34,28 +34,28 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
     }
 
 
-    protected function deleteContractor(array $query): void
+    protected function queryDeleteContractor(array $query): void
     {
         $this->client->restart();
 
         $this->client->request('DELETE', 'evrinoma/api/contractor/delete', $query);
     }
 
-    protected function putContractor(array $query): void
+    protected function queryPutContractor(array $query): void
     {
         $this->client->restart();
 
         $this->client->request('PUT', 'evrinoma/api/contractor/save', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode($query));
     }
 
-    protected function getContractor(array $query): void
+    protected function queryGetContractor(array $query): void
     {
         $this->client->restart();
 
         $this->client->request('GET', 'evrinoma/api/contractor', $query);
     }
 
-    protected function criteriaContractor(array $query): void
+    protected function queryCriteriaContractor(array $query): void
     {
         $this->client->restart();
 
@@ -264,21 +264,21 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
 //region SECTION: Private
     private function deleteById(string $id): array
     {
-        $this->deleteContractor(["class" => $this->getDtoClass(), "id" => $id,]);
+        $this->queryDeleteContractor(["class" => $this->getDtoClass(), "id" => $id,]);
 
         return json_decode($this->client->getResponse()->getContent(), true);
     }
 
     private function getById(int $id): array
     {
-        $this->getContractor(["class" => $this->getDtoClass(), "id" => $id,]);
+        $this->queryGetContractor(["class" => $this->getDtoClass(), "id" => $id,]);
 
         return json_decode($this->client->getResponse()->getContent(), true);
     }
 
     private function criteria(array $query): array
     {
-        $this->criteriaContractor(array_merge(["class" => $this->getDtoClass()], $query));
+        $this->queryCriteriaContractor(array_merge(["class" => $this->getDtoClass()], $query));
 
         return json_decode($this->client->getResponse()->getContent(), true);
     }
@@ -286,7 +286,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
 
     private function put(array $query): array
     {
-        $this->putContractor($query);
+        $this->queryPutContractor($query);
 
         return $query;
     }
@@ -296,7 +296,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
     {
         $query = $this->getDefault(["class" => $this->getDtoClass(), "identity" => "1234567890",]);
 
-        $this->createContractor($query);
+        $this->queryCreateContractor($query);
 
         return $query;
     }
@@ -305,7 +305,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
     {
         $query = $this->getDefault(["class" => $this->getDtoClass(), "identity" => "1234567890", "dependency" => "1234567890"]);
 
-        $this->createContractor($query);
+        $this->queryCreateContractor($query);
 
         return $query;
     }
@@ -314,7 +314,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
     {
         $query = $this->getDefault(["class" => $this->getDtoClass(),]);
 
-        $this->createContractor($query);
+        $this->queryCreateContractor($query);
 
         return $query;
     }
@@ -323,7 +323,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
     {
         $query = $this->getDefault([]);
 
-        $this->createContractor($query);
+        $this->queryCreateContractor($query);
 
         return $query;
     }
