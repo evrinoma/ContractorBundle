@@ -15,10 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
 {
-//region SECTION: Fields
-    private array $default = [];
-//endregion Fields
-
 //region SECTION: Protected
     protected function loadContractorFixtures(): void
     {
@@ -28,11 +24,6 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
     protected function getDtoClass(): string
     {
         return ContractorApiDto::class;
-    }
-
-    protected function getDefault(array $extend): array
-    {
-        return array_merge($extend, unserialize(serialize($this->default)));
     }
 
     protected function createContractor(array $query): void
