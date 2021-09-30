@@ -2,26 +2,26 @@ Evrinoma\ContractorBundle\Model\Basic\AbstractContractor:
   exclusion_policy: ALL
   properties:
     id:
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor, app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor ]
       expose: true
     identity:
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor, app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor ]
       expose: true
     isolate:
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor, app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor ]
       expose: true
     dependency:
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor, app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor ]
       expose: true
     name:
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor, app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor ]
       expose: true
     createdAt:
       type: DateTimeImmutable<'Y-m-d H:i'>
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor , app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor  ]
     updatedAt:
       type: DateTimeImmutable<'Y-m-d H:i'>
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor, app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor ]
     active:
-      groups: [ api_get_contractor, api_post_contractor, api_put_contractor, app_get_basic_contractor ]
+      groups: [ api_get_contractor, api_post_contractor, api_put_contractor ]
       expose: true
