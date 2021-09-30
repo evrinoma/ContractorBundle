@@ -19,6 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, ApiBrowserTestInterface, ApiHelperTestInterface
 {
+    public const API_GET      = 'evrinoma/api/contractor';
+    public const API_CRITERIA = 'evrinoma/api/contractor/criteria';
+    public const API_DELETE   = 'evrinoma/api/contractor/delete';
+    public const API_PUT      = 'evrinoma/api/contractor/save';
+    public const API_POST     = 'evrinoma/api/contractor/create';
+
     use ApiBrowserTestTrait, ApiHelperTestTrait;
 
 //region SECTION: Protected
@@ -267,16 +273,4 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 
         return $this->post($query);
     }
-
-//region SECTION: Getters/Setters
-    public function setUp(): void
-    {
-        parent::setUp();
-        static::$getUrl      = 'evrinoma/api/contractor';
-        static::$criteriaUrl = 'evrinoma/api/contractor/criteria';
-        static::$deleteUrl   = 'evrinoma/api/contractor/delete';
-        static::$putUrl      = 'evrinoma/api/contractor/save';
-        static::$postUrl     = 'evrinoma/api/contractor/create';
-    }
-//endregion Getters/Setters
 }
