@@ -15,13 +15,13 @@ class DecoratorPass extends AbstractRecursivePass
      */
     public function process(ContainerBuilder $container)
     {
-        $decoratorQuery = $container->getParameter('evrinoma.contractor.decorates.query');
+        $decoratorQuery = $container->getParameter('evrinoma.'.EvrinomaContractorBundle::CONTRACTOR_BUNDLE.'.decorates.query');
         if ($decoratorQuery) {
             $queryMediator = $container->getDefinition($decoratorQuery);
             $repository    = $container->getDefinition('evrinoma.'.EvrinomaContractorBundle::CONTRACTOR_BUNDLE.'.repository');
             $repository->setArgument(2, $queryMediator);
         }
-        $decoratorCommand = $container->getParameter('evrinoma.contractor.decorates.command');
+        $decoratorCommand = $container->getParameter('evrinoma.'.EvrinomaContractorBundle::CONTRACTOR_BUNDLE.'.decorates.command');
         if ($decoratorCommand) {
             $commandMediator = $container->getDefinition($decoratorCommand);
             $commandManager  = $container->getDefinition('evrinoma.'.EvrinomaContractorBundle::CONTRACTOR_BUNDLE.'.command.manager');
