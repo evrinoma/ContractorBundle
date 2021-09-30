@@ -86,7 +86,6 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 
         $find = $this->get(1);
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertArrayHasKey('data', $find);
 
         $this->assertArrayHasKey('data', $created);
         $this->assertArrayHasKey('data', $find);
