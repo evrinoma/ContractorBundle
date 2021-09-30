@@ -32,7 +32,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         return ContractorApiDto::class;
     }
 
-    protected static function setDefault(): array
+    protected static function defaultData(): array
     {
         return [
             "name"       => "test company",
@@ -273,11 +273,11 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     public function setUp(): void
     {
         parent::setUp();
-        $this->getUrl      = 'evrinoma/api/contractor';
-        $this->criteriaUrl = 'evrinoma/api/contractor/criteria';
-        $this->deleteUrl   = 'evrinoma/api/contractor/delete';
-        $this->putUrl      = 'evrinoma/api/contractor/save';
-        $this->postUrl     = 'evrinoma/api/contractor/create';
+        static::$getUrl      = 'evrinoma/api/contractor';
+        static::$criteriaUrl = 'evrinoma/api/contractor/criteria';
+        static::$deleteUrl   = 'evrinoma/api/contractor/delete';
+        static::$putUrl      = 'evrinoma/api/contractor/save';
+        static::$postUrl     = 'evrinoma/api/contractor/create';
     }
 //endregion Getters/Setters
 }
