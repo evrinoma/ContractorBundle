@@ -26,6 +26,18 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
         return ContractorApiDto::class;
     }
 
+
+    protected function setDefault(): array
+    {
+        return [
+            "name"       => "test company",
+            "id"         => 1,
+            "active"     => "a",
+            "created_at" => "2021-06-08 17:46",
+
+        ];
+    }
+
     protected function queryCreateContractor(array $query): void
     {
         $this->client->restart();
@@ -60,17 +72,6 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
         $this->client->restart();
 
         $this->client->request('GET', 'evrinoma/api/contractor/criteria', $query);
-    }
-
-    protected function randomContractor(): array
-    {
-        return [
-            "name"       => "test company",
-            "id"         => 1,
-            "active"     => "a",
-            "created_at" => "2021-06-08 17:46",
-
-        ];
     }
 //endregion Protected
 
@@ -326,15 +327,6 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface
         $this->queryCreateContractor($query);
 
         return $query;
-    }
-
-
-//region SECTION: Getters/Setters
-    public function setUp(): void
-    {
-        $this->default = $this->randomContractor();
-
-        parent::setUp();
     }
 //endregion Getters/Setters
 }
