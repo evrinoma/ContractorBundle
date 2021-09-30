@@ -34,9 +34,9 @@ Actions в контроллере разбыиты на две группы
     
     1. api_get_contractor - получение контрагентов
     2. api_post_contractor - создание контрагента
-    3. pi_put_contractor -  редактирование контрагента
+    3. api_put_contractor -  редактирование контрагента
 
-статусы:
+#Статусы:
 
     создание:
         контрагент создан HTTP_CREATED 201
@@ -54,7 +54,7 @@ Actions в контроллере разбыиты на две группы
         все остальные ошибки возвращаются как HTTP_BAD_REQUEST 400
 
 
-Тесты:
+#Тесты:
     
     composer install --dev
     /usr/bin/php vendor/phpunit/phpunit/phpunit --bootstrap src/Tests/bootstrap.php --configuration phpunit.xml.dist src/Tests --teamcity
