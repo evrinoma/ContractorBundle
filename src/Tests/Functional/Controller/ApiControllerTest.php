@@ -28,9 +28,9 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     use ApiBrowserTestTrait, ApiHelperTestTrait;
 
 //region SECTION: Protected
-    protected function loadContractorFixtures(): void
+    protected function getFixtures(): array
     {
-        $this->load(new ContractorFixtures());
+        return [];
     }
 
     protected static function getDtoClass(): string
