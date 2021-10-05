@@ -5,20 +5,17 @@ namespace Evrinoma\ContractorBundle\Dto;
 use Evrinoma\ContractorBundle\Model\ContractorModelInterface;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\DtoCommon\ValueObject\ActiveTrait;
+use Evrinoma\DtoCommon\ValueObject\DependencyTrait;
+use Evrinoma\DtoCommon\ValueObject\IdentityTrait;
+use Evrinoma\DtoCommon\ValueObject\IdTrait;
+use Evrinoma\DtoCommon\ValueObject\NameTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 {
 //region SECTION: Fields
-    private string $id = '';
-
-    private string $identity = '';
-
-    private string $dependency = '';
-
-    private string $name = '';
-
-    private string $active = '';
+    use IdTrait, ActiveTrait, DependencyTrait, IdentityTrait, NameTrait;
 //endregion Fields
 
 //region SECTION: Protected
@@ -83,39 +80,6 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     }
 //endregion Protected
 
-//region SECTION: Public
-    /**
-     * @return bool
-     */
-    public function hasId(): bool
-    {
-        return $this->id !== '';
-    }
-
-    public function hasName(): bool
-    {
-        return $this->name !== '';
-    }
-
-    public function hasDependency(): bool
-    {
-        return $this->dependency !== '';
-    }
-
-    public function hasIdentity(): bool
-    {
-        return $this->identity !== '';
-    }
-
-    public function hasActive(): bool
-    {
-        return $this->active !== '';
-    }
-//endregion Public
-
-//region SECTION: Private
-//endregion Private
-
 //region SECTION: Dto
     public function toDto(Request $request): DtoInterface
     {
@@ -152,45 +116,4 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
         return $this;
     }
 //endregion SECTION: Dto
-
-//region SECTION: Getters/Setters
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActive(): string
-    {
-        return $this->active;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentity(): string
-    {
-        return $this->identity;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDependency(): string
-    {
-        return $this->dependency;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
 }
