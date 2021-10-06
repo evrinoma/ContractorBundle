@@ -20,7 +20,7 @@ class EvrinomaContractorExtension extends Extension
     use HelperTrait;
 
 //region SECTION: Fields
-    public const ENTITY_FACTORY                  = 'Evrinoma\ContractorBundle\Factory\ContractorFactory';
+    public const FACTORY_CONTRACTOR              = 'Evrinoma\ContractorBundle\Factory\ContractorFactory';
     public const ENTITY                          = 'Evrinoma\ContractorBundle\Entity';
     public const ENTITY_BASE_CONTRACTOR          = self::ENTITY.'\Basic\BaseContractor';
     public const ENTITY_SPLIT_CONTRACTOR         = self::ENTITY.'\Split\BaseContractor';
@@ -50,7 +50,7 @@ class EvrinomaContractorExtension extends Extension
         $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
         $definitionApiController->setArgument(5, $config['dto']);
 
-        if ($config['factory'] !== self::ENTITY_FACTORY) {
+        if ($config['factory'] !== self::FACTORY_CONTRACTOR) {
             $container->removeDefinition('evrinoma.'.$this->getAlias().'.factory');
             $definitionFactory = new Definition($config['factory']);
             $alias             = new Alias('evrinoma.'.$this->getAlias().'.factory');
