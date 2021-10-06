@@ -2,7 +2,7 @@
 
 namespace Evrinoma\ContractorBundle\Dto;
 
-use Evrinoma\ContractorBundle\Model\ContractorModelInterface;
+use Evrinoma\ContractorBundle\Model\ModelInterface;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Evrinoma\DtoCommon\ValueObject\ActiveTrait;
@@ -86,11 +86,11 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
         $class = $request->get(DtoInterface::DTO_CLASS);
 
         if ($class === $this->getClass()) {
-            $id         = $request->get(ContractorModelInterface::ID);
-            $identity   = $request->get(ContractorModelInterface::IDENTITY);
-            $dependency = $request->get(ContractorModelInterface::DEPENDENCY);
-            $name       = $request->get(ContractorModelInterface::NAME);
-            $active     = $request->get(ContractorModelInterface::ACTIVE);
+            $id         = $request->get(ModelInterface::ID);
+            $identity   = $request->get(ModelInterface::IDENTITY);
+            $dependency = $request->get(ModelInterface::DEPENDENCY);
+            $name       = $request->get(ModelInterface::NAME);
+            $active     = $request->get(ModelInterface::ACTIVE);
 
             if ($active) {
                 $this->setActive($active);

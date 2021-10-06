@@ -2,7 +2,7 @@
 
 namespace Evrinoma\ContractorBundle\Model;
 
-interface ContractorModelInterface
+interface ModelInterface
 {
 //region SECTION: Fields
     public const ID         = 'id';
