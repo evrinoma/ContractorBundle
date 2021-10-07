@@ -4,7 +4,6 @@ namespace Evrinoma\ContractorBundle\Tests\Functional\Controller;
 
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
-use Evrinoma\ContractorBundle\Fixtures\ContractorFixtures;
 use Evrinoma\ContractorBundle\Tests\Functional\CaseTest;
 use Evrinoma\TestUtilsBundle\Browser\ApiBrowserTestInterface;
 use Evrinoma\TestUtilsBundle\Browser\ApiBrowserTestTrait;
@@ -19,11 +18,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, ApiBrowserTestInterface, ApiHelperTestInterface
 {
+//region SECTION: Fields
     public const API_GET      = 'evrinoma/api/contractor';
     public const API_CRITERIA = 'evrinoma/api/contractor/criteria';
     public const API_DELETE   = 'evrinoma/api/contractor/delete';
     public const API_PUT      = 'evrinoma/api/contractor/save';
     public const API_POST     = 'evrinoma/api/contractor/create';
+//endregion Fields
 
     use ApiBrowserTestTrait, ApiHelperTestTrait;
 
