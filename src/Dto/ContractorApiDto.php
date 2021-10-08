@@ -32,11 +32,11 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
     }
 
     /**
-     * @param string $id
+     * @param int|null $id
      *
      * @return ContractorApiDto
      */
-    protected function setId(string $id): ContractorApiDto
+    protected function setId(?int $id): ContractorApiDto
     {
         $this->id = $id;
 
