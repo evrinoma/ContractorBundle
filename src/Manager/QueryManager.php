@@ -4,6 +4,7 @@ namespace Evrinoma\ContractorBundle\Manager;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
+use Evrinoma\ContractorBundle\Exception\ContractorProxyException;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 use Evrinoma\ContractorBundle\Repository\ContractorQueryRepositoryInterface;
 use Evrinoma\UtilsBundle\Rest\RestInterface;
@@ -56,6 +57,23 @@ final class QueryManager implements QueryManagerInterface, RestInterface
         try {
             $contractor = $this->repository->find($dto->getId());
         } catch (ContractorNotFoundException $e) {
+            throw $e;
+        }
+
+        return $contractor;
+    }
+
+    /**
+     * @param ContractorApiDtoInterface $dto
+     *
+     * @return ContractorInterface
+     * @throws ContractorProxyException
+     */
+    public function proxy(ContractorApiDtoInterface $dto): ContractorInterface
+    {
+        try {
+            $contractor = $this->repository->proxy($dto->getId());
+        } catch (ContractorProxyException $e) {
             throw $e;
         }
 

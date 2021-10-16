@@ -9,6 +9,7 @@ use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeRemovedException;
 use Evrinoma\ContractorBundle\Exception\ContractorCannotBeSavedException;
 use Evrinoma\ContractorBundle\Exception\ContractorNotFoundException;
+use Evrinoma\ContractorBundle\Exception\ContractorProxyException;
 use Evrinoma\ContractorBundle\Mediator\QueryMediatorInterface;
 use Evrinoma\ContractorBundle\Model\Basic\ContractorInterface;
 
@@ -62,6 +63,19 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
         $contractor->setActiveToDelete();
 
         return true;
+    }
+
+    public function proxy(string $id): ContractorInterface
+    {
+        $em = $this->getEntityManager();
+
+        $contractor = $em->getReference($this->getEntityName(), $id);
+
+        if (!$em->contains($contractor)) {
+            throw new ContractorProxyException("Proxy doesn't exist with $id");
+        }
+
+        return $contractor;
     }
 //endregion Public
 
