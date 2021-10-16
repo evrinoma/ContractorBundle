@@ -21,62 +21,42 @@ class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 //region SECTION: Protected
     /**
      * @param string $active
-     *
-     * @return ContractorApiDto
      */
-    protected function setActive(string $active): ContractorApiDto
+    protected function setActive(string $active): void
     {
         $this->active = $active;
-
-        return $this;
     }
 
     /**
      * @param int|null $id
-     *
-     * @return ContractorApiDto
      */
-    protected function setId(?int $id): ContractorApiDto
+    protected function setId(?int $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
      * @param string $identity
-     *
-     * @return ContractorApiDto
      */
-    protected function setIdentity(string $identity): ContractorApiDto
+    protected function setIdentity(string $identity): void
     {
         $this->identity = $identity;
-
-        return $this;
     }
 
     /**
      * @param string $dependency
-     *
-     * @return ContractorApiDto
      */
-    protected function setDependency(string $dependency): ContractorApiDto
+    protected function setDependency(string $dependency): void
     {
         $this->dependency = $dependency;
-
-        return $this;
     }
 
     /**
      * @param string $name
-     *
-     * @return ContractorApiDto
      */
-    protected function setName(string $name): ContractorApiDto
+    protected function setName(string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 //endregion Protected
 
