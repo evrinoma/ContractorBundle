@@ -34,12 +34,12 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         return [];
     }
 
-    protected static function getDtoClass(): string
+    public static function getDtoClass(): string
     {
         return ContractorApiDto::class;
     }
 
-    protected static function defaultData(): array
+    public static function defaultData(): array
     {
         return [
             "name"       => "test company",
