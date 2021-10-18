@@ -35,7 +35,7 @@ class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterf
                 ->setParameter('dependency', '%'.$dto->getDependency().'%');
         }
         if ($dto->hasName()) {
-            $builder->andWhere($alias.'.name = :name')
+            $builder->andWhere($alias.'.name like :name')
                 ->setParameter('name', '%'.$dto->getName().'%');
         }
     }
