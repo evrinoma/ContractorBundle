@@ -29,7 +29,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     use ApiBrowserTestTrait, ApiHelperTestTrait;
 
 //region SECTION: Protected
-    protected function getFixtures(): array
+    public static function getFixtures(): array
     {
         return [];
     }
@@ -64,7 +64,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 
     public function testCriteria(): void
     {
-        $query = $this->getDefault();
+        $query = static::getDefault();
 
         $this->createIdentity();
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
@@ -266,21 +266,21 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 //region SECTION: Private
     private function createIdentity(): array
     {
-        $query = $this->getDefault(["identity" => "1234567890",]);
+        $query = static::getDefault(["identity" => "1234567890",]);
 
         return $this->post($query);
     }
 
     private function createIdentityDependency(): array
     {
-        $query = $this->getDefault(["identity" => "1234567890", "dependency" => "1234567890"]);
+        $query = static::getDefault(["identity" => "1234567890", "dependency" => "1234567890"]);
 
         return $this->post($query);;
     }
 
     private function createIdentityDependencyIsolate(): array
     {
-        $query = $this->getDefault();
+        $query = static::getDefault();
 
         return $this->post($query);
     }
