@@ -52,6 +52,16 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 //endregion Protected
 
 //region SECTION: Public
+    public function testPost(): void
+    {
+        $this->createIdentity();
+        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->createIdentityDependency();
+        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->createIdentityDependencyIsolate();
+        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+    }
+
     public function testCriteria(): void
     {
         $query = $this->getDefault();
