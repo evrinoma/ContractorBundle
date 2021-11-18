@@ -31,9 +31,9 @@ class ContractorFactory implements ContractorFactoryInterface
         $contractor = new self::$entityClass;
 
         $contractor
-            ->setIdentity($dto->getIdentity())
-            ->setDependency($dto->getDependency())
-            ->setName($dto->getName())
+            ->setIdentity(trim($dto->getIdentity()))
+            ->setDependency(trim($dto->getDependency()))
+            ->setName(trim($dto->getName()))
             ->setCreatedAt(new \DateTimeImmutable())
             ->setActiveToActive();
 

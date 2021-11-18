@@ -62,9 +62,9 @@ final class CommandManager implements CommandManagerInterface, RestInterface
         }
 
         $contractor
-            ->setIdentity($dto->getIdentity())
-            ->setDependency($dto->getDependency())
-            ->setName($dto->getName())
+            ->setIdentity(trim($dto->getIdentity()))
+            ->setDependency(trim($dto->getDependency()))
+            ->setName(trim($dto->getName()))
             ->setUpdatedAt(new \DateTimeImmutable())
             ->setActive($dto->getActive());
 
