@@ -8,15 +8,15 @@ use Evrinoma\ContractorBundle\Tests\Functional\CaseTest;
 use Evrinoma\TestUtilsBundle\Browser\ApiBrowserTestInterface;
 use Evrinoma\TestUtilsBundle\Browser\ApiBrowserTestTrait;
 use Evrinoma\TestUtilsBundle\Controller\ApiControllerTestInterface;
-use Evrinoma\TestUtilsBundle\Helper\ApiHelperTestInterface;
-use Evrinoma\TestUtilsBundle\Helper\ApiHelperTestTrait;
+use Evrinoma\TestUtilsBundle\Helper\ApiMethodTestInterface;
+use Evrinoma\TestUtilsBundle\Helper\ApiMethodTestTrait;
+use Evrinoma\TestUtilsBundle\Helper\ResponseStatusTestTrait;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group functional
  */
-class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, ApiBrowserTestInterface, ApiHelperTestInterface
+class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, ApiBrowserTestInterface, ApiMethodTestInterface
 {
 //region SECTION: Fields
     public const API_GET      = 'evrinoma/api/contractor';
@@ -26,7 +26,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     public const API_POST     = 'evrinoma/api/contractor/create';
 //endregion Fields
 
-    use ApiBrowserTestTrait, ApiHelperTestTrait;
+    use ApiBrowserTestTrait, ApiMethodTestTrait, ResponseStatusTestTrait;
 
 //region SECTION: Protected
     public static function getFixtures(): array
@@ -55,11 +55,11 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     public function testPost(): void
     {
         $this->createIdentity();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
         $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
         $this->createIdentityDependencyIsolate();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
     }
 
     public function testCriteria(): void
@@ -67,19 +67,19 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $query = static::getDefault();
 
         $this->createIdentity();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
         $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
         $this->createIdentityDependencyIsolate();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
 
         $response = $this->criteria(["class" => static::getDtoClass(), "identity" => "1234567890"]);
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusOK();
         $this->assertArrayHasKey('data', $response);
         $this->assertCount(2, $response['data']);
 
         $response = $this->criteria(["class" => static::getDtoClass(), "identity" => md5($query['name'])]);
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusOK();
         $this->assertArrayHasKey('data', $response);
         $this->assertCount(1, $response['data']);
     }
@@ -87,22 +87,22 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     public function testCriteriaNotFound(): void
     {
         $this->createIdentity();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
         $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
 
         $response = $this->criteria(["class" => static::getDtoClass(), "identity" => "0987654321"]);
-        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusNotFound();
         $this->assertArrayHasKey('data', $response);
     }
 
     public function testPut(): void
     {
         $created = $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
 
         $find = $this->get(1);
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusOK();
 
         $this->assertArrayHasKey('data', $created);
         $this->assertArrayHasKey('data', $find);
@@ -118,7 +118,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         ];
 
         $this->put($query);
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusOK();
     }
 
     public function testPutNotFound(): void
@@ -131,7 +131,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         ];
 
         $this->put($query);
-        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusNotFound();
     }
 
     public function testPutUnprocessable(): void
@@ -144,10 +144,10 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         ];
 
         $this->put($query);
-        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusUnprocessable();
 
         $created = $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
 
         $query = [
             "id"       => "1",
@@ -156,22 +156,22 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         ];
 
         $this->put($query);
-        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusUnprocessable();
     }
 
     public function testDelete(): void
     {
         $created = $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
 
         $find = $this->get(1);
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusOK();
 
         $this->assertArrayHasKey('data', $created);
         $this->assertArrayHasKey('data', $find);
 
         $response = $this->delete('1');
-        $this->assertEquals(Response::HTTP_ACCEPTED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusAccepted();
 
         $delete = $this->get(1);
 
@@ -186,23 +186,23 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     {
         $response = $this->delete('1');
         $this->assertArrayHasKey('data', $response);
-        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusNotFound();
     }
 
     public function testDeleteUnprocessable(): void
     {
         $response = $this->delete('');
         $this->assertArrayHasKey('data', $response);
-        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusUnprocessable();
     }
 
     public function testGet(): void
     {
         $created = $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
 
         $find = $this->get(1);
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusOK();
 
         $this->assertArrayHasKey('data', $created);
         $this->assertArrayHasKey('data', $find);
@@ -214,52 +214,52 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     {
         $response = $this->get(1);
         $this->assertArrayHasKey('data', $response);
-        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusNotFound();
     }
 
     public function testPostIdentity(): void
     {
         $this->createIdentity();
 
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
     }
 
     public function testPostIdenityDependency(): void
     {
         $this->createIdentityDependency();
 
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
     }
 
     public function testPostIdenityDependencyIsolate(): void
     {
         $this->createIdentityDependencyIsolate();
 
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
     }
 
     public function testPostDuplicate(): void
     {
         $this->createIdentity();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
         $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
         $this->createIdentityDependencyIsolate();
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusCreated();
 
         $this->createIdentity();
-        $this->assertEquals(Response::HTTP_CONFLICT, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusConflict();
         $this->createIdentityDependency();
-        $this->assertEquals(Response::HTTP_CONFLICT, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusConflict();
         $this->createIdentityDependencyIsolate();
-        $this->assertEquals(Response::HTTP_CONFLICT, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusConflict();
     }
 
     public function testPostUnprocessable(): void
     {
         $this->postWrong();
 
-        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $this->client->getResponse()->getStatusCode());
+        $this->testResponseStatusUnprocessable();
     }
 //endregion Public
 
@@ -275,7 +275,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     {
         $query = static::getDefault(["identity" => "1234567890", "dependency" => "1234567890"]);
 
-        return $this->post($query);;
+        return $this->post($query);
     }
 
     private function createIdentityDependencyIsolate(): array
