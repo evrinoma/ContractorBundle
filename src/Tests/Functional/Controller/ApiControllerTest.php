@@ -5,6 +5,7 @@ namespace Evrinoma\ContractorBundle\Tests\Functional\Controller;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Evrinoma\ContractorBundle\Tests\Functional\CaseTest;
+use Evrinoma\ContractorBundle\Tests\Functional\Helper\BaseContractorTestTrait;
 use Evrinoma\TestUtilsBundle\Browser\ApiBrowserTestInterface;
 use Evrinoma\TestUtilsBundle\Browser\ApiBrowserTestTrait;
 use Evrinoma\TestUtilsBundle\Controller\ApiControllerTestInterface;
@@ -26,32 +27,23 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     public const API_POST     = 'evrinoma/api/contractor/create';
 //endregion Fields
 
-    use ApiBrowserTestTrait, ApiMethodTestTrait, ResponseStatusTestTrait;
+    use ApiBrowserTestTrait, ApiMethodTestTrait, ResponseStatusTestTrait, BaseContractorTestTrait;
 
 //region SECTION: Protected
-    public static function getFixtures(): array
-    {
-        return [];
-    }
+//endregion Protected
 
-    public static function getDtoClass(): string
-    {
-        return ContractorApiDto::class;
-    }
-
+//region SECTION: Public
     public static function defaultData(): array
     {
         return [
             "name"       => "test company",
-            "id"         => 1,
-            "active"     => "a",
+            "id"         => static::id(),
+            "active"     => ActiveModel::ACTIVE,
             "created_at" => "2021-06-08 17:46",
             "class"      => static::getDtoClass(),
         ];
     }
-//endregion Protected
 
-//region SECTION: Public
     public function testPost(): void
     {
         $this->createIdentity();
@@ -73,12 +65,12 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $this->createIdentityDependencyIsolate();
         $this->testResponseStatusCreated();
 
-        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => "1234567890"]);
+        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => static::identity()]);
         $this->testResponseStatusOK();
         $this->assertArrayHasKey('data', $response);
         $this->assertCount(2, $response['data']);
 
-        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => md5($query['name'])]);
+        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => static::identityMd5($query['name'])]);
         $this->testResponseStatusOK();
         $this->assertArrayHasKey('data', $response);
         $this->assertCount(1, $response['data']);
@@ -91,7 +83,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => "0987654321"]);
+        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => static::wrongIdentity()]);
         $this->testResponseStatusNotFound();
         $this->assertArrayHasKey('data', $response);
     }
@@ -101,7 +93,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $created = $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $find = $this->get(1);
+        $find = $this->get(static::id());
         $this->testResponseStatusOK();
 
         $this->assertArrayHasKey('data', $created);
@@ -112,7 +104,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $query = [
             "class"    => static::getDtoClass(),
             "id"       => $find['data']['id'],
-            "identity" => "0987654321",
+            "identity" => static::wrongIdentity(),
             "active"   => ActiveModel::BLOCKED,
             "name"     => $find['data']['name'],
         ];
@@ -125,8 +117,8 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     {
         $query = [
             "class"    => static::getDtoClass(),
-            "id"       => "1",
-            "identity" => "0987654321",
+            "id"       => static::id(),
+            "identity" => static::wrongIdentity(),
             "active"   => ActiveModel::BLOCKED,
         ];
 
@@ -138,8 +130,8 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
     {
         $query = [
             "class"    => static::getDtoClass(),
-            "id"       => "",
-            "identity" => "0987654321",
+            "id"       => static::emptyId(),
+            "identity" => static::wrongIdentity(),
             "active"   => ActiveModel::BLOCKED,
         ];
 
@@ -150,8 +142,8 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $this->testResponseStatusCreated();
 
         $query = [
-            "id"       => "1",
-            "identity" => "0987654321",
+            "id"       => static::id(),
+            "identity" => static::wrongIdentity(),
             "active"   => ActiveModel::BLOCKED,
         ];
 
@@ -164,16 +156,16 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $created = $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $find = $this->get(1);
+        $find = $this->get(static::id());
         $this->testResponseStatusOK();
 
         $this->assertArrayHasKey('data', $created);
         $this->assertArrayHasKey('data', $find);
 
-        $response = $this->delete('1');
+        $response = $this->delete(static::id());
         $this->testResponseStatusAccepted();
 
-        $delete = $this->get(1);
+        $delete = $this->get(static::id());
 
         $this->assertArrayHasKey('data', $delete);
         $this->assertArrayHasKey('data', $response);
@@ -184,14 +176,14 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 
     public function testDeleteNotFound(): void
     {
-        $response = $this->delete('1');
+        $response = $this->delete(static::id());
         $this->assertArrayHasKey('data', $response);
         $this->testResponseStatusNotFound();
     }
 
     public function testDeleteUnprocessable(): void
     {
-        $response = $this->delete('');
+        $response = $this->delete(static::emptyId());
         $this->assertArrayHasKey('data', $response);
         $this->testResponseStatusUnprocessable();
     }
@@ -201,7 +193,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $created = $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $find = $this->get(1);
+        $find = $this->get(static::id());
         $this->testResponseStatusOK();
 
         $this->assertArrayHasKey('data', $created);
@@ -212,7 +204,7 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 
     public function testGetNotFound(): void
     {
-        $response = $this->get(1);
+        $response = $this->get(static::id());
         $this->assertArrayHasKey('data', $response);
         $this->testResponseStatusNotFound();
     }
@@ -224,14 +216,14 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
         $this->testResponseStatusCreated();
     }
 
-    public function testPostIdenityDependency(): void
+    public function testPostIdentityDependency(): void
     {
         $this->createIdentityDependency();
 
         $this->testResponseStatusCreated();
     }
 
-    public function testPostIdenityDependencyIsolate(): void
+    public function testPostIdentityDependencyIsolate(): void
     {
         $this->createIdentityDependencyIsolate();
 
@@ -264,24 +256,15 @@ class ApiControllerTest extends CaseTest implements ApiControllerTestInterface, 
 //endregion Public
 
 //region SECTION: Private
-    private function createIdentity(): array
+//region SECTION: Getters/Setters
+    public static function getFixtures(): array
     {
-        $query = static::getDefault(["identity" => "1234567890",]);
-
-        return $this->post($query);
+        return [];
     }
 
-    private function createIdentityDependency(): array
+    public static function getDtoClass(): string
     {
-        $query = static::getDefault(["identity" => "1234567890", "dependency" => "1234567890"]);
-
-        return $this->post($query);
+        return ContractorApiDto::class;
     }
-
-    private function createIdentityDependencyIsolate(): array
-    {
-        $query = static::getDefault();
-
-        return $this->post($query);
-    }
+//endregion Getters/Setters
 }
