@@ -4,6 +4,7 @@
 namespace Evrinoma\ContractorBundle\Mediator;
 
 use Doctrine\ORM\QueryBuilder;
+use Evrinoma\ContractorBundle\Repository\AliasInterface;
 use Evrinoma\UtilsBundle\Mediator\AbstractQueryMediator;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDtoInterface;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
@@ -12,7 +13,7 @@ use Evrinoma\DtoBundle\Dto\DtoInterface;
 class QueryMediator extends AbstractQueryMediator implements QueryMediatorInterface
 {
 //region SECTION: Fields
-    protected static string $alias = 'contractor';
+    protected static string $alias = AliasInterface::CONTRACTOR;
 //endregion Fields
 
 //region SECTION: Public
