@@ -3,10 +3,10 @@
 namespace Evrinoma\ContractorBundle\Tests\Functional\Helper;
 
 
-use Evrinoma\ContractorBundle\Tests\Functional\Helper\ValueObject\Dependency;
-use Evrinoma\ContractorBundle\Tests\Functional\Helper\ValueObject\Id;
-use Evrinoma\ContractorBundle\Tests\Functional\Helper\ValueObject\Identity;
-use Evrinoma\ContractorBundle\Tests\Functional\Helper\ValueObject\Name;
+use Evrinoma\ContractorBundle\Tests\Functional\ValueObject\Dependency;
+use Evrinoma\ContractorBundle\Tests\Functional\ValueObject\Id;
+use Evrinoma\ContractorBundle\Tests\Functional\ValueObject\Identity;
+use Evrinoma\ContractorBundle\Tests\Functional\ValueObject\Name;
 
 trait BaseContractorTestTrait
 {
