@@ -1,0 +1,9 @@
+services:
+   evrinoma.contractor.test.functional.action.contractor:
+    class: Evrinoma\ContractorBundle\Tests\Functional\Action\BaseContractor
+    public: true
+    arguments:
+
+   Evrinoma\ContractorBundle\Tests\Functional\Action\BaseContractor:
+     alias: evrinoma.contractor.test.functional.action.contractor
+     public: true

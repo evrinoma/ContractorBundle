@@ -44,6 +44,11 @@ class EvrinomaContractorExtension extends Extension
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        if ($container->getParameter('kernel.environment') === 'test') {
+            $loader->load('tests.yml');
+        }
+
         $configuration = $this->getConfiguration($configs, $container);
         $config        = $this->processConfiguration($configuration, $configs);
 
