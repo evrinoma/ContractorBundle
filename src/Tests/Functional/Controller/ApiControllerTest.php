@@ -9,8 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * @group functional
  */
-final class ApiControllerTest extends AbstractFunctionalTest
+final class ApiControllerTest extends AbstractFunctionalTest implements ApiContractorTestInterface
 {
+    use ApiControllerTestTrait;
 //region SECTION: Fields
     protected string $actionServiceName = 'evrinoma.contractor.test.functional.action.contractor';
 //endregion Fields
