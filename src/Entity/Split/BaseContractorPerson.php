@@ -8,7 +8,7 @@ use Evrinoma\ContractorBundle\Model\Split\AbstractContractorPerson;
 /**
  * BaseContractorPerson
  *
- * @ORM\Table(name="contractor_person")
+ * @ORM\Table(name="e_contractor_person")
  * @ORM\Entity()
  */
 class BaseContractorPerson extends AbstractContractorPerson
