@@ -9,6 +9,4 @@ interface BaseContractorTestInterface
     public function actionPostIdentityDependency(): void;
 
     public function actionPostIdentityDependencyIsolate(): void;
-
-    public function actionPostDuplicate(): void;
 }
