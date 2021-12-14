@@ -94,7 +94,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         Assert::assertArrayHasKey('data', $created);
         Assert::assertArrayHasKey('data', $find);
 
-        Assert::assertCount(0, array_diff($created['data'], $find['data']));
+        Assert::assertTrue($created['data'] == $find['data']);
 
         $query = [
             "class"    => static::getDtoClass(),
@@ -165,7 +165,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         Assert::assertArrayHasKey('data', $delete);
         Assert::assertArrayHasKey('data', $response);
 
-        Assert::assertCount(1, array_diff($find['data'], $delete['data']));
+        Assert::assertTrue($find['data'] == $delete['data']);
         Assert::assertEquals(ActiveModel::DELETED, $delete['data']['active']);
     }
 
@@ -194,7 +194,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         Assert::assertArrayHasKey('data', $created);
         Assert::assertArrayHasKey('data', $find);
 
-        Assert::assertCount(0, array_diff($created['data'], $find['data']));
+        Assert::assertTrue($created['data'] == $find['data']);
     }
 
     public function actionGetNotFound(): void
