@@ -46,8 +46,6 @@ final class ContractorApiController extends AbstractApiController implements Api
 //endregion Fields
 
 //region SECTION: Constructor
-
-
     /**
      * ApiController constructor.
      *
@@ -78,7 +76,7 @@ final class ContractorApiController extends AbstractApiController implements Api
 
 //region SECTION: Public
     /**
-     * @Rest\Post("/api/contractor/create", options={"expose"=true}, name="api_create_contractor")
+     * @Rest\Post("/api/contractor/create", options={"expose"=true}, name="api_contractor_create")
      * @OA\Post(
      *     tags={"contractor"},
      *     description="the method perform create contractor",
@@ -128,7 +126,7 @@ final class ContractorApiController extends AbstractApiController implements Api
     }
 
     /**
-     * @Rest\Put("/api/contractor/save", options={"expose"=true}, name="api_save_contractor")
+     * @Rest\Put("/api/contractor/save", options={"expose"=true}, name="api_contractor_save")
      * @OA\Put(
      *     tags={"contractor"},
      *     description="the method perform save contractor for current entity",
@@ -186,7 +184,7 @@ final class ContractorApiController extends AbstractApiController implements Api
     }
 
     /**
-     * @Rest\Delete("/api/contractor/delete", options={"expose"=true}, name="api_delete_contractor")
+     * @Rest\Delete("/api/contractor/delete", options={"expose"=true}, name="api_contractor_delete")
      * @OA\Delete(
      *     tags={"contractor"},
      *     @OA\Parameter(
