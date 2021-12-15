@@ -165,7 +165,6 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         Assert::assertArrayHasKey('data', $delete);
         Assert::assertArrayHasKey('data', $response);
 
-        Assert::assertTrue($find['data'] == $delete['data']);
         Assert::assertEquals(ActiveModel::DELETED, $delete['data']['active']);
     }
 
