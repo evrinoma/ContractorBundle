@@ -1,4 +1,4 @@
-#Configuration
+# Configuration
 
 преопределение штатного класса сущности
 
@@ -12,7 +12,7 @@
         // -- entity_person: App\Contractor\Entity\ContractorPerson сущность перосоны
         dto_class: App\Contractor\Dto\ContractorDto класс dto с которым работает сущность 
 
-#CQRS model
+# CQRS model
 
 Actions в контроллере разбиты на две группы
 создание, редактирование, удаление данных
@@ -36,7 +36,7 @@ Actions в контроллере разбиты на две группы
     2. api_post_contractor - создание контрагента
     3. api_put_contractor -  редактирование контрагента
 
-#Статусы:
+# Статусы:
 
     создание:
         контрагент создан HTTP_CREATED 201
@@ -54,9 +54,12 @@ Actions в контроллере разбиты на две группы
         все остальные ошибки возвращаются как HTTP_BAD_REQUEST 400
 
 
-#Тесты:
-    
+# Тесты:
+
     composer install --dev
+### run all tests
     /usr/bin/php vendor/phpunit/phpunit/phpunit --bootstrap src/Tests/bootstrap.php --configuration phpunit.xml.dist src/Tests --teamcity
 
+### run personal test for example testPost
+    /usr/bin/php vendor/phpunit/phpunit/phpunit --bootstrap src/Tests/bootstrap.php --configuration phpunit.xml.dist src/Tests/Functional/Controller/TypeApiControllerTest.php --filter "/::testPost( .*)?$/" 
 
