@@ -82,7 +82,7 @@ trait BaseContractorTestTrait
         return Id::wrong();
     }
 
-    protected static function nullableId(): string
+    protected static function nullableId()
     {
         return Id::nullable();
     }
