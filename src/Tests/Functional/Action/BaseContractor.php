@@ -4,6 +4,8 @@ namespace Evrinoma\ContractorBundle\Tests\Functional\Action;
 
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Evrinoma\ContractorBundle\Tests\Functional\Helper\BaseContractorTestTrait;
+use Evrinoma\ContractorBundle\Tests\Functional\ValueObject\Id;
+use Evrinoma\ContractorBundle\Tests\Functional\ValueObject\Identity;
 use Evrinoma\TestUtilsBundle\Action\AbstractServiceTest;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
 use PHPUnit\Framework\Assert;
@@ -30,7 +32,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
     {
         return [
             "name"       => "test company",
-            "id"         => static::id(),
+            "id"         => Id::value(),
             "active"     => ActiveModel::ACTIVE,
             "created_at" => "2021-06-08 17:46",
             "class"      => static::getDtoClass(),
@@ -60,7 +62,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         $this->createIdentityDependencyIsolate();
         $this->testResponseStatusCreated();
 
-        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => static::identity()]);
+        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => Identity::value()]);
         $this->testResponseStatusOK();
         Assert::assertArrayHasKey('data', $response);
         Assert::assertCount(2, $response['data']);
@@ -78,7 +80,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => static::wrongIdentity()]);
+        $response = $this->criteria(["class" => static::getDtoClass(), "identity" => Identity::wrong()]);
         $this->testResponseStatusNotFound();
         Assert::assertArrayHasKey('data', $response);
     }
@@ -88,7 +90,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         $created = $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $find = $this->get(static::id());
+        $find = $this->get(Id::value());
         $this->testResponseStatusOK();
 
         Assert::assertArrayHasKey('data', $created);
@@ -99,7 +101,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         $query = [
             "class"    => static::getDtoClass(),
             "id"       => $find['data']['id'],
-            "identity" => static::wrongIdentity(),
+            "identity" => Identity::wrong(),
             "active"   => ActiveModel::BLOCKED,
             "name"     => $find['data']['name'],
         ];
@@ -112,8 +114,8 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
     {
         $query = [
             "class"    => static::getDtoClass(),
-            "id"       => static::id(),
-            "identity" => static::wrongIdentity(),
+            "id"       => Id::value(),
+            "identity" => Identity::wrong(),
             "active"   => ActiveModel::BLOCKED,
         ];
 
@@ -125,8 +127,8 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
     {
         $query = [
             "class"    => static::getDtoClass(),
-            "id"       => static::emptyId(),
-            "identity" => static::wrongIdentity(),
+            "id"       => Id::empty(),
+            "identity" => Identity::wrong(),
             "active"   => ActiveModel::BLOCKED,
         ];
 
@@ -137,8 +139,8 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         $this->testResponseStatusCreated();
 
         $query = [
-            "id"       => static::id(),
-            "identity" => static::wrongIdentity(),
+            "id"       => Id::value(),
+            "identity" => Identity::wrong(),
             "active"   => ActiveModel::BLOCKED,
         ];
 
@@ -151,16 +153,16 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         $created = $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $find = $this->get(static::id());
+        $find = $this->get(Id::value());
         $this->testResponseStatusOK();
 
         Assert::assertArrayHasKey('data', $created);
         Assert::assertArrayHasKey('data', $find);
 
-        $response = $this->delete(static::id());
+        $response = $this->delete(Id::value());
         $this->testResponseStatusAccepted();
 
-        $delete = $this->get(static::id());
+        $delete = $this->get(Id::value());
 
         Assert::assertArrayHasKey('data', $delete);
         Assert::assertArrayHasKey('data', $response);
@@ -173,14 +175,14 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
 
     public function actionDeleteNotFound(): void
     {
-        $response = $this->delete(static::id());
+        $response = $this->delete(Id::value());
         Assert::assertArrayHasKey('data', $response);
         $this->testResponseStatusNotFound();
     }
 
     public function actionDeleteUnprocessable(): void
     {
-        $response = $this->delete(static::emptyId());
+        $response = $this->delete(Id::empty());
         Assert::assertArrayHasKey('data', $response);
         $this->testResponseStatusUnprocessable();
     }
@@ -190,7 +192,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
         $created = $this->createIdentityDependency();
         $this->testResponseStatusCreated();
 
-        $find = $this->get(static::id());
+        $find = $this->get(Id::value());
         $this->testResponseStatusOK();
 
         Assert::assertArrayHasKey('data', $created);
@@ -201,7 +203,7 @@ class BaseContractor extends AbstractServiceTest implements BaseContractorTestIn
 
     public function actionGetNotFound(): void
     {
-        $response = $this->get(static::id());
+        $response = $this->get(Id::value());
         Assert::assertArrayHasKey('data', $response);
         $this->testResponseStatusNotFound();
     }
