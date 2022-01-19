@@ -19,7 +19,7 @@ trait ContractorApiDto
      */
     public function setId(?int $id): void
     {
-        parent::setActive($id);
+        parent::setId($id);
     }
 
     /**
@@ -27,7 +27,7 @@ trait ContractorApiDto
      */
     public function setIdentity(string $identity): void
     {
-        parent::setActive($identity);
+        parent::setIdentity($identity);
     }
 
     /**
@@ -35,7 +35,7 @@ trait ContractorApiDto
      */
     public function setDependency(string $dependency): void
     {
-        parent::setActive($dependency);
+        parent::setDependency($dependency);
     }
 
     /**
@@ -43,7 +43,7 @@ trait ContractorApiDto
      */
     public function setName(string $name): void
     {
-        parent::setActive($name);
+        parent::setName($name);
     }
 //endregion Getters/Setters
 }
