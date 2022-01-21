@@ -6,8 +6,9 @@ namespace Evrinoma\ContractorBundle\Model\Basic;
 use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtInterface;
 use Evrinoma\UtilsBundle\Entity\IdInterface;
+use Evrinoma\UtilsBundle\Entity\NameInterface;
 
-interface ContractorInterface extends ActiveInterface, CreateUpdateAtInterface, IdInterface
+interface ContractorInterface extends ActiveInterface, CreateUpdateAtInterface, IdInterface, NameInterface
 {
     /**
      * @return string
@@ -25,7 +26,23 @@ interface ContractorInterface extends ActiveInterface, CreateUpdateAtInterface, 
     public function getIsolate(): string;
 
     /**
-     * @return string
+     * @param string $isolate
+     *
+     * @return AbstractContractor
      */
-    public function getName(): string;
+    public function setIsolate(string $isolate): self;
+
+    /**
+     * @param string $dependency
+     *
+     * @return AbstractContractor
+     */
+    public function setDependency(string $dependency): self;
+
+    /**
+     * @param string $identity
+     *
+     * @return AbstractContractor
+     */
+    public function setIdentity(string $identity): self;
 }

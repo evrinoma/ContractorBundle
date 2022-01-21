@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 use Evrinoma\UtilsBundle\Entity\CreateUpdateAtTrait;
 use Evrinoma\UtilsBundle\Entity\IdTrait;
+use Evrinoma\UtilsBundle\Entity\NameTrait;
 
 /**
  * Class AbstractBaseContractor
@@ -15,7 +16,7 @@ use Evrinoma\UtilsBundle\Entity\IdTrait;
  */
 abstract class AbstractContractor implements ContractorInterface
 {
-    use IdTrait, ActiveTrait, CreateUpdateAtTrait;
+    use IdTrait, ActiveTrait, CreateUpdateAtTrait, NameTrait;
 
 //region SECTION: Fields
     /**
@@ -36,12 +37,6 @@ abstract class AbstractContractor implements ContractorInterface
      * @ORM\Column(name="isolate", type="string", length=255, nullable=false)
      */
     protected string $isolate = '';
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
-     */
-    protected string $name;
 //endregion Fields
 
 //region SECTION: Getters/Setters
@@ -67,14 +62,6 @@ abstract class AbstractContractor implements ContractorInterface
     public function getIsolate(): string
     {
         return $this->isolate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
@@ -109,18 +96,6 @@ abstract class AbstractContractor implements ContractorInterface
     public function setIsolate(string $isolate): self
     {
         $this->isolate = $isolate;
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return AbstractContractor
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }
