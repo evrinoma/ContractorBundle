@@ -60,7 +60,9 @@ class ContractorRepository extends ServiceEntityRepository implements Contractor
      */
     public function remove(ContractorInterface $contractor): bool
     {
-        $contractor->setActiveToDelete();
+        $contractor
+            ->setUpdatedAt(new \DateTimeImmutable())
+            ->setActiveToDelete();
 
         return true;
     }
