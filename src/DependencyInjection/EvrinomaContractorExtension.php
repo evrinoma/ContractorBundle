@@ -3,7 +3,7 @@
 
 namespace Evrinoma\ContractorBundle\DependencyInjection;
 
-use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
+use Evrinoma\ContractorBundle\DependencyInjection\Compiler\Constraint\Property\ContractorPass;
 use Evrinoma\ContractorBundle\Dto\ContractorApiDto;
 use Evrinoma\ContractorBundle\EvrinomaContractorBundle;
 use Evrinoma\UtilsBundle\DependencyInjection\HelperTrait;
@@ -92,8 +92,8 @@ class EvrinomaContractorExtension extends Extension
         if ($config['constraints']) {
             $loader->load('validation.yml');
             foreach ($container->getDefinitions() as $key => $definition) {
-                if (strpos($key, ConstraintPass::CONTRACTOR_CONSTRAINT) !== false) {
-                    $definition->addTag(ConstraintPass::CONTRACTOR_CONSTRAINT);
+                if (strpos($key, ContractorPass::CONTRACTOR_CONSTRAINT) !== false) {
+                    $definition->addTag(ContractorPass::CONTRACTOR_CONSTRAINT);
                 }
             }
         }

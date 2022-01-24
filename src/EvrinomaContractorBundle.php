@@ -3,7 +3,7 @@
 
 namespace Evrinoma\ContractorBundle;
 
-use Evrinoma\ContractorBundle\DependencyInjection\Compiler\ConstraintPass;
+use Evrinoma\ContractorBundle\DependencyInjection\Compiler\Constraint\Property\ContractorPass;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\DecoratorPass;
 use Evrinoma\ContractorBundle\DependencyInjection\Compiler\MapEntityPass;
 use Evrinoma\ContractorBundle\DependencyInjection\EvrinomaContractorExtension;
@@ -29,7 +29,7 @@ class EvrinomaContractorBundle extends Bundle
         $container
             ->addCompilerPass(new MapEntityPass($this->getNamespace(), $this->getPath()))
             ->addCompilerPass(new DecoratorPass())
-            ->addCompilerPass(new ConstraintPass())
+            ->addCompilerPass(new ContractorPass())
         ;
     }
 //endregion Public
