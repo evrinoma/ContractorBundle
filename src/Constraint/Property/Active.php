@@ -11,6 +11,5 @@ class Active implements ConstraintInterface
 {
 //region SECTION: Getters/Setters
     use ActiveTrait;
-
 //endregion Getters/Setters
 }
