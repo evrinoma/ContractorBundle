@@ -6,6 +6,7 @@ namespace Evrinoma\ContractorBundle\Validator;
 
 use Evrinoma\ContractorBundle\Entity\Basic\BaseContractor;
 use Evrinoma\UtilsBundle\Validator\AbstractValidator;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class ContractorValidator extends AbstractValidator
 {
@@ -18,13 +19,12 @@ final class ContractorValidator extends AbstractValidator
 
 //region SECTION: Constructor
     /**
-     * ContractorValidator constructor.
-     *
-     * @param string $entityClass
+     * @param ValidatorInterface $validator
+     * @param string             $entityClass
      */
-    public function __construct(string $entityClass)
+    public function __construct(ValidatorInterface $validator, string $entityClass)
     {
-        parent::__construct($entityClass);
+        parent::__construct($validator, $entityClass);
     }
 //endregion Constructor
 }
