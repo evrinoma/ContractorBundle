@@ -52,22 +52,17 @@ class EvrinomaContractorExtension extends Extension
         $configuration = $this->getConfiguration($configs, $container);
         $config        = $this->processConfiguration($configuration, $configs);
 
-        $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
-        $definitionApiController->setArgument(5, $config['dto']);
+        $this->wireController($container, $config['dto']);
+
 
         if ($config['factory'] !== self::FACTORY_CONTRACTOR) {
-            $container->removeDefinition('evrinoma.'.$this->getAlias().'.factory');
-            $definitionFactory = new Definition($config['factory']);
-            $alias             = new Alias('evrinoma.'.$this->getAlias().'.factory');
-            $container->addDefinitions(['evrinoma.'.$this->getAlias().'.factory' => $definitionFactory]);
-            $container->addAliases([$config['factory'] => $alias]);
+            $this->wireFactory($container, $config['factory'], $config['entity']);
+        } else {
+            $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
+            $definitionFactory->setArgument(0, $config['entity']);
         }
 
-        $definitionFactory = $container->getDefinition('evrinoma.'.$this->getAlias().'.factory');
-        $definitionFactory->setArgument(0, $config['entity']);
-
-        $definitionValidator = $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
-        $definitionValidator->setArgument(0, $config['entity']);
+        $this->wireValidator($container, $config['entity']);
 
         $doctrineRegistry = null;
 
@@ -81,22 +76,16 @@ class EvrinomaContractorExtension extends Extension
         }
 
         if ($doctrineRegistry) {
-            $definitionRepository    = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
-            $definitionQueryMediator = $container->getDefinition('evrinoma.'.$this->getAlias().'.query.mediator');
-            $definitionRepository->setArgument(0, $doctrineRegistry);
-            $definitionRepository->setArgument(1, $config['entity']);
-            $definitionRepository->setArgument(2, $definitionQueryMediator);
+            $this->wireRepository($container, $doctrineRegistry, $config['entity']);
         }
 
+        $loader->load('validation.yml');
 
         if ($config['constraints']) {
-            $loader->load('validation.yml');
-            foreach ($container->getDefinitions() as $key => $definition) {
-                if (strpos($key, ContractorPass::CONTRACTOR_CONSTRAINT) !== false) {
-                    $definition->addTag(ContractorPass::CONTRACTOR_CONSTRAINT);
-                }
-            }
+            $loader->load('constraint/contractor.yml');
         }
+
+        $this->wireConstraintTag($container);
 
         $this->remapParametersNamespaces(
             $container,
@@ -136,6 +125,51 @@ class EvrinomaContractorExtension extends Extension
             );
         }
     }
+
+    private function wireConstraintTag(ContainerBuilder $container): void
+    {
+        foreach ($container->getDefinitions() as $key => $definition) {
+            switch (true) {
+                case strpos($key, ContractorPass::CONTRACTOR_CONSTRAINT) !== false :
+                    $definition->addTag(ContractorPass::CONTRACTOR_CONSTRAINT);
+                    break;
+                default:
+            }
+        }
+    }
+
+    private function wireRepository(ContainerBuilder $container, Reference $doctrineRegistry, string $class): void
+    {
+        $definitionRepository = $container->getDefinition('evrinoma.'.$this->getAlias().'.repository');
+        $definitionQueryMediator = $container->getDefinition('evrinoma.'.$this->getAlias().'.query.mediator');
+        $definitionRepository->setArgument(0, $doctrineRegistry);
+        $definitionRepository->setArgument(1, $class);
+        $definitionRepository->setArgument(2, $definitionQueryMediator);
+    }
+
+    private function wireFactory(ContainerBuilder $container, string $class, string $paramClass): void
+    {
+        $container->removeDefinition('evrinoma.'.$this->getAlias().'.factory');
+        $definitionFactory = new Definition($class);
+        $definitionFactory->addArgument($paramClass);
+        $alias = new Alias('evrinoma.'.$this->getAlias().'.factory');
+        $container->addDefinitions(['evrinoma.'.$this->getAlias().'.factory' => $definitionFactory]);
+        $container->addAliases([$class => $alias]);
+    }
+
+    private function wireController(ContainerBuilder $container, string $class): void
+    {
+        $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.api.controller');
+        $definitionApiController->setArgument(5, $class);
+    }
+
+    private function wireValidator(ContainerBuilder $container, string $class): void
+    {
+        $definitionApiController = $container->getDefinition('evrinoma.'.$this->getAlias().'.validator');
+        $definitionApiController->setArgument(0, new Reference('validator'));
+        $definitionApiController->setArgument(1, $class);
+    }
+
 //endregion Public
 
 //region SECTION: Getters/Setters
