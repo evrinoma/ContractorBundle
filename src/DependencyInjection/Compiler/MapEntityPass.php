@@ -38,8 +38,8 @@ class MapEntityPass extends AbstractMapEntity implements CompilerPassInterface
                 $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Split', '%s/Entity/Split');
 
                 $this->addResolveTargetEntity([
-                    'evrinoma.contractor.entity_person'  => ContractorPersonInterface::class,
-                    'evrinoma.contractor.entity_company' => ContractorCompanyInterface::class,
+                    'evrinoma.contractor.entity_person'  => [ContractorPersonInterface::class => [],],
+                    'evrinoma.contractor.entity_company' => [ContractorCompanyInterface::class => [],],
                 ]);
 
                 $this->remapMetadata($driver, 'Split');
