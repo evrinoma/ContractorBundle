@@ -5,7 +5,7 @@ namespace Evrinoma\ContractorBundle\Dto\Preserve;
 
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-trait ContractorApiDto
+trait ContractorApiDtoTrait
 {
 //region SECTION: Getters/Setters
     /**
