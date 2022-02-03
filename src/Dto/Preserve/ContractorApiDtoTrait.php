@@ -8,42 +8,52 @@ trait ContractorApiDto
 //region SECTION: Getters/Setters
     /**
      * @param string $active
+     *
+     * @return self
      */
-    public function setActive(string $active): void
+    public function setActive(string $active): self
     {
-        parent::setActive($active);
+        return parent::setActive($active);
     }
 
     /**
      * @param int|null $id
+     *
+     * @return self
      */
-    public function setId(?int $id): void
+    public function setId(?int $id): self
     {
-        parent::setId($id);
+        return parent::setId($id);
     }
 
     /**
      * @param string $identity
+     *
+     * @return self
      */
-    public function setIdentity(string $identity): void
+    public function setIdentity(string $identity): self
     {
-        parent::setIdentity($identity);
+        return parent::setIdentity($identity);
     }
 
     /**
      * @param string $dependency
+     *
+     * @return self
      */
-    public function setDependency(string $dependency): void
+    public function setDependency(string $dependency): self
     {
-        parent::setDependency($dependency);
+        return parent::setDependency($dependency);
     }
 
     /**
      * @param string $name
+     *
+     * @return self
      */
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
-        parent::setName($name);
+        return parent::setName($name);
     }
 //endregion Getters/Setters
 }
