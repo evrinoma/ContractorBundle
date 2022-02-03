@@ -3,15 +3,17 @@
 
 namespace Evrinoma\ContractorBundle\Dto\Preserve;
 
+use Evrinoma\DtoBundle\Dto\DtoInterface;
+
 trait ContractorApiDto
 {
 //region SECTION: Getters/Setters
     /**
      * @param string $active
      *
-     * @return self
+     * @return DtoInterface
      */
-    public function setActive(string $active): self
+    public function setActive(string $active): DtoInterface
     {
         return parent::setActive($active);
     }
@@ -19,9 +21,9 @@ trait ContractorApiDto
     /**
      * @param int|null $id
      *
-     * @return self
+     * @return DtoInterface
      */
-    public function setId(?int $id): self
+    public function setId(?int $id): DtoInterface
     {
         return parent::setId($id);
     }
@@ -29,9 +31,9 @@ trait ContractorApiDto
     /**
      * @param string $identity
      *
-     * @return self
+     * @return DtoInterface
      */
-    public function setIdentity(string $identity): self
+    public function setIdentity(string $identity): DtoInterface
     {
         return parent::setIdentity($identity);
     }
@@ -39,9 +41,9 @@ trait ContractorApiDto
     /**
      * @param string $dependency
      *
-     * @return self
+     * @return DtoInterface
      */
-    public function setDependency(string $dependency): self
+    public function setDependency(string $dependency): DtoInterface
     {
         return parent::setDependency($dependency);
     }
@@ -49,9 +51,9 @@ trait ContractorApiDto
     /**
      * @param string $name
      *
-     * @return self
+     * @return DtoInterface
      */
-    public function setName(string $name): self
+    public function setName(string $name): DtoInterface
     {
         return parent::setName($name);
     }
