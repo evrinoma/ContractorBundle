@@ -4,60 +4,19 @@ namespace Evrinoma\ContractorBundle\Dto;
 
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
-use Evrinoma\DtoCommon\ValueObject\ActiveTrait;
-use Evrinoma\DtoCommon\ValueObject\DependencyTrait;
-use Evrinoma\DtoCommon\ValueObject\IdentityTrait;
-use Evrinoma\DtoCommon\ValueObject\IdTrait;
-use Evrinoma\DtoCommon\ValueObject\NameTrait;
+use Evrinoma\DtoCommon\ValueObject\Mutable\ActiveTrait;
+use Evrinoma\DtoCommon\ValueObject\Mutable\DependencyTrait;
+use Evrinoma\DtoCommon\ValueObject\Mutable\IdentityTrait;
+use Evrinoma\DtoCommon\ValueObject\Mutable\IdTrait;
+use Evrinoma\DtoCommon\ValueObject\Mutable\NameTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContractorApiDto extends AbstractDto implements ContractorApiDtoInterface
 {
 //region SECTION: Fields
     use IdTrait, ActiveTrait, DependencyTrait, IdentityTrait, NameTrait;
+
 //endregion Fields
-
-//region SECTION: Protected
-    /**
-     * @param string $active
-     */
-    protected function setActive(string $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param int|null $id
-     */
-    protected function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param string $identity
-     */
-    protected function setIdentity(string $identity): void
-    {
-        $this->identity = $identity;
-    }
-
-    /**
-     * @param string $dependency
-     */
-    protected function setDependency(string $dependency): void
-    {
-        $this->dependency = $dependency;
-    }
-
-    /**
-     * @param string $name
-     */
-    protected function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-//endregion Protected
 
 //region SECTION: Dto
     public function toDto(Request $request): DtoInterface

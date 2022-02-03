@@ -4,32 +4,12 @@
 namespace Evrinoma\ContractorBundle\Dto\Preserve;
 
 
-interface ContractorApiDtoInterface
+use Evrinoma\DtoCommon\ValueObject\Mutable\ActiveInterface;
+use Evrinoma\DtoCommon\ValueObject\Mutable\DependencyInterface;
+use Evrinoma\DtoCommon\ValueObject\Mutable\IdentityInterface;
+use Evrinoma\DtoCommon\ValueObject\Mutable\IdInterface;
+use Evrinoma\DtoCommon\ValueObject\Mutable\NameInterface;
+
+interface ContractorApiDtoInterface extends IdInterface, IdentityInterface, DependencyInterface, NameInterface, ActiveInterface
 {
-//region SECTION: Getters/Setters
-    /**
-     * @param string $active
-     */
-    public function setActive(string $active): void;
-
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void;
-
-    /**
-     * @param string $identity
-     */
-    public function setIdentity(string $identity): void;
-
-    /**
-     * @param string $dependency
-     */
-    public function setDependency(string $dependency): void;
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void;
-//endregion Getters/Setters
 }
