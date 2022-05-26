@@ -42,12 +42,12 @@ class MapEntityPass extends AbstractMapEntity implements CompilerPassInterface
                     'evrinoma.contractor.entity_company' => [ContractorCompanyInterface::class => [],],
                 ]);
 
-                $this->remapMetadata($driver, 'Split');
+                $this->remapMetadata($driver, EvrinomaContractorExtension::ENTITY, 'Split');
 
                 throw new MapEntityCannotBeCompiledException('This functionality unsupported yet');
             } else {
                 $this->loadMetadata($driver, $referenceAnnotationReader, '%s/Model/Basic', '%s/Entity/Basic');
-                $this->remapMetadata($driver, 'Basic');
+                $this->remapMetadata($driver, EvrinomaContractorExtension::ENTITY, 'Basic');
             }
         } else {
             $this->cleanMetadata($driver, [EvrinomaContractorExtension::ENTITY]);
